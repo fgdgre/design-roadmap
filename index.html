@@ -1,0 +1,2193 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Курс UI/UX дизайну</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👜</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@400;500;600&family=Unbounded:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEEFE7; --surface:#F8F8F2; --raised:#FFFFFF;
+  --ink:#1D1E16; --muted:#5F6154; --line:#D9DBCE;
+  --olive:#7F8360; --olive-soft:#DDE0CB; --bark:#4A2318; --on-bark:#F6EBDF;
+  --zephyr:#EBD5C2; --accent-ink:#E6CDB8;
+  --heat0:#E2E4D8; --heat1:#C9CDB0; --heat2:#A2A77F; --heat3:#7F8360; --heat4:#4A2318;
+  --display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --text:"Commissioner",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  color-scheme:light; box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+/* Темна тема: нейтральний графіт, шавлія та Zephyr як акценти */
+:root[data-theme="dark"]{
+  --bg:#121211; --surface:#1A1A18; --raised:#232320;
+  --ink:#F1EEE8; --muted:#9D988F; --line:#2E2D2A;
+  --olive:#BCC198; --olive-soft:#2A2D21; --bark:#E3BC9E; --on-bark:#1E1510;
+  --zephyr:#3A2F27; --accent-ink:#1E1510;
+  --heat0:#232320; --heat1:#3B3E2E; --heat2:#5F6447; --heat3:#9EA37C; --heat4:#E3BC9E;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.55 var(--text);transition:background .3s}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--olive);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1080px;margin:0 auto;padding-left:20px;padding-right:20px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* Верхня панель */
+.top{position:sticky;top:0;z-index:20;background:var(--bg);border-bottom:1px solid var(--line)}
+.topin{display:flex;align-items:center;gap:12px;height:64px}
+.brand{margin-right:auto}
+.tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.tabs a{text-decoration:none;font:500 14px var(--text);padding:8px 16px;border-radius:999px;color:var(--muted);white-space:nowrap}
+.tabs a:hover{color:var(--ink)}
+.tabs a[aria-current="page"]{background:var(--ink);color:var(--bg)}
+.ghost.icon{width:40px;height:40px;padding:0;justify-content:center;font-size:17px}
+@media (max-width:560px){.brand{display:none}.tabs{margin-right:auto}.tabs a{padding:8px 12px}}
+.brand{font:700 15px var(--display);text-decoration:none;letter-spacing:-0.01em}
+.ghost{font:500 14px var(--text);background:none;border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:8px 14px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+.ghost:hover{border-color:var(--ink)}
+
+/* Привітання й рівень */
+.hello{padding-top:28px;padding-bottom:28px;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:end}
+h1{font:700 clamp(2.1rem,6vw,4rem)/1 var(--display);letter-spacing:-0.03em;margin:0}
+.level{min-width:min(340px,100%)}
+.level-name{font:700 1.05rem var(--display);margin:0 0 4px}
+.level small{color:var(--muted);font-size:14px}
+.xpbar{height:10px;background:var(--line);border-radius:10px;overflow:hidden;margin:10px 0 6px}
+.xpbar i{display:block;height:100%;background:var(--olive);border-radius:10px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+@media (max-width:760px){.hello{grid-template-columns:1fr}}
+
+/* Сітка дашборда */
+.dash{display:grid;grid-template-columns:repeat(12,1fr);gap:16px;padding-bottom:20px}
+.card{background:var(--surface);border-radius:24px;padding:24px;min-width:0}
+.card h2{font:700 1.05rem/1.25 var(--display);margin:0 0 4px;letter-spacing:-0.01em}
+.card .sub{color:var(--muted);font-size:14px;margin:0 0 16px}
+.s7{grid-column:span 7}.s5{grid-column:span 5}.s3{grid-column:span 3}.s12{grid-column:1/-1}
+@media (max-width:860px){.s7,.s5{grid-column:1/-1}.s3{grid-column:span 6}}
+
+/* Наступний крок — головний акцент */
+.next{background:var(--bark);color:var(--on-bark);display:flex;flex-direction:column;gap:14px;position:relative;overflow:hidden}
+.next .eyebrow{font-size:14px;opacity:.75;margin:0}
+.next h2{font:700 clamp(1.3rem,2.8vw,1.75rem)/1.2 var(--display);margin:0;max-width:24ch}
+.next p{margin:0;opacity:.8;max-width:52ch}
+.next .acts{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:8px}
+.btn-light{font:600 14px var(--text);background:var(--on-bark);color:var(--bark);border:0;border-radius:999px;padding:10px 18px;cursor:pointer;text-decoration:none}
+.btn-line{font:600 14px var(--text);background:none;color:var(--on-bark);border:1px solid currentColor;border-radius:999px;padding:9px 17px;cursor:pointer;text-decoration:none;opacity:.9}
+.btn-line:hover,.btn-light:hover{opacity:1;filter:brightness(1.05)}
+.next .xp{position:absolute;right:22px;top:22px;font:700 13px var(--display);opacity:.7}
+
+/* Запис заняття */
+.today{font:700 2.4rem/1 var(--display);margin:6px 0 4px;letter-spacing:-0.02em}
+.today span{font-size:1rem;color:var(--muted);font-weight:500;margin-left:4px}
+.mins{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.mins button{font:600 14px var(--text);border:1px solid var(--line);background:var(--raised);color:var(--ink);border-radius:12px;padding:10px 14px;cursor:pointer;transition:transform .12s,border-color .12s}
+.mins button:hover{border-color:var(--olive)}
+.mins button:active{transform:scale(.95)}
+.linkbtn{background:none;border:0;padding:0;color:var(--muted);text-decoration:underline;cursor:pointer;font-size:13px;margin-top:12px}
+
+/* Показники */
+.stat .num{font:700 2rem/1.05 var(--display);letter-spacing:-0.02em;margin:10px 0 6px}
+.stat .num small{font-size:1rem;color:var(--muted);font-weight:500}
+.stat .lbl{font-weight:600;font-size:15px}
+.stat .sub{margin:0}
+
+/* Теплова карта */
+.heat-scroll{overflow-x:auto;padding:3px 4px 4px 3px;scrollbar-width:thin}
+.heat{display:grid;grid-template-rows:repeat(7,14px);grid-auto-flow:column;grid-auto-columns:14px;gap:4px;width:max-content}
+.heat i{border-radius:4px;background:var(--heat0)}
+.heat i[data-l="1"]{background:var(--heat1)}.heat i[data-l="2"]{background:var(--heat2)}
+.heat i[data-l="3"]{background:var(--heat3)}.heat i[data-l="4"]{background:var(--heat4)}
+.heat i.future{background:none}
+.heat i.today{outline:2px solid var(--ink);outline-offset:1px}
+.heat-legend{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin-top:12px}
+.heat-legend i{width:12px;height:12px;border-radius:3px;display:inline-block}
+
+/* Тижневі стовпці */
+.bars{display:grid;grid-template-columns:repeat(8,1fr);gap:8px;align-items:end;height:150px}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:6px;min-width:0}
+.bar b{font-size:11.5px;font-weight:600;color:var(--muted);white-space:nowrap}
+.bar i{display:block;width:100%;max-width:34px;border-radius:8px 8px 4px 4px;background:var(--olive-soft);min-height:4px;transition:height .5s}
+.bar.cur i{background:var(--olive)}
+.bar span{font-size:11px;color:var(--muted)}
+.empty-note{color:var(--muted);font-size:14px;margin:12px 0 0}
+
+/* Плитки етапів */
+.stages{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.tile{display:flex;flex-direction:column;gap:10px;padding:18px;border-radius:18px;background:var(--raised);text-decoration:none;border:1px solid transparent;transition:border-color .15s,transform .15s}
+.tile:hover{border-color:var(--line);transform:translateY(-2px)}
+.tile .row1{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tile .n{font:700 13px var(--display);color:var(--olive)}
+.status{font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px;background:var(--line);color:var(--muted)}
+.status.go{background:var(--olive-soft);color:var(--ink)}
+.status.ok{background:var(--bark);color:var(--on-bark)}
+.tile h3{font:700 1rem/1.25 var(--display);margin:0}
+.tile .meta{font-size:13px;color:var(--muted)}
+.pbar{height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.pbar i{display:block;height:100%;background:var(--olive);border-radius:6px}
+
+/* Досягнення */
+.badges{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
+.badge{padding:16px 14px;border-radius:18px;background:var(--raised);text-align:center}
+.badge .ic{font-size:30px;line-height:1;display:block;margin-bottom:8px}
+.badge b{display:block;font-size:14px;line-height:1.25}
+.badge span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px;line-height:1.35}
+.badge.locked .ic{filter:grayscale(1);opacity:.3}
+.badge.locked b{color:var(--muted)}
+.badge.new{animation:pop .6s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{0%{transform:scale(.6)}100%{transform:scale(1)}}
+
+.focuslink{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;background:var(--zephyr)}
+.focuslink p{margin:0;max-width:60ch}
+
+/* Сторінка етапу */
+.crumbs{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.stage-head{padding-top:20px;padding-bottom:24px}
+.stage-head .n{font:700 14px var(--display);color:var(--olive);margin:0 0 10px}
+.stage-head h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.08;max-width:20ch}
+.stage-head .goal{color:var(--muted);font-size:1.08rem;max-width:60ch;margin:16px 0 0}
+.stage-prog{display:flex;align-items:center;gap:14px;margin-top:22px;max-width:520px}
+.stage-prog .pbar{flex:1;height:10px}
+.stage-prog span{font-size:14px;color:var(--muted);white-space:nowrap}
+.filters{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{font:500 14px var(--text);border:0;background:none;color:var(--muted);padding:7px 14px;border-radius:999px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.toggle{display:inline-flex;gap:8px;align-items:center;font-size:14px;color:var(--muted);cursor:pointer}
+.toggle input{accent-color:var(--olive);width:16px;height:16px}
+.legend{display:flex;gap:18px;font-size:13.5px;color:var(--muted);margin-left:auto}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+@media (max-width:760px){.legend{margin-left:0;width:100%}}
+.items{list-style:none;margin:0;padding:6px 24px;background:var(--surface);border-radius:24px}
+.item{display:grid;grid-template-columns:28px 1fr auto;gap:14px;padding:18px 0;border-top:1px solid var(--line)}
+.item:first-child{border-top:0}
+.item[hidden]{display:none}
+.check{appearance:none;-webkit-appearance:none;width:24px;height:24px;margin:1px 0 0;border:2px solid var(--muted);border-radius:8px;cursor:pointer;display:grid;place-items:center;background:var(--raised);transition:background .15s,border-color .15s,transform .15s}
+.check::after{content:"";width:6px;height:11px;border:solid var(--on-bark);border-width:0 2.5px 2.5px 0;transform:rotate(45deg) translate(-1px,-1px);opacity:0}
+.check:checked{background:var(--bark);border-color:var(--bark)}
+.check:checked::after{opacity:1}
+.check:active{transform:scale(.88)}
+.title{font-weight:600;font-size:16.5px;line-height:1.35}
+.title a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px;text-decoration-thickness:2px}
+.title a:hover{text-decoration-color:var(--olive)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px;vertical-align:2px;background:var(--bark)}
+.dot.extra{background:none;border:1.5px solid var(--muted)}
+.info{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;margin-top:6px;font-size:13.5px;color:var(--muted)}
+.tag{font-weight:500;font-size:12.5px;padding:2px 9px;border-radius:999px;background:var(--olive-soft);color:var(--ink)}
+.tag.read{background:var(--zephyr)}
+.tag.practice{background:none;border:1px solid var(--line)}
+.tag.project{background:var(--bark);color:var(--on-bark)}
+.tag.tool{background:none;border:1px dashed var(--muted)}
+.note{margin:8px 0 0;color:var(--muted);font-size:15px;max-width:66ch}
+.xp-pill{font:700 11.5px var(--display);color:var(--olive);white-space:nowrap;padding-top:4px}
+.item.done .title{color:var(--muted);text-decoration:line-through}
+.item.done .title a{text-decoration:line-through}
+.item.done .xp-pill{opacity:.4}
+.allhidden{padding:24px;color:var(--muted);margin:0}
+.pager{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}
+.pager a{display:block;padding:18px 20px;border-radius:18px;background:var(--surface);text-decoration:none}
+.pager a:last-child{text-align:right}
+.pager small{display:block;color:var(--muted);font-size:13px}
+.pager b{font:700 15px/1.3 var(--display)}
+@media (max-width:640px){
+  .items{padding:4px 16px;border-radius:18px}
+  .item{grid-template-columns:26px 1fr;gap:12px}
+  .xp-pill{grid-column:2;padding-top:0}
+  .card{padding:20px;border-radius:20px}
+}
+
+/* Матеріали */
+.mat-head{padding-top:32px;padding-bottom:8px}
+.mat-head .lead2{color:var(--muted);margin:12px 0 20px;max-width:60ch}
+.resume{display:flex;align-items:center;justify-content:space-between;gap:12px 20px;flex-wrap:wrap;background:var(--bark);color:var(--on-bark);border-radius:20px;padding:18px 22px;margin-bottom:20px}
+.resume p{margin:0}
+.resume small{display:block;opacity:.75;font-size:13px}
+.resume b{font:700 1.02rem/1.3 var(--display)}
+.jump{display:flex;gap:8px;overflow-x:auto;padding:14px 0 6px;scrollbar-width:none}
+.jump button{flex:none;font:500 13px var(--text);border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:14px;padding:8px 12px;cursor:pointer;text-align:left;display:flex;flex-direction:column;gap:2px}
+.jump button span{color:var(--muted);font-size:12px}
+.jump button.ok{border-color:var(--bark)}
+.sec{margin:14px 0;background:var(--surface);border-radius:24px}
+.sec > summary{list-style:none;cursor:pointer;padding:22px 24px;display:grid;grid-template-columns:auto 1fr auto;gap:4px 16px;align-items:baseline}
+.sec > summary::-webkit-details-marker{display:none}
+.sec .num{font:700 14px var(--display);color:var(--olive);min-width:24px}
+.sec h2{font:700 clamp(1.1rem,2.4vw,1.35rem)/1.2 var(--display);margin:0;letter-spacing:-0.01em}
+.sec .cnt{font-size:14px;color:var(--muted);white-space:nowrap}
+.sec .cnt i{display:inline-block;font-style:normal;transition:transform .2s;margin-left:6px}
+.sec[open] .cnt i{transform:rotate(180deg)}
+.sec .goal{grid-column:2/4;margin:2px 0 0;color:var(--muted);font-size:15px;max-width:64ch}
+.sec .pbar{grid-column:2/4;margin-top:10px}
+.sec .items{background:none;border-radius:0;padding:0 24px 10px}
+.sec .items .item:first-child{border-top:1px solid var(--line)}
+.item{position:relative;scroll-margin-top:90px}
+.item.is-next::before{content:"";position:absolute;left:-24px;top:14px;bottom:14px;width:4px;border-radius:0 4px 4px 0;background:var(--olive)}
+.next-pill{font-size:12px;font-weight:600;background:var(--olive);color:var(--bg);padding:2px 9px;border-radius:999px}
+.flash{animation:flash 2s ease-out}
+@keyframes flash{0%,30%{background:var(--olive-soft)}100%{background:transparent}}
+@media (max-width:640px){
+  .sec{border-radius:18px}
+  .sec > summary{padding:18px 16px;grid-template-columns:auto 1fr;gap:4px 12px}
+  .sec .cnt{grid-column:2}
+  .sec .goal,.sec .pbar{grid-column:1/3}
+  .sec .items{padding:0 16px 8px}
+  .item.is-next::before{left:-16px}
+}
+
+
+/* Уроки */
+.lessons{padding:0 24px 8px}
+.lesson{border-top:1px solid var(--line)}
+.lesson[hidden]{display:none}
+.lesson > summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:22px auto 1fr auto;gap:12px;align-items:center;padding:16px 8px;margin:0 -8px;border-radius:12px;scroll-margin-top:90px}
+.lesson > summary::-webkit-details-marker{display:none}
+.lesson > summary:hover .ltitle{color:var(--olive)}
+.lmark{width:20px;height:20px;border-radius:50%;border:2px solid var(--muted);display:grid;place-items:center}
+.lesson.done .lmark{background:var(--bark);border-color:var(--bark)}
+.lesson.done .lmark::after{content:"";width:5px;height:9px;border:solid var(--on-bark);border-width:0 2px 2px 0;transform:rotate(45deg) translate(-1px,-1px)}
+.lesson.is-next .lmark{border-color:var(--olive);box-shadow:0 0 0 4px var(--olive-soft)}
+.lnum{font:700 13px var(--display);color:var(--olive)}
+.ltitle{font-weight:600;font-size:16.5px;line-height:1.3;transition:color .15s}
+.lesson.done .ltitle{color:var(--muted)}
+.lmeta{display:flex;gap:12px;font-size:13px;color:var(--muted);white-space:nowrap;align-items:center}
+.lmeta i{font-style:normal;transition:transform .2s}
+.lesson[open] .lmeta i{transform:rotate(180deg)}
+.lbody{padding:0 0 24px 34px;max-width:860px}
+.ltext{margin:0;padding-left:18px}
+.ltext li{margin:7px 0;max-width:68ch}
+.lbody h4{font:700 14px/1.3 var(--display);margin:24px 0 10px;letter-spacing:-0.01em}
+.opt{font:500 12.5px var(--text);color:var(--muted);margin-left:6px}
+.reslist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.res{display:grid;grid-template-columns:86px 1fr;gap:12px;align-items:start;background:var(--raised);border-radius:14px;padding:12px 14px}
+.extra .res{background:none;border:1px solid var(--line)}
+.res a{font-weight:600;text-decoration:none;line-height:1.35}
+.res a:hover{text-decoration:underline;text-decoration-color:var(--olive);text-underline-offset:3px}
+.kind{font-size:12px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--olive-soft);color:var(--ink);justify-self:start;margin-top:1px}
+.k-read{background:var(--zephyr)}
+.k-tool{background:none;border:1px dashed var(--muted)}
+.k-search{background:none;border:1px solid var(--line);color:var(--muted)}
+.k-playlist{background:var(--olive);color:var(--bg)}
+.rmeta{display:flex;flex-wrap:wrap;gap:4px 10px;font-size:13px;color:var(--muted);margin-top:3px}
+.lang{font-weight:700;font-size:11px;border:1px solid var(--line);border-radius:6px;padding:0 5px;line-height:18px}
+.tasks{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.task{display:grid;grid-template-columns:28px 1fr auto;gap:12px;padding:14px;border-radius:14px;background:var(--raised)}
+.task b{font-weight:600}
+.task p{margin:5px 0 0;color:var(--muted);font-size:15px;max-width:66ch}
+.task.done b{text-decoration:line-through;color:var(--muted)}
+.lvl{font-size:12px;font-weight:600;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.lvl.l1{background:var(--olive-soft);color:var(--ink)}
+.lvl.l2{background:var(--zephyr);color:var(--ink)}
+.lvl.l3{background:var(--bark);color:var(--on-bark)}
+.lfoot{display:flex;align-items:center;gap:14px;margin-top:20px;flex-wrap:wrap}
+.ldone-btn{font:600 14px var(--text);border:1.5px solid var(--ink);background:none;color:var(--ink);border-radius:999px;padding:10px 18px;cursor:pointer}
+.ldone-btn.on{background:var(--bark);border-color:var(--bark);color:var(--on-bark)}
+.cp{margin:10px 24px 0;padding:18px;border-radius:18px;border:2px dashed var(--olive)}
+.cp.done{border-style:solid;background:var(--olive-soft)}
+.cp-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cp-badge{font:700 13px var(--display);color:var(--olive)}
+.cp-row{display:grid;grid-template-columns:28px 1fr;gap:12px;cursor:pointer}
+.cp-row b{font-weight:600}
+.cp-row p{margin:4px 0 0;color:var(--muted);max-width:70ch}
+.quiz{padding:8px 24px 24px}
+.quiz h4{font:700 14px var(--display);margin:18px 0 6px}
+.qa{border-top:1px solid var(--line)}
+.qa summary{cursor:pointer;padding:12px 0;font-weight:500}
+.qa p{margin:0 0 14px;color:var(--muted);max-width:70ch}
+.legend .lvl{font-size:12px}
+@media (max-width:640px){
+  .lessons{padding:0 16px 6px}
+  .lesson > summary{grid-template-columns:22px auto 1fr;gap:4px 10px}
+  .lmeta{grid-column:3}
+  .lbody{padding-left:0}
+  .res{grid-template-columns:1fr;gap:6px}
+  .task{grid-template-columns:26px 1fr;padding:12px}
+  .task .xp-pill{grid-column:2}
+  .cp{margin:10px 16px 0}
+  .quiz{padding:8px 16px 20px}
+}
+
+
+/* Поділитися */
+dialog#share{max-width:min(560px,94vw);max-height:90vh}
+.field{display:flex;flex-direction:column;gap:6px;font-size:14px;color:var(--muted);margin:6px 0 4px}
+.field input{font:500 16px var(--text);padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--surface);color:var(--ink)}
+.share-sec{border-top:1px solid var(--line);padding-top:16px;margin-top:16px}
+.share-sec h4{font:700 15px var(--display);margin:0 0 6px}
+.share-sec summary{cursor:pointer;font-weight:600;font-size:15px}
+.share-sec textarea{margin-top:12px;min-height:80px}
+.row.left{justify-content:flex-start}
+.hint{font-size:13px;margin:10px 0 0}
+#cardImg{display:block;width:100%;max-width:260px;aspect-ratio:4/5;object-fit:contain;border-radius:14px;background:var(--surface);margin:8px 0 4px}
+.share-btn{margin-top:12px}
+button:disabled{opacity:.45;cursor:not-allowed}
+.viewbar{position:sticky;top:64px;z-index:19;background:var(--bark);color:var(--on-bark)}
+.viewbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-top:10px;padding-bottom:10px;font-size:14.5px;font-weight:500}
+.viewbar .btn-light{padding:7px 14px}
+body.readonly .check,body.readonly .mins button,body.readonly .ldone-btn,body.readonly #undoToday,body.readonly .next .btn-line{pointer-events:none;opacity:.55}
+
+/* Фокус і поради */
+.focus{display:grid;grid-template-columns:1fr 1.4fr;gap:28px}
+.focus p{margin:0 0 12px}
+.swatches{display:flex;gap:8px;margin:18px 0 6px}
+.swatches i{width:36px;height:36px;border-radius:10px;display:block;border:1px solid var(--line)}
+.growth{margin:0;padding:0;list-style:none;counter-reset:g}
+.growth li{counter-increment:g;padding:14px 0 14px 40px;border-top:1px solid var(--line);position:relative}
+.growth li:first-child{border-top:0;padding-top:0}
+.growth li::before{content:counter(g);position:absolute;left:0;top:14px;width:26px;height:26px;border-radius:50%;background:var(--zephyr);display:grid;place-items:center;font:700 12px var(--display)}
+.growth li:first-child::before{top:0}
+.growth b{font-weight:600}
+.growth a{color:var(--olive);font-weight:500;white-space:nowrap}
+.card ul{margin:0;padding-left:18px}
+.card li{margin:8px 0}
+@media (max-width:760px){.focus{grid-template-columns:1fr}}
+
+footer.wrap{margin-top:40px;margin-bottom:40px;padding-top:24px;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:10px;align-items:center;color:var(--muted);font-size:14px}
+footer p{margin:0 auto 0 0;max-width:52ch}
+
+dialog{border:0;border-radius:22px;padding:26px;max-width:min(520px,92vw);background:var(--raised);color:var(--ink)}
+dialog::backdrop{background:rgba(18,18,17,.5)}
+dialog h3{font:700 1.2rem var(--display);margin:0 0 8px}
+dialog p{color:var(--muted);margin:0 0 14px;font-size:15px}
+dialog textarea{width:100%;min-height:110px;border:1px solid var(--line);border-radius:12px;padding:12px;font:13px/1.4 ui-monospace,Menlo,monospace;background:var(--surface);color:var(--ink);resize:vertical}
+.row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px;flex-wrap:wrap}
+.solid{font:600 14px var(--text);background:var(--ink);color:var(--bg);border:0;border-radius:999px;padding:9px 16px;cursor:pointer}
+.toasts{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;align-items:center;z-index:30;pointer-events:none;width:max-content;max-width:92vw}
+.toast{background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:999px;font-size:14px;font-weight:500;animation:tin .25s ease-out;text-align:center}
+.toast.big{background:var(--bark);color:var(--on-bark);font-weight:600;padding:12px 22px}
+@keyframes tin{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+
+<script>
+/* ===================================================================
+   КОНТЕНТ КУРСУ — усе редагується тут.
+   Модуль: id, title, min (орієнтовно), goal, lessons[], checkpoint, quiz[]
+   Урок:  L(id, назва, хвилин, [пояснення], [дивись і читай], [якщо незрозуміло], [завдання])
+   Матеріали: V(відео YouTube), PL(плейлист), A(стаття), T(інструмент / гра), Q(пошук на YouTube)
+   Завдання: [рівень 1|2|3, назва, опис]
+   id НЕ ЗМІНЮВАТИ після публікації — до них прив’язаний прогрес.
+   =================================================================== */
+const yt = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
+const V  = (t, id, src, lang, dur) => ({k:"video", t, u:"https://www.youtube.com/watch?v=" + id, src, lang, dur});
+const PL = (t, id, src, lang, dur) => ({k:"playlist", t, u:"https://www.youtube.com/playlist?list=" + id, src, lang, dur});
+const A  = (t, u, src, lang, dur) => ({k:"read", t, u, src, lang, dur});
+const T  = (t, u, src, dur) => ({k:"tool", t, u, src, dur});
+const Q  = (t, q) => ({k:"search", t, u:yt(q)});
+const L  = (id, t, min, text, watch, extra, tasks) => ({id, t, min, text, watch, extra, tasks});
+
+const MODULES = [
+{ id:"start", title:"Старт", time:"1 тиждень",
+  goal:"Розумієш, як влаштований курс, налаштувала робоче місце й чесно бачиш свою точку відліку.",
+  lessons:[
+  L("s1","Як проходити цей курс", 30, [
+    "Кожен урок складається з короткого пояснення тут, 1–3 основних матеріалів і практики.",
+    "Урок пройдено, коли подивилась або прочитала основне. <b>Завдання — за бажанням</b>: роби ті, що цікаві, або коли тема не засіла. Легке — на 15–30 хвилин, середнє — на вечір, челендж — для набитої руки.",
+    "Блок «Якщо щось незрозуміло» — пошук на YouTube з іншими поясненнями тієї ж теми.",
+    "Наприкінці модуля — <b>чекпоінт</b>: проєкт, що збирає все вивчене. Здебільшого це покращення твого лендингу MOI, тож до кінця курсу він стане сильним кейсом.",
+    "Більшість відео англійською: вмикай субтитри й автопереклад. Поряд часто є варіант українською чи російською.",
+    "Записуй час на дашборді: так видно прогрес і тримається серія днів."
+  ],[
+    V("Every UI/UX Concept Explained in Under 10 Minutes","EcbgbKtOELY","Kole Jain","EN","9 хв"),
+    V("UX vs. UI","5KUNmgt_pvY","NN/g","EN","3 хв")
+  ],[
+    A("Серіал «UI/UX-дизайнер» на Дія.Освіта","https://osvita.diia.gov.ua/courses/ui-ux-designer","Дія.Освіта × Projector","UA","2–3 год"),
+    Q("Що робить UI/UX-дизайнер","what does a UI UX designer do day in the life")
+  ],[
+    [1,"Склади розклад","Обери 3–4 дні на тиждень і реальний час для навчання. Краще 40 хвилин регулярно, ніж 5 годин раз на місяць."],
+    [2,"Розбери свій лендинг MOI","Відкрий вкладку «Фокус», прочитай розбір і випиши 10 конкретних проблем свого лендингу зі скриншотами."],
+    [3,"Порівняй із преміальними брендами","Знайди 3 сайти брендів сумок, які тобі подобаються. Для кожного запиши, що в них краще за MOI: структура, фото, кнопки, тексти."]
+  ]),
+  L("s2","Робоче місце й насмотреність", 60, [
+    "На безкоштовному плані Figma ліміт у 3 файли стосується спільного командного проєкту. <b>Drafts (чернетки) не обмежені</b> — працюй там.",
+    "Історія версій зберігається близько місяця. Важливі файли раз на пару тижнів дублюй.",
+    "Якщо навчаєшся в університеті чи коледжі, перевір Figma Education — повний тариф безкоштовний.",
+    "Насмотреність — це не колекція гарних картинок, а словник прийомів. Головна звичка: зберіг екран — підписав одним реченням, <b>чому</b> він працює.",
+    "Де шукати: Mobbin (екрани застосунків), Godly й Land-book (сайти), Behance (кейси)."
+  ],[
+    PL("Figma Design for beginners — офіційний курс Figma","PLXDU_eVOJTx5IuSrbtanZHnDuPB3Hx0hq","Figma","EN","13 відео"),
+    T("Mobbin — бібліотека екранів реальних застосунків","https://mobbin.com","mobbin.com"),
+    T("Godly — найкращі сайти для натхнення","https://godly.website","godly.website")
+  ],[
+    V("Figma from scratch in 1 hour","QxstLdREVYY","Роман Одуванов","RU","1 год"),
+    A("Figma Education","https://www.figma.com/education/","Figma","EN"),
+    T("Land-book — галерея лендингів","https://land-book.com","land-book.com")
+  ],[
+    [1,"Файл «Навчання»","Створи в Drafts файл зі сторінками: Нотатки, Вправи, Референси, MOI. Сюди складатимеш усю практику курсу."],
+    [2,"20 референсів із підписами","Збери 20 екранів (Mobbin, Godly, Land-book) і під кожним одне речення: що саме тут добре зроблено."],
+    [3,"Розклади один екран на числа","Візьми екран із Mobbin, поклади у Figma й виміряй: розміри шрифтів, відступи, радіуси, кольори. Запиши у таблицю поруч."]
+  ])],
+  checkpoint:{t:"Карта старту", d:"Одна сторінка у Figma: 10 проблем MOI, 20 референсів із підписами і твої цілі на 3 місяці. Повернешся до неї наприкінці курсу й побачиш, наскільки виросла."},
+  quiz:[
+    ["Чим UI відрізняється від UX?","UI — як інтерфейс виглядає й поводиться: кнопки, шрифти, кольори. UX — увесь досвід людини: чи легко досягти мети, чи зрозуміло, чи приємно. Гарний UI без UX — красива, але незручна річ."],
+    ["Де зберігати навчальні файли на безкоштовному плані?","У Drafts: вони не обмежені, на відміну від 3 файлів командного проєкту."],
+    ["Навіщо підписувати референси?","Формулюючи, чому щось працює, ти тренуєш аналіз і переносиш прийом у свої макети, а не просто колекціонуєш картинки."]
+  ]
+},
+{ id:"figma", title:"Figma на рівні профі", time:"2–3 тижні",
+  goal:"Будь-який екран збираєш на Auto Layout, компонентах і змінних так, що його не соромно віддати розробнику.",
+  lessons:[
+  L("f1","Фрейми, сітки й constraints", 60, [
+    "<b>Frame</b> відрізняється від групи: має власний фон, обрізання, сітки й Auto Layout. Майже все в інтерфейсі — фрейми.",
+    "<b>Layout grid</b>: колонки (12 для десктопу, 8 для планшета, 4 для телефона), gutter — відстань між колонками, margin — поля від краю.",
+    "<b>Constraints</b> кажуть, як елемент поводиться, коли фрейм змінює розмір: прилипає ліворуч, праворуч, тягнеться чи масштабується.",
+    "Перевірка якості: потягни фрейм за край. Якщо щось поїхало — constraints або Auto Layout налаштовані неправильно."
+  ],[
+    V("Figma Tutorial: Layout Grids","zd8wrAdURN0","Figma","EN","3 хв"),
+    V("Figma tutorial: Constraints","LHY9cm_2zwU","Figma","EN","5 хв"),
+    V("Сетка в Figma: 8, 12, 16 или 24 колонки?","9MFHb3s8FiI","Alexey Bychkov","RU","22 хв")
+  ],[
+    V("Master Responsive Grids (Rows & Columns) in Figma","sybtdc4dYzE","Tim Gabe","EN","10 хв"),
+    Q("Constraints чи Auto Layout — коли що","Figma constraints vs auto layout")
+  ],[
+    [1,"Сітки для трьох екранів","Створи фрейми 1440, 768 і 390 px із сітками на 12, 8 і 4 колонки. Збережи їх як шаблони."],
+    [2,"Перший екран MOI на сітці","Перебудуй хіро MOI так, щоб заголовок і кнопка лягали точно в колонки 12-колонкової сітки."],
+    [3,"Картка, що тягнеться","Збери картку товару, яка коректно розтягується від 280 до 400 px лише за допомогою constraints."]
+  ]),
+  L("f2","Auto Layout", 120, [
+    "Auto Layout — це flexbox у Figma: напрямок, відстань між елементами (gap), внутрішні відступи (padding), вирівнювання.",
+    "Три режими розміру: <b>Hug</b> — облягає вміст, <b>Fill</b> — заповнює батьківський блок, <b>Fixed</b> — фіксований.",
+    "Складні блоки — це вкладені Auto Layout: картка = вертикальний стек, у ньому рядок ціни = горизонтальний стек.",
+    "<b>Wrap</b> переносить елементи на новий рядок — ідеально для сітки карток. Min/max width не дають блоку стати занадто вузьким чи широким.",
+    "<b>Absolute position</b> — для бейджів і іконок поверх, які не повинні штовхати сусідів.",
+    "Правило: якщо щось можна зробити на Auto Layout — роби на ньому."
+  ],[
+    V("A Guide to Auto Layout: Best Practices, Tips & Tricks","1odqpkfkDL8","Figma","EN","23 хв"),
+    V("Auto Layout for Beginners (crash course)","2UbxHkiPwxg","Flux Academy","EN","21 хв"),
+    V("Автолеяути за 15 хвилин","fnp7jEyq1Gk","Mate academy","UA","15 хв")
+  ],[
+    V("Master Auto Layout in 30 Minutes (+ Practice File)","rgbnAsmPaZk","DesignWithArash","EN","39 хв"),
+    V("Auto Layout в Figma с нуля","MqWeuT6t61M","Alexey Bychkov","RU","20 хв"),
+    A("Guide to auto layout","https://help.figma.com/hc/en-us/articles/360040451373-Guide-to-auto-layout","Довідка Figma","EN")
+  ],[
+    [1,"Кнопка й тег","Кнопка з іконкою, яка росте разом із текстом (Hug), і тег-«пігулка». Зміни текст — нічого не має ламатися."],
+    [2,"Картка товару MOI","Повністю на Auto Layout: фото, назва, ціна, кружечки кольорів, кнопка. Жодного вільно розміщеного шару."],
+    [3,"Секція «Size type» з wrap","Три картки розмірів, що переносяться на новий рядок при звуженні, плюс навбар, де логотип Hug, а меню Fill."]
+  ]),
+  L("f3","Компоненти, властивості й варіанти", 120, [
+    "<b>Main component</b> — оригінал, <b>instance</b> — копія, що оновлюється разом з ним, але дозволяє змінювати текст і деталі (overrides).",
+    "<b>Variants</b> — версії одного компонента: стани (default, hover, pressed, disabled) і розміри (S, M, L).",
+    "<b>Properties</b>: boolean (показати чи сховати іконку), text (текст кнопки), instance swap (замінити іконку). Вони скорочують кількість варіантів у рази.",
+    "Називай шари й властивості зрозуміло й англійською: State=Hover, Size=M. Так тебе зрозуміє будь-який розробник."
+  ],[
+    V("Figma tutorial: Component properties","iIq8FLt1hUY","Figma","EN","18 хв"),
+    V("Master Figma Components and Variants in 20 Minutes","bnoPAezI6cw","DesignWithArash","EN","19 хв"),
+    V("Про компоненти і варіанти у Фігмі","sFvMPRAEJQI","юля і дизайн","UA","35 хв")
+  ],[
+    V("Как правильно работать с компонентами в Figma","ICCs6Lo4eak","Сергей Оршак","RU","17 хв"),
+    A("Guide to components in Figma","https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma","Довідка Figma","EN"),
+    Q("Вкладені компоненти","Figma nested components tutorial")
+  ],[
+    [1,"Кнопка з чотирма станами","Варіанти Default, Hover, Pressed, Disabled. Перевір, що текст і відступи однакові у всіх станах."],
+    [2,"Кнопка з властивостями","Size S/M/L, boolean для іконки, text property для підпису. Мета — одна кнопка замість 20 копій."],
+    [3,"Картка товару-компонент","Картка з instance swap для іконки і варіантом «у кошику / не в кошику». Збери з неї сітку з 6 товарів."]
+  ]),
+  L("f4","Стилі й змінні", 90, [
+    "<b>Стилі</b> — збережені кольори, текст, тіні. <b>Змінні</b> — значення з назвою: колір, число, рядок, boolean.",
+    "Змінні групуються в колекції, а колекції мають <b>режими</b>: світла й темна тема, різні мови чи розміри екрана.",
+    "Два рівні кольорів: <b>primitive</b> (olive-500 — сам колір) і <b>semantic</b> (bg-primary — його роль). Тема перемикається зміною ролей, а не перефарбовуванням сотень шарів.",
+    "На безкоштовному плані частина можливостей змінних може бути обмежена (наприклад, кількість режимів). Для навчання цього вистачає."
+  ],[
+    V("Figma tutorial: Intro to variables","1ONxxlJnvdM","Figma","EN","15 хв"),
+    V("Master Figma variables in 7 minutes","GUupJJC5Ac4","Flux Academy","EN","7 хв"),
+    V("Dark And Light Modes Using Color Variables","KzLlAAWfyTE","Build With Fede","EN","7 хв")
+  ],[
+    V("Use Figma Variables Like a Pro (+ Practice File)","fn4rP20U2UM","DesignWithArash","EN","31 хв"),
+    A("Guide to variables in Figma","https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma","Довідка Figma","EN"),
+    Q("Стилі чи змінні","Figma styles vs variables when to use")
+  ],[
+    [1,"Текстові стилі MOI","H1, H2, H3, Body, Caption. Застосуй до всього лендингу — жодного тексту без стилю."],
+    [2,"Палітра MOI у змінних","Колекція Primitives (olive, zephyr, bark, нейтральні) і колекція Semantic (bg, surface, text, accent), прив’язана до них."],
+    [3,"Темна тема одним кліком","Додай режим Dark до семантичних змінних і перемкни на ньому весь лендинг."]
+  ]),
+  L("f5","Прототипування", 120, [
+    "Прототип — зв’язки між екранами: <b>тригер</b> (клік, наведення, натискання, затримка) + <b>дія</b> (перейти, відкрити overlay, прокрутити) + <b>анімація</b>.",
+    "<b>Smart Animate</b> плавно анімує шари з однаковими назвами між кадрами.",
+    "<b>Interactive components</b> — hover і press прямо всередині компонента: налаштувала раз, працює в усіх копіях.",
+    "<b>Змінні в прототипі</b> дають логіку: лічильник кошика, вибраний колір, увімкнена тема.",
+    "Фіксуй хедер при скролі (Fix position) — прототип одразу виглядає «справжнім»."
+  ],[
+    V("Figma tutorial: Interactive components","ReNbXhaL3Xk","Figma","EN","9 хв"),
+    V("Figma Prototype Tutorial for Beginners","1ucLq6JTxac","Aliena Cai","EN","6 хв"),
+    V("Figma tutorial: Prototype with variables","VEuwKJAz7Jg","Figma","EN","13 хв")
+  ],[
+    V("Figma Prototypes: Connections, Animation, Scrolling, and Overlays","5p5yPwyJ9A8","Alexey Bychkov","RU","27 хв"),
+    V("Advanced prototyping techniques","o3r1CBEFYX4","Figma","EN","1 год 9 хв"),
+    A("Guide to prototyping in Figma","https://help.figma.com/hc/en-us/articles/360040314193-Guide-to-prototyping-in-Figma","Довідка Figma","EN")
+  ],[
+    [1,"Клікабельний лендинг","Пункти меню скролять до секцій, кнопки мають hover. Хедер зафіксований."],
+    [2,"Q&A, що відкривається","Інтерактивний компонент-акордеон: клік відкриває відповідь, плюс перетворюється на мінус."],
+    [3,"Кошик на змінних","Кнопка «Додати» збільшує лічильник кошика в хедері, а вибір кольору змінює фото сумки."]
+  ])],
+  checkpoint:{t:"MOI на компонентах", d:"Перезбери лендинг MOI: усе на Auto Layout, кнопки й картки — компоненти з варіантами, кольори й текст — змінні та стилі, плюс клікабельний прототип з hover і Q&A. Перевір: розтягни фрейм — нічого не ламається."},
+  quiz:[
+    ["Hug, Fill чи Fixed — що обрати для ширини кнопки, текст якої може змінюватися?","Hug: кнопка росте разом із текстом. Fill — коли кнопка має розтягнутися на всю ширину батьківського блоку, наприклад у мобільній формі."],
+    ["Чим варіант відрізняється від boolean-властивості?","Варіант — окрема версія компонента (стан, розмір). Boolean просто показує чи ховає шар, наприклад іконку, не створюючи нових варіантів."],
+    ["Навіщо ділити кольори на primitive і semantic?","Primitive — сирі кольори палітри, semantic — їхня роль в інтерфейсі. Щоб змінити тему чи бренд, перепризначаєш ролі, а не перефарбовуєш шари вручну."]
+  ]
+},
+{ id:"visual", title:"Візуальна база: типографіка, сітка, колір", time:"4–6 тижнів",
+  goal:"Можеш пояснити кожне рішення щодо шрифту, відступу й кольору, а макети виглядають зібрано без «натхнення».",
+  lessons:[
+  L("v1","Типографіка: основи", 120, [
+    "Гарнітура — родина шрифтів (Inter), накреслення — її варіант (Inter Bold).",
+    "<b>Міжрядковий інтервал</b>: 1.4–1.6 для основного тексту, 1.1–1.25 для великих заголовків.",
+    "<b>Довжина рядка</b>: 45–75 знаків. Довші рядки втомлюють — око губить початок наступного.",
+    "Великим заголовкам часто потрібен трохи від’ємний трекінг, дрібним підписам — трохи більший.",
+    "Ієрархію створює контраст розміру й насиченості. В інтерфейсі вистачає 1–2 гарнітур."
+  ],[
+    V("The 80% of UI Design — Typography","9-oefwZ6Z74","Sajid","EN","12 хв"),
+    A("Introducing type","https://fonts.google.com/knowledge/introducing_type","Google Fonts Knowledge","EN","30 хв"),
+    A("Typography in ten minutes","https://practicaltypography.com/typography-in-ten-minutes.html","Practical Typography","EN","10 хв")
+  ],[
+    V("The ULTIMATE Guide To Typography For Beginners","AXpxZMRM1EY","DesignSpo","EN","14 хв"),
+    V("Основы типографики (1/3)","GOV4FVwka9c","KornilovPro","RU","19 хв"),
+    A("Summary of key rules","https://practicaltypography.com/summary-of-key-rules.html","Practical Typography","EN")
+  ],[
+    [1,"Гра на кернінг","Пройди type.method.ac (Kern Type) і досягни 80+ балів."],
+    [2,"Один абзац — три налаштування","Той самий текст із міжрядковим 1.2, 1.5 і 1.8 та довжиною рядка 40, 65 і 100 знаків. Обери найкращий і поясни чому."],
+    [3,"Типографічний постер MOI","Назва бренду й три рівні тексту — лише шрифтом, без картинок і кольору. Ієрархія має читатися з першого погляду."]
+  ]),
+  L("v2","Шкала шрифтів і шрифтові пари", 90, [
+    "<b>Модульна шкала</b>: базовий розмір (16 px) множиш на коефіцієнт — 1.2, 1.25, 1.333. Виходить гармонійний ряд: 16, 20, 25, 31, 39…",
+    "Обмеж себе 5–7 розмірами на весь продукт. Випадкові 17, 19, 22 — ознака хаосу.",
+    "Пари працюють на контрасті: serif + sans, або одна гарнітура з різними накресленнями.",
+    "<b>Перевіряй кирилицю</b>: гарний латинський шрифт може не мати української «ї» чи «ґ»."
+  ],[
+    V("Perfect Typography Scale for UI Design (Exact Blueprint)","hwjiExdMiNY","Mizko","EN","10 хв"),
+    V("Pairing fonts the EASY way","zJH3SXlyi1A","Learn UI Design","EN","15 хв"),
+    A("Choosing type","https://fonts.google.com/knowledge/choosing_type","Google Fonts Knowledge","EN","30 хв")
+  ],[
+    V("Mathematically Perfect Typography for Web Design","7sUUzOCv47U","Kole Jain","EN","13 хв"),
+    T("Typescale — генератор шкали","https://typescale.com","typescale.com"),
+    Q("Шрифти з кирилицею","best google fonts cyrillic UI")
+  ],[
+    [1,"Шкала для MOI","На typescale.com обери коефіцієнт і перенеси шкалу в текстові стилі Figma."],
+    [2,"Три пари для MOI","Склади 3 шрифтові пари з кирилицею, примір кожну на першому екрані MOI, обери одну."],
+    [3,"Адаптивна шкала","Дві версії стилів — десктоп і мобайл (наприклад, H1 56 → 36). Перевір обидві на реальних екранах."]
+  ]),
+  L("v3","Сітки, відступи й ритм", 90, [
+    "<b>8-point grid</b>: усі відступи й розміри кратні 8 (для дрібного — 4). Менше рішень, більше порядку.",
+    "<b>Закон близькості</b>: відступ усередині групи менший за відступ між групами. Інакше блоки «розпадаються».",
+    "Ритм сторінки: однакові відступи між секціями (наприклад, 96 px на десктопі й 64 на телефоні).",
+    "Вирівнюй по одних лініях. Що менше різних осей, то спокійніший макет."
+  ],[
+    V("You’ll Regret NOT Using The 8pt Grid in Figma","ohF93_k3IMk","Tim Gabe","EN","8 хв"),
+    V("Hard and Soft 8 Point Grids","aPwwv-6pRWY","Christopher Deane","EN","8 хв"),
+    A("Law of Proximity","https://lawsofux.com/law-of-proximity/","Laws of UX","EN","5 хв")
+  ],[
+    V("Figma Grids: ширина, 8px чи 10px","rFwAHtNz_5s","Alexey Bychkov","RU","24 хв"),
+    Q("Системи відступів","spacing system UI design tutorial")
+  ],[
+    [1,"Аудит відступів MOI","Виміряй відступи на лендингу й знайди 5 «випадкових» чисел, що не кратні 8."],
+    [2,"Перебудуй секцію Colors","На 8-pt сітці, з однаковим вирівнюванням підписів і рівними проміжками."],
+    [3,"Шкала відступів-змінних","Створи змінні 4/8/12/16/24/32/48/64/96 і застосуй їх до всього лендингу."]
+  ]),
+  L("v4","Візуальна ієрархія й гештальт", 90, [
+    "Око читає в такому порядку: <b>розмір → контраст → колір → позиція</b>. Керуй цим свідомо.",
+    "На екрані має бути <b>одна головна дія</b>. Якщо все яскраве, нічого не виділяється.",
+    "Гештальт: близькість, подібність, замкнутість, спільна область — мозок сам групує елементи.",
+    "<b>Blur-тест</b>: розмий скриншот. Що видно першим — те й головне. Чи це те, що ти хотіла?"
+  ],[
+    V("Visual Hierarchy","8OTbyWndY9M","NN/g","EN","4 хв"),
+    V("The Gestalt Principles for User Interface Design","DwR0SZTBMTU","NN/g","EN","3 хв"),
+    A("Visual Hierarchy in UX: Definition","https://www.nngroup.com/articles/visual-hierarchy-ux-definition/","NN/g","EN","10 хв")
+  ],[
+    V("The Beginner’s Guide To Visual Hierarchy","kK1TOpI948o","DesignSpo","EN","15 хв"),
+    A("5 Principles of Visual Design in UX","https://www.nngroup.com/articles/principles-visual-design/","NN/g","EN"),
+    A("F-Shaped Pattern of Reading","https://www.nngroup.com/articles/f-shaped-pattern-reading-web-content/","NN/g","EN")
+  ],[
+    [1,"Blur-тест MOI","Розмий скриншот лендингу (Layer blur 8) і запиши, що видно першим, другим, третім."],
+    [2,"Одна картка — п’ять ієрархій","Картка сумки: назва, ціна, матеріал, кнопка. П’ять варіантів, де головним стає різне. Який працює краще і чому?"],
+    [3,"Перший екран із головною дією","Переробі хіро MOI так, щоб після заголовка першою кидалася в очі кнопка замовлення."]
+  ]),
+  L("v5","Колір в інтерфейсі", 120, [
+    "<b>Нейтральні кольори</b> — 80–90% інтерфейсу. Брендовий колір — для акцентів і головних дій.",
+    "Кожен колір палітри має відтінки від 50 до 900: світлі для фонів, середні для елементів, темні для тексту.",
+    "Семантичні кольори: success, warning, error, info — у всіх станах.",
+    "<b>Контраст WCAG</b>: 4.5:1 для звичайного тексту, 3:1 для великого. Перевіряй завжди.",
+    "Правило 60-30-10 — орієнтир, а не закон."
+  ],[
+    V("Color Theory in UI Design","-4lMJ4is2pE","Jesse Showalter","EN","13 хв"),
+    V("The 7 Color Mistakes that RUIN your UI Designs","EOcY3hPMQkk","Kole Jain","EN","7 хв"),
+    T("Realtime Colors — палітра на живому сайті","https://www.realtimecolors.com","realtimecolors.com")
+  ],[
+    V("60-30-10 Colors — Design Masterclass","nrN2axSSOKg","Malewicz","EN","8 хв"),
+    A("Material 3: колірна система","https://m3.material.io/styles/color/system/overview","Google","EN"),
+    T("WebAIM Contrast Checker","https://webaim.org/resources/contrastchecker/","WebAIM")
+  ],[
+    [1,"Гра на колір","Пройди color.method.ac — тренує око на відтінки й доповнювальні кольори."],
+    [2,"Палітра MOI 50–900","Відтінки для olive і bark, плюс теплі нейтральні сірі. Перевір контраст тексту на кожному фоні."],
+    [3,"Стани й семантика","Кнопки, поля й повідомлення (успіх, помилка, попередження) у палітрі MOI — так, щоб вони пасували бренду."]
+  ]),
+  L("v6","Насмотреність і розбір референсів", 60, [
+    "Метод: <b>знайди → розклади → повтори 1:1 → зроби своє</b>. Розкласти — означає виміряти сітку, шрифти, відступи й кольори.",
+    "Підхід Refactoring UI: ієрархію створюй вагою й кольором, а не лише розміром. Прибирай зайві рамки — відділяй блоки відступами й фоном.",
+    "Повторення чужого екрана 1:1 — не плагіат, а вправа. У портфоліо йде лише своє."
+  ],[
+    V("Refactoring UI: Bad About","S6-q5BheEYU","Steve Schoger","EN","14 хв"),
+    A("7 Practical Tips for Cheating at Design","https://medium.com/refactoring-ui/7-practical-tips-for-cheating-at-design-40c736799886","Refactoring UI","EN","15 хв"),
+    T("Can’t Unsee — гра на уважність до деталей","https://cantunsee.space","cantunsee.space")
+  ],[
+    V("How to think like a GENIUS UI/UX designer","HE4rLEQpiXY","Kole Jain","EN","6 хв"),
+    V("Refactoring UI: Transistor","ZT4WRRhacWk","Steve Schoger","EN","18 хв"),
+    V("Refactoring UI (доповідь на CSS Day)","7Z9rrryIOC4","Steve Schoger","EN","44 хв")
+  ],[
+    [1,"Can’t Unsee до 100%","Пройди гру повністю. Помилки переглянь — це готові уроки."],
+    [2,"Розклади 3 сайти з Godly","Для кожного: сітка, шрифти й розміри, відступи, кольори. Оформи як розбір у Figma."],
+    [3,"Повтори 1:1 і зроби своє","Перемалюй один екран точно, потім застосуй його прийоми до однієї секції MOI."]
+  ])],
+  checkpoint:{t:"Редизайн MOI: візуал", d:"Новий перший екран і секції Size, Material, Colors на сітці, зі шкалою шрифтів, системою відступів і палітрою з перевіреним контрастом. Поклади «було» і «стало» поруч — це перша сторінка майбутнього кейсу."},
+  quiz:[
+    ["Яка комфортна довжина рядка для основного тексту?","Приблизно 45–75 знаків. Довші рядки важко читати: око губить початок наступного рядка."],
+    ["Чому відступ усередині картки має бути меншим за відступ між картками?","Через закон близькості: що ближче елементи, то більше вони сприймаються як група. Інакше картки візуально «розпадаються»."],
+    ["Який мінімальний контраст для звичайного тексту за WCAG AA?","4.5:1. Для великого тексту — 3:1."]
+  ]
+},
+{ id:"product", title:"Продукт і бізнес", time:"3–4 тижні",
+  goal:"Розумієш, як продукт заробляє, які цифри важливі бізнесу і як дизайн на них впливає. Говориш з командою мовою цілей, а не смаку.",
+  lessons:[
+  L("p1","Як продукти заробляють", 90, [
+    "Дизайн у компанії існує, щоб продукт приносив цінність людям і гроші бізнесу. Найкращі рішення роблять і те, й інше.",
+    "<b>Ціннісна пропозиція</b>: яку роботу клієнта ти виконуєш, які болі знімаєш, які вигоди даєш. Value Proposition Canvas допомагає це розкласти.",
+    "<b>Бізнес-модель</b>: хто клієнти, через які канали приходять, за що платять, які витрати. Business Model Canvas вміщує весь бізнес на одну сторінку.",
+    "Базова економіка e-commerce: <b>конверсія</b> (яка частка відвідувачів купує), <b>середній чек</b>, <b>маржа</b>, <b>CAC</b> (скільки коштує залучити покупця), <b>LTV</b> (скільки він принесе за весь час).",
+    "Для MOI це означає: красива сторінка — не мета. Мета — щоб більше людей, які прийшли з Instagram, дійшли до замовлення й повернулися ще."
+  ],[
+    V("Value Proposition Canvas Explained","ReM1uqmVfP0","Strategyzer","EN","3 хв"),
+    V("Business Model Canvas Explained","QoAOzMTLP5s","Strategyzer","EN","2 хв"),
+    V("30-Minute Masterclass on Product Thinking","Tk-EI2yYT3A","Mike Krieger, EO","EN","30 хв")
+  ],[
+    A("The Value Proposition Canvas","https://www.strategyzer.com/library/the-value-proposition-canvas","Strategyzer","EN"),
+    V("Unit Economics for Startups","AMKgcBzK7cg","Eric Andrews","EN","18 хв"),
+    V("Product Design: база за 40 хвилин","1P_xPKo1X_c","Илья Сидоренко","RU","45 хв")
+  ],[
+    [1,"Value Proposition MOI","Заповни Value Proposition Canvas для MOI: роботи клієнтки, болі, вигоди і як сумка з кастомізацією їх закриває."],
+    [2,"Економіка однієї сумки","Прикинь собівартість, ціну, маржу й вартість реклами на одну покупку. Скільки сумок треба продати на місяць, щоб окупитися? Цифри можна припустити — головне логіка."],
+    [3,"Business Model Canvas MOI","Повний канвас на одній сторінці. Знайди 2 найризикованіші припущення в бізнес-моделі."]
+  ]),
+  L("p2","Метрики й воронки", 90, [
+    "<b>Воронка</b>: скільки людей проходить кожен крок — зайшли → подивилися товар → додали в кошик → оформили → оплатили. Дизайнерка шукає, де найбільше «витікає».",
+    "<b>AARRR</b>: Acquisition — залучення, Activation — перший цінний досвід, Retention — повернення, Revenue — гроші, Referral — рекомендації.",
+    "<b>North Star Metric</b> — одна метрика, що найкраще відображає цінність і для клієнта, і для бізнесу. Для MOI це може бути кількість оформлених кастомних замовлень.",
+    "Кількісні дані кажуть, <b>що</b> відбувається, якісні (інтерв’ю, тести) — <b>чому</b>. Потрібні обидва.",
+    "Безкоштовний інструмент: Microsoft Clarity показує теплові карти й записи сесій на будь-якому сайті, зокрема у Framer."
+  ],[
+    V("What are Pirate Metrics? AARRR in 3 minutes","zIwrgnT498E","Product Chat","EN","4 хв"),
+    V("How to Set a Great North Star Metric","ZwrRJlhJBrE","Exponent","EN","5 хв"),
+    V("How to Use Heatmaps in Microsoft Clarity","CFrLkiyBt50","Microsoft Clarity","EN","3 хв")
+  ],[
+    V("The Customer Journey & the Marketing Funnel","iRjXccj4yRo","Grow with Google","EN","32 хв"),
+    V("Finding Your North Star Metric","gajFtK3tLgA","Dan Martell","EN","9 хв"),
+    T("Microsoft Clarity","https://clarity.microsoft.com","Microsoft")
+  ],[
+    [1,"Воронка MOI","Намалюй воронку від посту в Instagram до оплати. На кожному кроці — гіпотеза, чому люди можуть піти."],
+    [2,"Метрики MOI","Обери North Star і 3–5 допоміжних метрик за AARRR. Для кожної — як її виміряти."],
+    [3,"Clarity на живому сайті","Коли MOI буде у Framer, підключи Microsoft Clarity, попроси 10 знайомих пройти сайт і розбери теплові карти й записи."]
+  ]),
+  L("p3","Гіпотези, пріоритети й A/B-тести", 90, [
+    "Гіпотеза: «Якщо ми [зміна], то [метрика] зміниться на [скільки], тому що [причина з даних]». Без «тому що» це просто ідея.",
+    "<b>ICE / RICE</b> — швидкий спосіб пріоритезувати: вплив, упевненість, легкість (і охоплення). Так команди вирішують, що робити першим.",
+    "<b>A/B-тест</b> — дві версії одночасно на різних людях. Потрібні достатній трафік, одна зміна за раз і заздалегідь обрана метрика.",
+    "Мало трафіку — краще юзабіліті-тест на 5 людях, ніж A/B-тест, що нічого не покаже."
+  ],[
+    V("A/B Testing 101","m000dSSXvDY","NN/g","EN","2 хв"),
+    V("Simple explanation of A/B Testing","eiIhTbFP0ls","codebasics","EN","6 хв"),
+    V("What is the RICE Scoring Model?","pzyRafZJ-0M","ProductPlan","EN","4 хв")
+  ],[
+    A("A/B Testing 101","https://www.nngroup.com/articles/ab-testing/","NN/g","EN"),
+    V("Is A/B Testing Faster than Usability Testing?","6-j5My77tIU","NN/g","EN","6 хв"),
+    V("A/B testing — statistical significance for beginners","BmNBxAhatYI","ABoptimization","EN","3 хв")
+  ],[
+    [1,"5 гіпотез для MOI","Сформулюй 5 гіпотез у повному форматі на основі воронки й інтерв’ю."],
+    [2,"Пріоритезація ICE","Оціни гіпотези за ICE й обери 2 для першої ітерації. Поясни вибір."],
+    [3,"Дизайн A/B-тесту","Для однієї гіпотези: версії A і B у Figma, метрика, скільки трафіку потрібно, як зрозуміти результат."]
+  ]),
+  L("p4","Product discovery і цінність дизайну", 90, [
+    "<b>Outcome, а не output</b>: успіх — не «зробили новий екран», а «більше людей дійшли до замовлення».",
+    "<b>Product discovery</b> — безперервний пошук того, що варто будувати. Opportunity Solution Tree Терези Торрес: ціль → можливості (болі й потреби) → рішення → експерименти.",
+    "Цілі бізнесу й користувачів не воюють: хороше рішення — на їхньому перетині. Цілі стейкхолдерів дізнавайся з інтерв’ю з ними.",
+    "На співбесідах усе частіше питають: «Як ти зрозуміла, що рішення спрацювало?» Тут потрібні метрики й дані, а не «стало красивіше»."
+  ],[
+    V("Outcomes Over Outputs","J6qN-F9eeoc","NN/g","EN","3 хв"),
+    V("What is an opportunity solution tree?","y7hfQ1V1N3M","Product Talk","EN","1 хв"),
+    V("Introduction to Modern Product Discovery","l7-5x0ra2tc","Teresa Torres","EN","37 хв")
+  ],[
+    A("Opportunity Solution Trees","https://www.producttalk.org/opportunity-solution-trees/","Product Talk","EN"),
+    A("Stakeholder Interviews","https://www.nngroup.com/articles/stakeholder-interviews/","NN/g","EN"),
+    V("Why opportunity mapping is so hard","Wh3LAGlS_aA","Product Talk","EN","5 хв")
+  ],[
+    [1,"Output → outcome","Перепиши 5 «задач» для MOI (на кшталт «зробити новий хедер») як очікувані результати з метрикою."],
+    [2,"Opportunity Solution Tree","Ціль MOI → 4–5 можливостей з інтерв’ю → по 2 рішення → як перевірити кожне."],
+    [3,"Інтерв’ю зі стейкхолдером","Поговори з власником малого бізнесу (кав’ярня, майстер, магазин знайомих) про цілі й проблеми. Запиши, як дизайн міг би допомогти."]
+  ])],
+  checkpoint:{t:"Бізнес-кейс MOI", d:"Одна сторінка, яку не соромно показати власниці бізнесу: ціннісна пропозиція, економіка однієї сумки, воронка з метриками, 5 гіпотез із пріоритетами й план одного експерименту. Додай її в кейс MOI — саме це відрізняє тебе від більшості junior."},
+  quiz:[
+    ["Чим конверсія відрізняється від середнього чека?","Конверсія — яка частка відвідувачів купує. Середній чек — скільки в середньому платить один покупець. Дизайн впливає на обидва: прибирає тертя в оформленні й допомагає обрати дорожчу кастомізацію."],
+    ["Коли A/B-тест не має сенсу?","Коли мало трафіку: результат не буде статистично значущим. Тоді краще якісні методи — юзабіліті-тести й інтерв’ю."],
+    ["Що таке outcome на відміну від output?","Output — те, що зробили (новий екран). Outcome — зміна в поведінці людей чи результаті бізнесу (більше замовлень)."]
+  ]
+},
+{ id:"ux", title:"UX: мислити як продуктова дизайнерка", time:"5–7 тижнів",
+  goal:"Починаєш не з картинки, а з проблеми: умієш поговорити з людьми, знайти біль і перевірити рішення.",
+  lessons:[
+  L("u1","Дизайн-мислення й процес", 60, [
+    "Процес: <b>емпатія → визначення проблеми → ідеї → прототип → тест</b>. Не лінійно, а циклами.",
+    "Найважливіше — формулювання проблеми: «Як ми можемо допомогти [кому] [зробити що], щоб [результат]?»",
+    "Паралельно можна проходити Google UX Design Certificate на Coursera: подай заявку на Financial Aid (посилання поруч з Enroll, відповіді англійською) — доступ стане повним і безкоштовним. Схвалення займає близько двох тижнів."
+  ],[
+    V("Design Thinking 101","6lmvCqvmjfE","NN/g","EN","3 хв"),
+    V("What Is User Research?","0MLwuhpwRiE","NN/g","EN","4 хв"),
+    A("Design Thinking 101","https://www.nngroup.com/articles/design-thinking/","NN/g","EN","10 хв")
+  ],[
+    A("Google UX Design Certificate","https://www.coursera.org/professional-certificates/google-ux-design","Coursera","EN"),
+    V("Design Thinking 102","LJBavFyEl1g","NN/g","EN","3 хв"),
+    A("UX Research Cheat Sheet","https://www.nngroup.com/articles/ux-research-cheat-sheet/","NN/g","EN")
+  ],[
+    [1,"Проблема MOI","Сформулюй 3 варіанти проблеми у форматі «Як ми можемо…» для онлайн-магазину MOI."],
+    [2,"Заявка на Google UX Certificate","Подай заявку на Financial Aid. Коли схвалять — проходь курси 1–4 паралельно з цим модулем."],
+    [3,"Карта процесу MOI","Розпиши, що ти вже зробила на кожному етапі дизайн-мислення, а що пропустила. Що змінилося б, якби почала з емпатії?"]
+  ]),
+  L("u2","Інтерв’ю з користувачами", 90, [
+    "Мета — дізнатися <b>поведінку й мотиви</b>, а не думки про твої ідеї.",
+    "Питай про минуле: «Розкажи, як ти востаннє купувала сумку». Люди погано прогнозують своє майбутнє.",
+    "Відкриті питання, техніка воронки (від загального до конкретного), уточнення: «Чому?», «Розкажи більше».",
+    "Не підказуй і не захищай дизайн. 5–6 інтерв’ю вже дають повторювані патерни."
+  ],[
+    V("Five User Interview Mistakes to Avoid","yBYd5USasXg","NN/g","EN","6 хв"),
+    V("Using the Funnel Technique in User Interviews","2wF9tWSugm4","NN/g","EN","3 хв"),
+    V("How To Conduct User Interviews Like A Pro","5tVbFfGDQCk","CareerFoundry","EN","9 хв")
+  ],[
+    A("User Interviews 101","https://www.nngroup.com/articles/user-interviews/","NN/g","EN"),
+    V("Probing in User Interviews","1bionYPAPhg","NN/g","EN","3 хв"),
+    A("Affinity Diagramming","https://www.nngroup.com/articles/affinity-diagram/","NN/g","EN")
+  ],[
+    [1,"Сценарій інтерв’ю","10 відкритих питань про досвід купівлі сумок і аксесуарів онлайн."],
+    [2,"Три інтерв’ю","Поговори з трьома знайомими (можна по відеодзвінку). Запиши ключові цитати дослівно."],
+    [3,"Affinity-діаграма","Розклади знахідки на стікери й згрупуй за темами на сторінці Figma. Які 3 головні болі?"]
+  ]),
+  L("u3","Персони, CJM і Jobs to be Done", 90, [
+    "<b>Персона</b> — узагальнений портрет на основі даних, а не вигадка про «Марію, 25 років, любить каву».",
+    "<b>Jobs to be Done</b>: «Коли я…, я хочу…, щоб…». Фокус на ситуації й мотиві, а не на демографії.",
+    "<b>Customer Journey Map</b>: етапи шляху, дії, думки, емоції, болі — і можливості для дизайну на кожному кроці."
+  ],[
+    V("Personas 101","rv9yfrV-EAs","NN/g","EN","4 хв"),
+    V("Customer Journey Mapping 101","2W13ext26kQ","NN/g","EN","2 хв"),
+    V("Jobs-to-Be-Done vs. Personas","IanZkc-i2J4","NN/g","EN","3 хв")
+  ],[
+    A("Journey Mapping 101","https://www.nngroup.com/articles/journey-mapping-101/","NN/g","EN"),
+    V("Jobs To Be Done простыми словами","QmSFD3voF7Y","Илья Сидоренко","RU",""),
+    V("FigJam tutorial: User journey mapping","L4E1yupkISI","Figma","EN","8 хв")
+  ],[
+    [1,"Три job stories","Три формулювання «Коли я…, я хочу…, щоб…» для покупниць MOI на основі інтерв’ю."],
+    [2,"Персона покупниці MOI","Одна сторінка: цілі, болі, контекст, цитати з інтерв’ю."],
+    [3,"CJM від Instagram до посилки","Етапи, емоції, болі й ідеї: побачила сумку → обрала → замовила → отримала."]
+  ]),
+  L("u4","Інформаційна архітектура, user flow, вайрфрейми", 120, [
+    "<b>Інформаційна архітектура</b> — як організований контент і навігація. Card sorting показує, як люди самі групують розділи.",
+    "<b>User flow</b> — кроки до конкретної мети в інтерфейсі. <b>Вайрфрейм</b> — скелет екрана без візуалу.",
+    "Low-fi роби швидко й не шкодуй: на цьому етапі дешево помилятися."
+  ],[
+    V("Information Architecture: 3 Key Models","v39z0JPeIc8","NN/g","EN","3 хв"),
+    V("User Journeys vs. User Flows","dsviXwJwslI","NN/g","EN","4 хв"),
+    V("Figma Wireframe Tutorial for Beginners","iyrEStiTZh0","Aliena Cai","EN","6 хв")
+  ],[
+    A("Wireflows","https://www.nngroup.com/articles/wireflows/","NN/g","EN"),
+    A("Card Sorting","https://www.nngroup.com/articles/card-sorting-definition/","NN/g","EN"),
+    V("Open vs. Closed Card Sorting","0tNPT6X9Lhc","NN/g","EN","3 хв")
+  ],[
+    [1,"User flow замовлення","Від головної MOI до підтвердження замовлення: усі кроки й розгалуження."],
+    [2,"Вайрфрейми конфігуратора","Розмір → матеріал → колір → підсумок → оформлення. Сірі блоки, без кольору."],
+    [3,"Card sorting із трьома людьми","12–15 карток із розділами магазину. Як люди їх згрупували? Чи збігається з твоїм меню?"]
+  ]),
+  L("u5","Евристики й UX-аудит", 90, [
+    "10 евристик Нільсена: видимість стану системи, відповідність реальному світу, контроль і свобода, послідовність, запобігання помилкам, впізнавання замість пригадування, гнучкість, мінімалізм, допомога з помилками, довідка.",
+    "Аудит: проходиш інтерфейс по евристиках, кожну проблему оцінюєш за серйозністю від 0 до 4 і пропонуєш рішення.",
+    "Психологія теж допомагає: закони Фіттса, Гіка, Якоба — на Laws of UX."
+  ],[
+    PL("The 10 Usability Heuristics — серія коротких відео","PLJOFJ3Ok_idtb2YeifXlG1-TYoMBLoG6I","NN/g","EN","10 × 3 хв"),
+    A("10 Usability Heuristics for User Interface Design","https://www.nngroup.com/articles/ten-usability-heuristics/","NN/g","EN","15 хв"),
+    A("UX-розбори реальних продуктів у форматі коміксу","https://growth.design/case-studies","Growth.Design","EN","по 15 хв")
+  ],[
+    V("How to Conduct a Heuristic Evaluation","sqi0-Lz_ZTY","NN/g","EN","5 хв"),
+    A("Laws of UX","https://lawsofux.com/","lawsofux.com","EN"),
+    A("Psychology of Design — картки","https://growth.design/psychology","Growth.Design","EN")
+  ],[
+    [1,"Три кейси Growth.Design","Прочитай три кейси й запиши, які евристики там порушено."],
+    [2,"Аудит українського сервісу","10 проблем зі скриншотами, евристикою, серйозністю й ідеєю рішення."],
+    [3,"Аудит MOI і план виправлень","Те саме для свого лендингу плюс пріоритети: що виправити першим і чому."]
+  ]),
+  L("u6","Юзабіліті-тестування", 90, [
+    "Давай людині <b>задачу, а не інструкцію</b>: «Обери сумку на подарунок і замов», а не «Натисни на картку».",
+    "Попроси думати вголос. Не допомагай, навіть коли дуже хочеться.",
+    "<b>5 учасників</b> знаходять більшість проблем. Краще кілька коротких раундів по 5, ніж один великий.",
+    "Записуй: де застрягли, що сказали, чи впоралися й скільки часу зайняло."
+  ],[
+    V("Usability Testing 101","n8MnoJyl3W4","NN/g","EN","2 хв"),
+    V("Introducing a Participant to a Usability Test","bcfqmx2hnUQ","NN/g","EN","4 хв"),
+    A("Why You Only Need to Test with 5 Users","https://www.nngroup.com/articles/why-you-only-need-to-test-with-5-users/","NN/g","EN","10 хв")
+  ],[
+    A("Usability Testing 101","https://www.nngroup.com/articles/usability-testing-101/","NN/g","EN"),
+    V("Usability Testing w. 5 Users","RhgUirqki50","NN/g","EN","4 хв"),
+    V("How To Setup a Mobile Usability Test","NdqTbpyvaIg","NN/g","EN","3 хв")
+  ],[
+    [1,"Сценарій тесту","Три задачі для прототипу MOI й питання наприкінці."],
+    [2,"Тест на 5 людях","Можна по відеодзвінку з демонстрацією екрана. Записуй усе, не допомагай."],
+    [3,"Звіт","Топ-5 проблем, цитати, рекомендації й макети «до / після»."]
+  ])],
+  checkpoint:{t:"UX-кейс MOI", d:"Проблема → інтерв’ю → персона й CJM → флоу й вайрфрейми конфігуратора сумки → тест на 5 людях → висновки й покращення. Це ядро твого головного кейсу в портфоліо."},
+  quiz:[
+    ["Чому на інтерв’ю не варто питати «Чи купили б ви таку сумку?»","Люди погано прогнозують свою поведінку й часто відповідають з ввічливості. Краще питати про реальний минулий досвід."],
+    ["Чим user flow відрізняється від CJM?","User flow — кроки в інтерфейсі до конкретної мети. CJM — ширший шлях клієнта з емоціями й точками контакту, зокрема поза сайтом."],
+    ["Скільки учасників достатньо для якісного юзабіліті-тесту?","Близько 5 на одну ітерацію: вони знаходять більшість проблем."]
+  ]
+},
+{ id:"writing", title:"UX-тексти", time:"2 тижні",
+  goal:"Тексти в інтерфейсі ведуть людину до мети: кнопки зрозумілі, помилки допомагають, а голос бренду впізнаваний.",
+  lessons:[
+  L("w1","Основи UX-письма", 60, [
+    "Люди не читають, а сканують. Найважливіше — на початку речення й абзацу.",
+    "Чітко, коротко, корисно: одне повідомлення — одна думка. «Будь ласка, зачекайте, поки система обробляє ваш запит» → «Зберігаємо…».",
+    "<b>Кнопка називає дію</b>: «Додати в кошик», а не «ОК» чи «Надіслати». Та сама дія — те саме слово на всьому шляху.",
+    "Пиши мовою людини, а не системи: «Замовлення», а не «Транзакція №…». Регістр як у реченні, без КАПСУ."
+  ],[
+    V("The 3 Sizes of UX Copy","MBrngFrbEAs","NN/g","EN","5 хв"),
+    V("The Biggest Mistake in Writing for the Web","dHX8RRYPHJI","NN/g","EN","3 хв"),
+    A("How Users Read on the Web","https://www.nngroup.com/articles/how-users-read-on-the-web/","NN/g","EN","10 хв")
+  ],[
+    V("A Beginner's Guide To UX Writing (Full Guide)","hsMLqUFtPbU","CareerFoundry","EN","1 год"),
+    A("UX Writing Study Guide","https://www.nngroup.com/articles/ux-writing-study-guide/","NN/g","EN"),
+    V("How to Write UX Copy: String Patterns","jsqsnFjtywE","IxDF","EN","6 хв")
+  ],[
+    [1,"Аудит кнопок MOI","Випиши всі кнопки й посилання лендингу. Чи кожна чесно каже, що станеться після кліку? Перепиши слабкі."],
+    [2,"Скоротити вдвічі","Візьми тексти секцій MOI й скороти кожен удвічі без втрати змісту."],
+    [3,"Тексти всього флоу","Усі тексти від вибору сумки до підтвердження замовлення українською й англійською."]
+  ]),
+  L("w2","Тон голосу бренду", 60, [
+    "<b>Голос</b> — постійний характер бренду. <b>Тон</b> змінюється з ситуацією: радісний після покупки, спокійний і чіткий у помилці.",
+    "NN/g описує тон чотирма шкалами: смішний ↔ серйозний, формальний ↔ невимушений, шанобливий ↔ зухвалий, захоплений ↔ стриманий.",
+    "Гайд голосу: 3–4 риси («теплий, упевнений, лаконічний»), для кожної — «так» і «ні» з прикладами."
+  ],[
+    V("The Four Dimensions of Tone of Voice in UX Writing","0ar4DezKKGI","NN/g","EN","3 хв"),
+    V("Establishing Tone of Voice","HSpms43ycKg","NN/g","EN","3 хв"),
+    A("The Four Dimensions of Tone of Voice","https://www.nngroup.com/articles/tone-of-voice-dimensions/","NN/g","EN","10 хв")
+  ],[
+    V("AI for Tone: Avoid Sounding Like a Robot","5RzxWiLVtCM","NN/g","EN","2 хв")
+  ],[
+    [1,"Тон трьох брендів","Оціни тексти трьох брендів, які любиш, за чотирма шкалами NN/g."],
+    [2,"Гайд голосу MOI","3–4 риси голосу, для кожної приклади «так / ні»."]
+  ]),
+  L("w3","Помилки, порожні стани й мікрокопі", 60, [
+    "Помилка відповідає на три питання: що сталося, чому, що робити. Без звинувачень, без кодів, поруч із місцем помилки.",
+    "<b>Порожній стан</b> — запрошення до дії: «Кошик порожній. Подивись нові сумки», а не «Немає даних».",
+    "Мікрокопі: підказки в полях, підтвердження, сповіщення. Саме вони знімають тривогу на кроці оплати."
+  ],[
+    V("Error Messages 101","sReni_EeZUM","NN/g","EN","3 хв"),
+    V("Empty States in Application Design: 3 Guidelines","MUh3xyvEWDE","NN/g","EN","3 хв"),
+    A("Error-Message Guidelines","https://www.nngroup.com/articles/error-message-guidelines/","NN/g","EN","10 хв")
+  ],[
+    A("Designing Empty States","https://www.nngroup.com/articles/empty-state-interface-design/","NN/g","EN"),
+    V("Error Messages: 4 Guidelines","vx_YTT3PL8Y","NN/g","EN","4 хв"),
+    V("Improve this Empty State UX Writing","QYlKL8sY280","Write with Dr. Kat","EN","18 хв")
+  ],[
+    [1,"Колекція помилок","Збери 5 повідомлень про помилку з реальних сервісів і перепиши погані."],
+    [2,"Помилки форми MOI","Тексти помилок для всіх полів замовлення: телефон, адреса, оплата."],
+    [3,"Порожні й успішні стани","Порожній кошик, нічого не знайдено, замовлення прийнято — текст і макет кожного стану."]
+  ])],
+  checkpoint:{t:"Голос MOI", d:"Гайд голосу й повністю переписані тексти лендингу та оформлення замовлення, включно з помилками, порожніми станами й листом-підтвердженням. Покажи «до / після» — у кейсі це виглядає дуже переконливо."},
+  quiz:[
+    ["Чим голос відрізняється від тону?","Голос — постійна особистість бренду. Тон підлаштовується під ситуацію, але не виходить за межі голосу."],
+    ["З чого складається хороше повідомлення про помилку?","Що сталося, чому й як виправити — поруч із місцем помилки, людською мовою, без звинувачень."]
+  ]
+},
+{ id:"web", title:"Вебдизайн, що продає", time:"3–4 тижні",
+  goal:"Проєктуєш лендинги й сайти, які ведуть до дії, і вмієш працювати з першими клієнтами.",
+  lessons:[
+  L("b1","Анатомія лендингу", 90, [
+    "Перший екран за 5 секунд відповідає: що це, для кого, чому мені, що робити далі. Заголовок — про вигоду, а не лише назва.",
+    "Класична структура: хіро з головною дією → проблема чи бажання → як це працює → переваги → соціальний доказ → заперечення й FAQ → фінальний заклик.",
+    "Одна головна дія на сторінку. Кнопка повторюється там, де людина «дозріла»: після переваг і в кінці.",
+    "Соціальний доказ: відгуки з фото, кількість клієнтів, згадки в медіа, фото покупниць з Instagram."
+  ],[
+    V("Landing Page Structure (With Examples)","fGCtS6D6tr0","Flux Academy","EN","16 хв"),
+    V("Design The Perfect Hero Section","LJbkLdtEW00","Flux Academy","EN","12 хв"),
+    V("Perfect Landing Page Design Explained","GTNgiTK-ic8","Flux Academy","EN","8 хв")
+  ],[
+    V("10 Tips for Better Website Hero Sections","HY_Ea1la6BM","Jesse Showalter","EN","13 хв"),
+    V("5 ways to boost social proof in fresh landing pages","XjDAV1oQVvE","Rob Hope","EN","3 хв"),
+    V("Your brain HATES these websites","nWbBZPjev_0","Malewicz","EN","11 хв")
+  ],[
+    [1,"5-секундний тест","Покажи перший екран MOI трьом людям на 5 секунд. Що вони запам’ятали? Чи зрозуміли, що сумку можна кастомізувати?"],
+    [2,"Структура MOI","Перебудуй порядок секцій MOI за класичною структурою. Чого бракує — відгуків, процесу, FAQ про доставку?"],
+    [3,"Три хіро","Три різні концепції першого екрана MOI з різними заголовками-вигодами. Протестуй на 5 людях."]
+  ]),
+  L("b2","Конверсія й довіра", 90, [
+    "CRO — оптимізація конверсії: прибрати тертя, додати довіри, зробити наступний крок очевидним.",
+    "Тертя: зайві поля, несподівана ціна доставки, повільне завантаження, незрозумілі кнопки.",
+    "Довіра: реальні фото продукту, умови доставки й повернення, контакти, відгуки, безпечна оплата.",
+    "Не вгадуй — вимірюй: теплові карти, записи сесій, 5-секундні тести."
+  ],[
+    V("How To Increase Conversions With Design","YkxGTwbRQ9w","Flux Academy","EN","11 хв"),
+    V("What is Conversion Rate Optimization?","FJ67z9D4mv4","WebFX","EN","7 хв"),
+    V("Ecommerce Page Redesign: UX/UI Tips","oYskl2ZBoBc","uxpeak","EN","8 хв")
+  ],[
+    A("E-commerce homepages and listing pages","https://www.nngroup.com/articles/ecommerce-homepages-listing-pages/","NN/g","EN"),
+    V("No Testimonials For Your Website? Add THIS Instead","rSWSXAFv1Gg","Wes McDowell","EN","5 хв"),
+    V("The Perfect Ecommerce Website Layout Explained","mRWdhN4XFzo","Payton Clark Smith","EN","13 хв")
+  ],[
+    [1,"Полювання на тертя","Пройди шлях покупки на MOI і на 2 сайтах конкурентів. Випиши всі моменти, де хочеться піти."],
+    [2,"Блок довіри MOI","Доставка, повернення, догляд, відгуки й гарантія — у стилі бренду."],
+    [3,"CRO-аудит з пріоритетами","10 покращень конверсії MOI з оцінкою ICE і макетами для топ-3."]
+  ]),
+  L("b3","Перші клієнти й фриланс", 90, [
+    "Бриф — половина успіху: цілі бізнесу, аудиторія, конкуренти, обмеження, бюджет, дедлайн, хто ухвалює рішення.",
+    "Ціну краще прив’язувати до цінності й обсягу, а не до годин. Фіксуй у домовленості кількість правок.",
+    "Перші клієнти — з оточення, волонтерських проєктів і малого бізнесу поруч. Кожен проєкт — кейс і відгук."
+  ],[
+    V("Pricing Design Work — Stop Charging Hourly","jE53O1PzmNU","The Futur","EN","3 хв"),
+    V("10 Questions to Ask a Client Before Creating a Design Brief","cJrpeLgW_Wc","WebFX","EN","4 хв"),
+    V("If I started freelance web design in 2025, here’s what I would do","fIg2koX6nr8","By Huy","EN","16 хв")
+  ],[
+    V("Know EXACTLY What to Charge for Websites","dnBelEJ9m8o","Self-Made Web Designer","EN","13 хв"),
+    V("SECRET Questions Pro Designers ask their clients","kS5jGXKVzB4","Abi Connick","EN","8 хв"),
+    V("How to land your first web design clients","dx6JvTvIwPo","Anna Dawson","EN","14 хв")
+  ],[
+    [1,"Шаблон брифу","20 питань для клієнта, згрупованих за темами."],
+    [2,"Пропозиція клієнту","Комерційна пропозиція на редизайн сайту знайомого бізнесу: етапи, терміни, що входить, вартість."],
+    [3,"Перший реальний клієнт","Знайди малий бізнес чи волонтерську організацію зі слабким сайтом і запропонуй редизайн першого екрана за відгук і кейс."]
+  ])],
+  checkpoint:{t:"MOI, що продає", d:"Лендинг MOI, перебудований за структурою, що продає: хіро з вигодою, процес кастомізації, соціальний доказ, блок довіри, FAQ і повторювані заклики. Плюс 5-секундний тест «до / після»."},
+  quiz:[
+    ["На які питання має відповісти перший екран?","Що це, для кого, чому варто й що робити далі — за кілька секунд."],
+    ["Що найчастіше вбиває конверсію в e-commerce?","Несподівані витрати на останньому кроці, складне оформлення, брак довіри й повільна сторінка."]
+  ]
+},
+{ id:"graphics", title:"Графіка для інтерфейсів", time:"2–3 тижні",
+  goal:"Іконки, ілюстрації й фото працюють як одна візуальна мова, а не як картинки, зібрані з різних місць.",
+  lessons:[
+  L("g1","Іконки", 90, [
+    "Іконки малюють на сітці (зазвичай 24×24) з полями й ключовими фігурами — keylines. Так різні форми виглядають однаково «важкими».",
+    "Один набір — одна товщина лінії, один радіус кутів, один стиль: лінійний або заливний.",
+    "Іконка без підпису зрозуміла лише для найпоширеніших дій. Є сумнів — додай підпис.",
+    "Не малюй усе з нуля: Lucide, Phosphor, Material Symbols. Свої іконки — коли бренду потрібна унікальність."
+  ],[
+    V("Icon design in Figma","JYyO8uKTBe8","Nick Babich","EN","7 хв"),
+    V("How to Design Better Icons — golden rules","9At1yFg901Y","nikitisza","EN","5 хв"),
+    V("Making an icon grid in Figma","ddWbw-zEu9s","Miggi from Figgi","EN","4 хв")
+  ],[
+    V("Build it in Figma: Design a cohesive icon set","S9P7ob7Nx5I","Figma","EN","1 год 17 хв"),
+    A("Material: designing icons","https://m3.material.io/styles/icons/designing-icons","Google","EN"),
+    T("Lucide — безкоштовний набір іконок","https://lucide.dev","lucide.dev"),
+    T("Phosphor Icons","https://phosphoricons.com","phosphoricons.com")
+  ],[
+    [1,"Перемалюй 6 іконок Lucide","На сітці 24 px, точно в розмірах — так зрозумієш логіку keylines."],
+    [2,"Набір іконок MOI","12 іконок для магазину (кошик, доставка, розмір, матеріал, повернення, догляд…) в одному стилі."],
+    [3,"Іконки як компоненти","Набір як компоненти з розмірами 16/20/24 і змінною кольору."]
+  ]),
+  L("g2","Ілюстрації й вектори", 90, [
+    "Pen tool і булеві операції — основа будь-якої векторної графіки у Figma.",
+    "Ілюстрації в UI мають бути одного стилю: палітра, товщина ліній, рівень деталізації, пропорції.",
+    "Найчастіше ілюстрації потрібні в онбордингу, порожніх станах, помилках і на лендингах.",
+    "Для e-commerce на кшталт MOI краще продають фото, а ілюстрація чи візерунок — для акцентів."
+  ],[
+    V("Master Figma Pen Tool in 6 Minutes","d78yo84tnfA","Tim Gabe","EN","7 хв"),
+    V("Awesome Figma Illustration Tutorial (For Beginners)","p0t8UgzCJtE","KULAK STUDIO","EN","26 хв"),
+    T("The Bézier Game — гра на pen tool","https://bezier.method.ac","method.ac","20 хв")
+  ],[
+    V("Vector illustration and Figma Draw","qRvafbrzHak","Figma","EN","59 хв"),
+    T("The Boolean Game","https://boolean.method.ac","method.ac"),
+    T("unDraw — ілюстрації з налаштуванням кольору","https://undraw.co","undraw.co")
+  ],[
+    [1,"Bézier і Boolean","Пройди обидві гри від method.ac."],
+    [2,"Візерунок MOI","Безшовний візерунок із мотивів сумок і квітів (як на сумці в «Find your MOI») для пакування чи фонів."],
+    [3,"Ілюстрації для станів","Три ілюстрації в одному стилі: порожній кошик, успішне замовлення, сторінка 404."]
+  ]),
+  L("g3","Фото й арт-дирекшн", 90, [
+    "У e-commerce фото продають більше за будь-який текст: товар на нейтральному тлі, деталі матеріалу, сумка на людині, масштаб.",
+    "Одна стилістика фото: світло, фон, кадрування, обробка. Різнобій руйнує відчуття преміальності.",
+    "Текст на фото: темна підкладка чи градієнт, розмиття, достатній контраст — або текст поруч, а не поверх.",
+    "Вага зображень: стиснення, формати WebP і AVIF, правильний розмір. Інакше сайт повільний, і конверсія падає."
+  ],[
+    V("3 secret steps to Art Direction","sT2YiwRXoJM","BONT","EN","17 хв"),
+    V("Product Photography On A Budget (phone only)","uZeRLXODK5w","Learn With Shopify","EN","14 хв"),
+    V("9 Techniques to Display Text over Background Images","JJQGuKhcErU","Magnific","EN","2 хв")
+  ],[
+    V("2 key steps to Creative Direction for Web Design","IEhRO9LDWew","BONT","EN","14 хв"),
+    V("How To Take Product Photography At Home With A Smartphone","ZFqvFP4GsvI","Learn With Shopify","EN","10 хв")
+  ],[
+    [1,"Розбір фото трьох брендів","Як знімають сумки три преміальні бренди: фон, світло, ракурси, люди. Що з цього підходить MOI?"],
+    [2,"Фото-гайд MOI","Правила фону, світла, ракурсів і кадрування для карток і лендингу, з прикладами."],
+    [3,"Зйомка на телефон","Зніми будь-яку сумку чи аксесуар за гайдом (5 кадрів) і встав у картки товару MOI."]
+  ])],
+  checkpoint:{t:"Візуальна мова MOI", d:"Набір іконок, візерунок чи ілюстрації для станів і фото-гайд, застосовані до лендингу. Разом усе має виглядати як один бренд."},
+  quiz:[
+    ["Навіщо іконкам сітка й keylines?","Щоб різні форми — кругла, квадратна, витягнута — виглядали однаковими за візуальною вагою й розміром."],
+    ["Як зробити текст на фото читабельним?","Затемнення чи градієнт-підкладка, розмиття, спокійна ділянка фото або текст поруч із фото, а не поверх."]
+  ]
+},
+{ id:"mobile", title:"Адаптив і мобільні інтерфейси", time:"2–3 тижні",
+  goal:"Знаєш патерни iOS і Android, а макет живе на екранах від 360 px до десктопа.",
+  lessons:[
+  L("m1","Патерни iOS", 90, [
+    "Apple HIG — правила й патерни iOS: навігаційна панель, tab bar на 3–5 розділів, sheets, системний шрифт SF Pro.",
+    "Мінімальна зона дотику — <b>44×44 pt</b>. Іконка може бути меншою, зона натискання — ні.",
+    "Safe areas: не клади важливе під «чубчик» і домашній індикатор."
+  ],[
+    V("Design foundations from idea to interface (WWDC25)","dGcqqA3Sl-o","Apple","EN","19 хв"),
+    A("Designing for iOS","https://developer.apple.com/design/human-interface-guidelines/designing-for-ios","Apple HIG","EN","15 хв"),
+    A("Tab bars","https://developer.apple.com/design/human-interface-guidelines/tab-bars","Apple HIG","EN","10 хв")
+  ],[
+    V("Get to know the new design system (WWDC25)","DS2ildqCrB0","Apple","EN","18 хв"),
+    V("Explore navigation design for iOS (WWDC22)","Kd02qR_LyA0","Apple","EN","26 хв"),
+    A("Layout","https://developer.apple.com/design/human-interface-guidelines/layout","Apple HIG","EN")
+  ],[
+    [1,"Три екрани iOS","Перемалюй 3 екрани системних застосунків (Налаштування, Музика) на Auto Layout."],
+    [2,"Tab bar для MOI","Застосунок MOI: 4 розділи, активний і неактивний стани."],
+    [3,"Вибір кольору в sheet","Bottom sheet для вибору кольору сумки за патернами iOS, з прототипом."]
+  ]),
+  L("m2","Material 3 і Android", 60, [
+    "Material 3 — дизайн-система Google: компоненти, колірні токени, динамічний колір, шкала типографіки.",
+    "Навігація: navigation bar знизу, rail збоку на планшеті, drawer. Мінімальна зона дотику — 48×48 dp.",
+    "Відмінності від iOS: системний жест «назад», верхні app bar, інші перемикачі й кнопки."
+  ],[
+    V("Introduction to Material 3","I3eT32LXAKc","Philipp Lackner","EN","18 хв"),
+    A("Material 3: компоненти","https://m3.material.io/components","Google","EN"),
+    A("Material 3: брейкпоінти","https://m3.material.io/foundations/layout/breakpoints","Google","EN")
+  ],[
+    V("Material 3 Expressive Explained In 7 Minutes","Yx-zMcIh8A4","Philipp Lackner","EN","8 хв"),
+    Q("Різниця iOS і Android для дизайнера","iOS vs Android design guidelines differences for designers")
+  ],[
+    [1,"Таблиця iOS vs Android","5 компонентів (навігація, перемикач, кнопка, діалог, поле) — як виглядають на кожній платформі."],
+    [2,"Один екран — дві платформи","Картка товару MOI в iOS- і Android-версії."]
+  ]),
+  L("m3","Адаптивний дизайн", 90, [
+    "<b>Mobile-first</b>: починай з вузького екрана — він змушує вирішити, що справді головне.",
+    "Типові брейкпоінти: 360–390, 768, 1024, 1440. Колонки стають стеком, меню — бургером або tab bar, шрифти зменшуються.",
+    "У Figma: Fill container + max width, і окремий фрейм на кожен брейкпоінт."
+  ],[
+    V("Responsive Design in Figma Using Breakpoints","c0ZTaDMGb20","DesignWithArash","EN","5 хв"),
+    V("Responsive Breakpoints with Variables + Modes","xNk3QnuowKE","UI Collective","EN","5 хв")
+  ],[
+    V("Responsive Web Design Has Never Been This Easy","gsVwThzYwv8","Jesse Showalter","EN","4 хв"),
+    Q("Mobile-first дизайн","mobile first design explained")
+  ],[
+    [1,"Size type на трьох екранах","Секція розмірів MOI на 1440, 768 і 390 px."],
+    [2,"Мобільна версія лендингу","Увесь MOI на 390 px: меню, хіро, секції, Q&A, футер."],
+    [3,"Брейкпоінти на змінних","Відступи й розміри шрифтів через змінні з режимами Desktop/Mobile (якщо дозволяє безкоштовний план)."]
+  ]),
+  L("m4","Форми, навігація й e-commerce", 90, [
+    "Форми: мітка над полем, одна колонка, підказки й помилки поруч з полем, правильна клавіатура (email, телефон).",
+    "Плейсхолдер — не мітка: він зникає, щойно людина почала вводити.",
+    "Картка товару: великі фото, ціна, варіанти, доставка й повернення, кнопка «купити» в зоні досяжності пальця."
+  ],[
+    V("15 UX Best Practices for E-Commerce Product Pages","vv74GmBXxHE","Baymard Institute","EN","13 хв"),
+    V("UI/UX Form Design DO’s and DON’Ts","I5Vz2pl8pPI","DesignCourse","EN","11 хв"),
+    A("Website Forms Usability: Top 10 Recommendations","https://www.nngroup.com/articles/web-form-design/","NN/g","EN","10 хв")
+  ],[
+    A("Mobile Navigation Patterns","https://www.nngroup.com/articles/mobile-navigation-patterns/","NN/g","EN"),
+    A("Product pages","https://www.nngroup.com/articles/ecommerce-product-pages/","NN/g","EN"),
+    V("Mobile Checkout Experience Tips","i6gc0lOaKTI","NN/g","EN","2 хв"),
+    A("Baymard Institute — блог про UX e-commerce","https://baymard.com/blog","Baymard","EN")
+  ],[
+    [1,"Форма замовлення","Мобільна форма MOI: ім’я, телефон, доставка. Покажи стан помилки."],
+    [2,"Картка товару за Baymard","Мобільна картка сумки, перевірена за 15 порадами з відео."],
+    [3,"Checkout у 3 кроки","Клікабельний прототип: кошик → доставка → оплата → успіх."]
+  ])],
+  checkpoint:{t:"MOI mobile", d:"Мобільна версія лендингу, картка товару й оформлення замовлення як один клікабельний прототип. Покажи 2–3 людям на їхньому телефоні через Figma Mirror або посилання."},
+  quiz:[
+    ["Який мінімальний розмір зони дотику?","44×44 pt за Apple і 48×48 dp за Material."],
+    ["Де розміщувати мітки полів форми?","Над полем. Плейсхолдер замість мітки зникає під час введення."],
+    ["Що таке mobile-first?","Починати з найвужчого екрана, а потім розширювати, замість втискати десктоп у телефон."]
+  ]
+},
+{ id:"system", title:"Дизайн-системи, доступність, хендоф", time:"3–4 тижні",
+  goal:"Збираєш систему токенів і компонентів і віддаєш макет розробнику без десяти уточнювальних питань.",
+  lessons:[
+  L("d1","Що таке дизайн-система", 90, [
+    "Дизайн-система = принципи + токени + компоненти + документація + процес. UI-кіт — лише її частина.",
+    "Атомарний підхід: атоми (кнопка, поле) → молекули (пошук) → організми (хедер).",
+    "Вчися на чужих: Material, Apple, Atlassian, Shopify Polaris."
+  ],[
+    PL("Introduction to design systems — офіційний курс","PLXDU_eVOJTx6vqOWJSWH87Zb5-riiG63A","Figma","EN","~2 год"),
+    V("Your First Design System in Figma","_uva2dQPlV8","Tim Gabe","EN","15 хв"),
+    A("Design Systems 101","https://www.nngroup.com/articles/design-systems-101/","NN/g","EN","10 хв")
+  ],[
+    V("Build a Design System — Full Course","opTANvl9G1g","UI Collective","EN","3,5 год"),
+    Q("Атомарний дизайн","atomic design explained")
+  ],[
+    [1,"Розбери Material 3","Які там токени, компоненти, як влаштована документація."],
+    [2,"Інвентаризація MOI","Скільки різних кнопок, кольорів, шрифтів, радіусів на лендингу? Склади список."]
+  ]),
+  L("d2","Токени", 60, [
+    "Токен — назване значення: колір, відступ, радіус, тінь, шрифт.",
+    "Рівні: <b>primitive</b> (olive-500) → <b>semantic</b> (color-bg-accent) → <b>component</b> (button-bg).",
+    "Хороша назва описує роль, а не вигляд: color-text-muted, а не grey-text. У Figma токени живуть у змінних."
+  ],[
+    V("Tokens, variables, and styles","JyCmacSyDY4","Figma","EN","13 хв"),
+    V("What the #&%$ are Design Tokens?","wtTstdiBuUk","UX Lord","EN","7 хв")
+  ],[
+    V("Design Tokens for Dummies","CJyJN0ZdEGA","UI Collective","EN","50 хв")
+  ],[
+    [1,"Таблиця токенів MOI","Три рівні: primitive, semantic, component — для кольорів, відступів і радіусів."],
+    [2,"Токени у змінних","Перенеси таблицю в змінні Figma й прив’яжи до компонентів."],
+    [3,"Ребрендинг за 5 хвилин","Зміни primitive-кольори на інший бренд. Чи оновилося все? Що вилізло — те й виправ."]
+  ]),
+  L("d3","Доступність", 90, [
+    "Доступність — для всіх: слабкий зір, яскраве сонце, втомлені очі, телефон в одній руці.",
+    "Контраст, розмір тексту, зміст не лише кольором (додавай іконку чи текст), видимий фокус для клавіатури, зрозумілі помилки.",
+    "Про доступність усе частіше питають на співбесідах — це конкурентна перевага."
+  ],[
+    V("Checking color contrast for accessibility in Figma","5uvU1-2xq3U","Figma","EN","2 хв"),
+    V("Accessible Design in Figma: Beyond the Basics","QqDXDXd9y5k","UI Collective","EN","26 хв"),
+    A("Чек-лист доступності","https://www.a11yproject.com/checklist/","The A11Y Project","EN","20 хв")
+  ],[
+    V("WCAG Crash Course for UI/UX Designers in 8 Mins","s8KsEv3KSWM","Veera Srivastava","EN","8 хв"),
+    V("Why Disabled Buttons Hurt UX","uEjidraxhAw","NN/g","EN","5 хв"),
+    T("WebAIM Contrast Checker","https://webaim.org/resources/contrastchecker/","WebAIM")
+  ],[
+    [1,"Контраст усіх пар","Перевір контраст кожної пари «текст — фон» у MOI. Виправ ті, що не проходять."],
+    [2,"Аудит за чек-листом","10 пунктів A11Y Project, що стосуються дизайну, для свого лендингу."],
+    [3,"Фокус і помилки","Стан фокусу й помилки для всіх інтерактивних компонентів дизайн-системи."]
+  ]),
+  L("d4","Хендоф і основи верстки", 120, [
+    "Розробник читає макет як flexbox і grid — це твій Auto Layout. Розуміючи верстку, ти проєктуєш реалістично.",
+    "Хендоф: зрозумілі назви шарів, усі стани, адаптив, анотації й <b>крайові випадки</b> — довгий текст, порожній стан, помилка, завантаження.",
+    "Dev Mode у Figma платний, але базове інспектування доступне й на безкоштовному плані."
+  ],[
+    V("Collaboration and handoff in Dev Mode","xCJsRuH7v9w","Figma","EN","7 хв"),
+    V("CSS Flexbox vs Grid","aEj6k-gi9-s","Coding2GO","EN","8 хв"),
+    T("Flexbox Froggy — гра про flexbox","https://flexboxfroggy.com","flexboxfroggy.com","30 хв")
+  ],[
+    T("Grid Garden — гра про CSS Grid","https://cssgridgarden.com","cssgridgarden.com","30 хв"),
+    V("Hand off your UX designs to developers like a PRO","Kmp85DeC3K4","Design With Destiny","EN","15 хв"),
+    V("Learn CSS Flexbox in 20 Minutes","wsTv9y931o8","Coding2GO","EN","21 хв")
+  ],[
+    [1,"Flexbox Froggy","Пройди всі 24 рівні. Порівняй властивості з налаштуваннями Auto Layout."],
+    [2,"Grid Garden","Пройди гру. Бонус: опиши, як твою hover-анімацію карток MOI зверстали б на grid."],
+    [3,"Сторінка хендофу","Для картки товару: стани, адаптив, крайові випадки, анотації з відступами."]
+  ])],
+  checkpoint:{t:"Дизайн-система MOI", d:"Токени у змінних, текстові стилі, кнопки, поля й картки з усіма станами, сторінка документації й перевірка контрасту. Лендинг MOI зібраний лише з неї."},
+  quiz:[
+    ["Чим дизайн-система відрізняється від UI-кіту?","UI-кіт — набір компонентів. Дизайн-система — ще й принципи, токени, документація й домовленості, як нею користуватися."],
+    ["Чому не можна передавати зміст лише кольором?","Люди з порушенням кольоросприйняття можуть не побачити різниці. Додавай іконку, текст чи форму."],
+    ["Які крайові випадки варто показати розробнику?","Довгий і короткий текст, порожній стан, завантаження, помилку, відсутнє фото, різні розміри екрана."]
+  ]
+},
+{ id:"ds2", title:"Просунута дизайн-система", time:"2–3 тижні",
+  goal:"Система масштабується: має документацію, теми, гнучкі компоненти й правила розвитку.",
+  lessons:[
+  L("x1","Документація й правила розвитку", 90, [
+    "Компонент без документації використовують неправильно. Для кожного: призначення, коли використовувати й коли ні, анатомія, стани, приклади «так / ні».",
+    "<b>Governance</b> — як система змінюється: хто пропонує нові компоненти, хто затверджує, як повідомляють про зміни (changelog, версії).",
+    "Атомарний дизайн Бреда Фроста — класична модель організації системи. Книга безкоштовна онлайн."
+  ],[
+    V("Define your design system's documentation","sHF6JSPWbzM","Figma","EN","6 хв"),
+    V("Config 2024: Design systems best practices","MJTCfSFLUGE","Figma","EN","49 хв"),
+    V("A Design System Governance Process","5Zc3W4NpiA8","Brad Frost","EN","19 хв")
+  ],[
+    A("Atomic Design — книга онлайн","https://atomicdesign.bradfrost.com/","Brad Frost","EN"),
+    V("Atomic Design (An Event Apart)","W-h1FtNYim4","Brad Frost","EN","1 год"),
+    V("Deep Dive into Uber's Design Systems","-z9JX8Lz5lI","Figma","EN","49 хв")
+  ],[
+    [1,"Розбери чужу документацію","Як задокументована кнопка в Material 3. Які розділи повторюються в кожного компонента?"],
+    [2,"Документація трьох компонентів","Кнопка, поле, картка MOI: призначення, анатомія, стани, «так / ні»."],
+    [3,"Процес змін","Опиши, як у команді з трьох дизайнерок додавався б новий компонент, плюс шаблон changelog."]
+  ]),
+  L("x2","Гнучкі компоненти: slots і вкладені інстанси", 90, [
+    "Що більший продукт, то важливіше, щоб компоненти були гнучкими без десятків варіантів.",
+    "<b>Slots</b> у Figma дозволяють вставити будь-який вміст у визначене місце компонента — як children у коді. Якщо на твоєму плані їх немає, тренуйся на вкладених інстансах.",
+    "Вкладені інстанси й exposed properties дають керувати вкладеними компонентами з верхнього рівня."
+  ],[
+    V("Create flexible components with Slots","UjOVRUSdO14","Figma","EN","5 хв"),
+    V("Getting started with Slots","fpc0cUt1y1M","Figma","EN","12 хв"),
+    V("MASTER Figma Components in 10 Minutes","KnmxD8LvHmA","Arnau Ros","EN","9 хв")
+  ],[
+    V("Figma Slots Explained","E9X6_QT07DM","UI Collective","EN","12 хв"),
+    V("Nested instances for complex component variants","2jf9Zv6vYGk","Wolfr","EN","13 хв")
+  ],[
+    [1,"Картка зі слотом","Універсальна картка, у яку можна вставити будь-який вміст."],
+    [2,"Модальне вікно","Компонент модального вікна зі слотом для вмісту й варіантами кнопок."],
+    [3,"Рефакторинг системи","Де варіанти MOI можна замінити властивостями чи слотами? Скороти кількість варіантів і поясни, що виграла."]
+  ]),
+  L("x3","Теми й мультибренд", 90, [
+    "Архітектура токенів дозволяє одній системі обслуговувати кілька тем і брендів: primitive → semantic → component, а режими — на семантичному рівні.",
+    "Типові осі: світла й темна тема, бренд, щільність (компактна чи звичайна), брейкпоінт.",
+    "Перевірка якості: перемикаєш режим — і все працює без жодного ручного перефарбовування."
+  ],[
+    V("Multi-Brand Design System and Figma Variable Setup","EyeO-yWSkYE","UI Collective","EN","1 год"),
+    V("Mastering Multi Brand Design Systems in Figma","nAx_IImhr1o","Pixellink","EN","26 хв")
+  ],[
+    V("Learn Design Systems: Variables, Components, AI","lsgVRCJ4fko","UI Collective","EN","4 год"),
+    V("DTCG W3C release and multiple brands","XI8cjfw8rt8","Figma","EN","21 хв")
+  ],[
+    [1,"Карта токенів","Схема: які токени залежать від теми, бренду, брейкпоінта."],
+    [2,"Другий бренд","Додай у систему MOI суббренд (наприклад, MOI Mini) з іншими кольорами й радіусами."],
+    [3,"Чотири режими","Світла й темна теми для двох брендів — і весь лендинг перемикається між ними."]
+  ])],
+  checkpoint:{t:"MOI Design System 2.0", d:"Документація ключових компонентів, гнучкі компоненти, дві теми й другий бренд, changelog. Це рівень, який зазвичай показують middle-дизайнери."},
+  quiz:[
+    ["Що має бути в документації компонента?","Призначення, коли використовувати й коли ні, анатомія, стани, поведінка, приклади «так / ні»."],
+    ["На якому рівні токенів перемикаються теми?","На семантичному: ролі (bg-surface, text-primary) отримують різні primitive-значення в різних режимах."]
+  ]
+},
+{ id:"motion", title:"Анімація й no-code", time:"2–3 тижні",
+  goal:"Інтерфейс рухається осмислено, а свій проєкт ти викладаєш живим сайтом без програміста.",
+  lessons:[
+  L("a1","Принципи анімації в UI", 60, [
+    "Анімація пояснює зміни: звідки щось прийшло, куди зникло, що сталося після дії.",
+    "Тривалість: <b>100–300 мс</b> для дрібних змін, до 500 мс для великих переходів.",
+    "Ease-out — для появи, ease-in — для зникнення. Повторювані анімації дратують — менше значить краще."
+  ],[
+    V("UX Animations","nV0ahPAxSbI","NN/g","EN","4 хв"),
+    V("Animations are Distracting!","mqyBPuq3enI","NN/g","EN","2 хв"),
+    A("Executing UX Animations: Duration and Motion","https://www.nngroup.com/articles/animation-duration/","NN/g","EN","10 хв")
+  ],[
+    V("9 principles of UI animation","lOaTtmGE-X8","Tamerlan Aziev","EN","8 хв"),
+    A("Microinteractions in User Experience","https://www.nngroup.com/articles/microinteractions/","NN/g","EN"),
+    Q("Криві easing","easing curves UI animation explained")
+  ],[
+    [1,"5 мікроанімацій у телефоні","Знайди їх у застосунках і запиши, що кожна пояснює людині."],
+    [2,"Розбери свою hover-анімацію","Карток MOI: яка тривалість, яка крива, навіщо вона. Що б ти змінила?"]
+  ]),
+  L("a2","Мікроінтеракції у Figma", 90, [
+    "Smart Animate анімує шари з однаковими назвами між кадрами — це основа більшості мікроінтеракцій.",
+    "Interactive components — для hover і press, After delay — для лоадерів, spring-криві — для живості."
+  ],[
+    V("Smart Animate and Drag Triggers","6Id4INKEwb8","Figma","EN","9 хв"),
+    V("How to get micro-interactions right using Figma","hHp4FGVcHjY","Flux Academy","EN","22 хв")
+  ],[
+    V("Figma Smart Animate for Beginners","thplNeqE9Tg","Tim Gabe","EN","10 хв"),
+    V("3D Carousel in Figma Using Smart Animate","xgk5N4rCJIw","uxpeak","EN","8 хв")
+  ],[
+    [1,"«Додати в кошик»","Кнопка з анімованим станом успіху."],
+    [2,"Вибір кольору","Клік по кружечку кольору плавно змінює фото сумки."],
+    [3,"Карусель матеріалів","Свайп між матеріалами з Smart Animate і drag-тригером."]
+  ]),
+  L("a3","Framer: від макета до живого сайту", 180, [
+    "Framer — no-code інструмент: з макета виходить справжній сайт з адаптивом, анімаціями й CMS.",
+    "На безкоштовному плані сайт живе на піддомені Framer — цього достатньо для портфоліо.",
+    "Макет можна перенести з Figma плагіном, але краще зібрати заново, використовуючи стеки Framer, — так адаптив буде чистим."
+  ],[
+    V("Framer Tutorial: For Beginners (New 2026)","BDrEB0S1YZg","Ryan Hayward","EN","27 хв"),
+    V("Master Figma To Framer In 10 Minutes","rwitGra27mo","Arnau Ros","EN","11 хв"),
+    A("Framer Academy","https://www.framer.com/academy/","Framer","EN")
+  ],[
+    V("My Figma to Framer Process","gUUXLnlbBdk","Flux Academy","EN","17 хв"),
+    V("Framer micro-interactions","vX686jF715U","Framer University","EN","22 хв"),
+    V("Framer Complete Course","1w6HIurOqjw","Average Design Dude","EN","2 год 14 хв")
+  ],[
+    [1,"Сайт-візитка","Повтори урок Ryan Hayward і опублікуй простий сайт про себе."],
+    [2,"Перший екран MOI у Framer","З hover і адаптивом під телефон."],
+    [3,"Увесь MOI онлайн","Повний лендинг, опублікований і з робочими анімаціями."]
+  ])],
+  checkpoint:{t:"Живий MOI", d:"Опублікований сайт MOI у Framer з мікроанімаціями й мобільною версією. Посилання піде прямо в портфоліо — живий сайт працює сильніше за картинки."},
+  quiz:[
+    ["Яка тривалість типова для мікроанімацій?","Приблизно 100–300 мс. Довше — інтерфейс здається повільним, коротше — зміна непомітна."],
+    ["Коли анімація шкодить?","Коли повторюється без потреби, затримує дію, відволікає або нічого не пояснює."]
+  ]
+},
+{ id:"ai", title:"AI в роботі дизайнера", time:"1–2 тижні",
+  goal:"AI пришвидшує чернетки й рутину, а рішення й смак залишаються твоїми.",
+  lessons:[
+  L("i1","Figma Make та AI-інструменти", 90, [
+    "AI добре робить чернетки: варіанти макетів, тексти, робочі прототипи з коду.",
+    "На безкоштовному плані Figma обмежений місячний ліміт AI-кредитів — трать їх на експерименти.",
+    "Твоя цінність — розуміння проблеми, вибір і перевірка. AI усереднює, а дизайнерка робить точно."
+  ],[
+    V("Intro to Figma Make","1PFkmrb4Bqg","Figma","EN","10 хв"),
+    V("How I use (and don’t use) AI to design better","2u6bH17NIQk","Aliena Cai","EN","22 хв")
+  ],[
+    V("Use AI Like a Senior Designer (3 Workflows)","Oo-5AWdQAt8","UI Collective","EN","14 хв"),
+    V("Figma Make: Getting started","LF-dUF-EYBs","Figma","EN","52 хв")
+  ],[
+    [1,"Прототип у Figma Make","Згенеруй конфігуратор сумки MOI за описом."],
+    [2,"Що AI зробив гірше за тебе","Порівняй зі своїм дизайном і запиши 5 конкретних відмінностей."]
+  ]),
+  L("i2","AI в UX-процесі", 60, [
+    "Корисно: синтез нотаток інтерв’ю, чернетки сценаріїв, UX-тексти, варіанти назв, перевірка логіки флоу.",
+    "Ризики: вигадані дані, усереднений смак, конфіденційність. AI не замінює розмов зі справжніми людьми.",
+    "Правило: AI пропонує — ти перевіряєш і вирішуєш."
+  ],[
+    V("AI Tools for UX Designers: My Complete Design Workflow","1ClbYm_mgpk","Griffin Wooldridge","EN","6 хв"),
+    V("Design with AI — Full Guide","r-MPiu0E4W4","UI Collective","EN","1 год 52 хв")
+  ],[
+    Q("AI для UX-досліджень","AI for UX research synthesis")
+  ],[
+    [1,"Синтез інтерв’ю з AI","Дай Claude чи ChatGPT свої нотатки інтерв’ю й порівняй групування зі своєю affinity-діаграмою."],
+    [2,"UX-тексти MOI","Попроси 10 варіантів тексту головної кнопки й повідомлення про успішне замовлення. Обери й поясни вибір."]
+  ])],
+  checkpoint:{t:"AI-спринт", d:"За один день із AI спроєктуй нову функцію MOI (наприклад, гравіювання ініціалів): флоу, вайрфрейми, тексти. Наприкінці чесний розбір: де AI допоміг, а де довелося переробляти."},
+  quiz:[
+    ["Головний ризик AI у дослідженнях?","Він може вигадати правдоподібних користувачів і висновки. Синтетичні дані не замінюють розмов зі справжніми людьми."],
+    ["Що лишається за дизайнеркою, коли AI генерує макети?","Розуміння проблеми, вибір рішення, смак, перевірка з людьми й відповідальність за результат."]
+  ]
+},
+{ id:"team", title:"Командна робота й реальні проєкти", time:"3–4 тижні",
+  goal:"Розумієш, як працює продуктова команда, вмієш давати й отримувати фідбек і захищати рішення.",
+  lessons:[
+  L("t1","Як влаштована продуктова команда", 60, [
+    "Типова команда: product manager (що й навіщо), дизайнерка (як це буде для людини), розробники (як зробити), QA (чи працює), аналітик (що кажуть дані).",
+    "Scrum: спринти по 1–2 тижні, планування, короткі щоденні зустрічі, демо, ретроспектива. Дизайн зазвичай іде на спринт попереду розробки.",
+    "Задачі живуть у Jira чи Linear. Посилання на макет у задачі й коментарі у Figma — звична частина роботи."
+  ],[
+    V("Learn Scrum in under 8 minutes","_QfFu-YQfK4","agileforall","EN","8 хв"),
+    V("How Do Product Managers and UX Designers Work Together?","35WzgKFXDRA","Product HQ","EN","6 хв"),
+    V("A day in the life of a UX Designer","gEYq6GFAFCs","chunbuns","EN","6 хв")
+  ],[
+    V("How to Work with Product Managers as a Senior Designer","crAaxd30NMg","femke.design","EN","18 хв"),
+    V("Product Designer: realistic day in the life","HA1t7Nc-3mE","Agatha Richards","EN","14 хв"),
+    V("Intro to Linear","9Q5BoiIFBiY","Linear","EN","4 хв")
+  ],[
+    [1,"Ролі в команді MOI","Опиши, хто й що робив би в команді MOI, якби це був справжній продукт."],
+    [2,"Задача як у Jira","Оформи задачу на конфігуратор сумки: опис, критерії готовності, посилання на макет, крайові випадки."]
+  ]),
+  L("t2","Дизайн-критика й фідбек", 60, [
+    "Критика — про досягнення цілей, а не про смак. Починай з цілі: «Ця сторінка має… Чи допомагає їй цей блок?»",
+    "Даючи фідбек: конкретно, з причиною, питанням замість наказу. Отримуючи: слухай, уточнюй, не захищайся одразу, записуй.",
+    "Розмитий фідбек «зроби красивіше» перетворюй на конкретику питаннями: «Що саме зачепило? Що мало б відчуватися інакше?»"
+  ],[
+    V("UX Design Critiques: 3 Tips for Effective Feedback","CBm9gdwshf8","NN/g","EN","4 хв"),
+    V("Responding to Unhelpful Design Feedback","DX4-5YT1XBs","NN/g","EN","2 хв"),
+    V("The secret to giving great feedback","wtl5UrrgU8c","TED","EN","5 хв")
+  ],[
+    A("Design Critiques","https://www.nngroup.com/articles/design-critiques/","NN/g","EN"),
+    V("How to Give Better Design Feedback","fcoMDIn52pE","Superside","EN","10 хв")
+  ],[
+    [1,"Фідбек на чужий кейс","Знайди кейс на Behance й напиши структурований фідбек: ціль, що працює, що ні, питання."],
+    [2,"Критика з подругою","Покажи MOI й попроси критику за структурою. Запиши, що змінила, а що свідомо залишила."],
+    [3,"Ревʼю в спільноті","Опублікуй роботу в дизайн-спільноті (Telegram, Discord, Reddit) і відпрацюй отриманий фідбек."]
+  ]),
+  L("t3","Презентація й захист рішень", 60, [
+    "Презентуй від проблеми, а не від екранів: ціль → що дізналися → рішення → як перевіримо.",
+    "Кожне рішення має «тому що»: дані, тест, принцип чи обмеження. «Мені так подобається» — не аргумент.",
+    "Заперечення — не атака. Уточни, чого людина побоюється, і покажи, як рішення з цим працює."
+  ],[
+    V("Advice for explaining design rationale","B1rKtQpgo9k","femke.design","EN","10 хв"),
+    V("Collaborating With Stakeholders","M8YhaXg6H8I","NN/g","EN","4 хв"),
+    V("Why Your Stakeholders Don't Trust Your Design Decisions","-dtCf1DAAKc","femke.design","EN","15 хв")
+  ],[
+    V("How to defend your design decisions (with Tom Greever)","SfQBunQMKhk","Writers of Silicon Valley","EN","45 хв")
+  ],[
+    [1,"«Тому що» для MOI","Для 10 рішень у MOI запиши аргумент: дані, принцип чи обмеження."],
+    [2,"Презентація на 5 хвилин","Запиши відео: презентація конфігуратора MOI для «власниці бізнесу»."],
+    [3,"Відпрацювання заперечень","Подруга грає скептичну клієнтку з 5 запереченнями. Запиши, які відповіді спрацювали."]
+  ])],
+  checkpoint:{t:"Реальний проєкт", d:"Невеликий проєкт для реальної людини чи організації від брифу до презентації: бриф, план, дві ітерації з фідбеком, фінальна презентація з аргументами. Це перший практичний досвід у резюме."},
+  quiz:[
+    ["З чого починати дизайн-критику?","З цілі екрана чи функції: оцінюємо, наскільки рішення її досягає, а не чи подобається."],
+    ["Як реагувати на фідбек «зроби красивіше»?","Уточнювати питаннями: що саме зачепило, що мало б відчуватися інакше, на кого орієнтуємося. Так розмитий фідбек стає конкретним."]
+  ]
+},
+{ id:"career", title:"Портфоліо й вихід на ринок", time:"4–6 тижнів",
+  goal:"Три сильні кейси, живе портфоліо, резюме й упевненість на співбесідах.",
+  lessons:[
+  L("c1","Як писати UX-кейс", 120, [
+    "Структура: <b>контекст і роль → проблема → процес → рішення → результат → чого навчилась</b>.",
+    "Показуй рішення й «чому», а не всі артефакти поспіль. Рекрутер витрачає на кейс 1–2 хвилини.",
+    "Перший екран кейсу має продавати: хто ти в проєкті, яка проблема, який результат."
+  ],[
+    V("How to create your first UX case study","044MI9uH1c4","Aliena Cai","EN","21 хв"),
+    V("How to Write & Structure Your UX Case Study","hx7XyA8RNIw","Sharon Yeun Kim","EN","26 хв")
+  ],[
+    V("UX/UI Portfolio + Case Study — Full Course","N-34Q9mhwvs","Malewicz","EN","4 год 22 хв"),
+    V("How to write your UX design case study","uZwRVckjQWI","chunbuns","EN","10 хв")
+  ],[
+    [1,"Скелет кейсу MOI","Заголовки розділів і по одному реченню під кожним."],
+    [2,"Повний кейс MOI 2.0","Збери з чекпоінтів: візуал, бізнес-кейс, UX-дослідження, тексти, лендинг, що продає, мобайл, дизайн-система й живий сайт. Не все — лише найсильніше."],
+    [3,"Англійська версія","Переклади кейс англійською — це відкриває закордонні вакансії й замовників."]
+  ]),
+  L("c2","Портфоліо: Behance, PDF, сайт", 120, [
+    "2–3 сильні кейси краще за 10 слабких.",
+    "Behance — для видимості, PDF — для відгуків на вакансії, сайт у Framer — для враження.",
+    "Обкладинки кейсів в одному стилі роблять портфоліо цілісним."
+  ],[
+    V("How to prepare your design portfolio on Behance","VIjZSJB1uyc","Cuberto Design","EN","20 хв"),
+    V("The EXACT UX Portfolio Presentation Framework","4b40fr8-vOs","Ran Talks Design","EN","30 хв")
+  ],[
+    V("Junior UX Designer Portfolio Review","esHH-U6h9TE","Kyle Torres","EN","24 хв"),
+    V("UX Portfolio Review: First Case Study","85NfqxniGxw","vaexperience","EN","12 хв")
+  ],[
+    [1,"Три обкладинки","Обкладинки для трьох кейсів в одному стилі."],
+    [2,"Кейс на Behance","Опублікуй кейс MOI 2.0."],
+    [3,"Сайт-портфоліо","Простий сайт у Framer з трьома кейсами й контактами."]
+  ]),
+  L("c3","Ринок, резюме й фідбек", 90, [
+    "Від junior UI/UX зазвичай чекають: Figma, портфоліо з процесом, базові UX-методи, англійську, вміння пояснювати рішення.",
+    "Резюме — одна сторінка. LinkedIn — англійською, з посиланням на портфоліо.",
+    "ADPList — безкоштовні дзвінки з практикуючими дизайнерами для фідбеку на портфоліо."
+  ],[
+    A("Вакансії дизайнерів на DOU","https://jobs.dou.ua/vacancies/?category=Design","DOU","UA"),
+    T("ADPList — безкоштовні ментори","https://adplist.org","adplist.org"),
+    V("10 crucial questions to ask your interviewer","ygMvS7RLUGs","Mizko","EN","8 хв")
+  ],[
+    Q("Резюме UI/UX дизайнера","UI UX designer resume tips junior")
+  ],[
+    [1,"20 вакансій","Розбери 20 вакансій junior/middle на DOU й випиши топ-10 вимог, що повторюються."],
+    [2,"Резюме й LinkedIn","Одна сторінка резюме і профіль LinkedIn англійською."],
+    [3,"Дві сесії на ADPList","Отримай фідбек на портфоліо від двох різних менторів і внеси правки."]
+  ]),
+  L("c4","Співбесіди й тестові завдання", 120, [
+    "Типові питання: розкажи про кейс, як ти приймала рішення, як працюєш із фідбеком, що зробила б інакше.",
+    "Тестове: уточни бриф, обмеж свій час, покажи процес і припущення, а не лише фінальні екрани."
+  ],[
+    V("The Essential UX Interview Questions","vu3xcQm7cEo","CareerFoundry","EN","15 хв"),
+    V("Ace the UI/UX Take-home Test","3blyJn6htLU","Jake Pomper Design","EN","32 хв"),
+    V("How to Present UX Design Ideas","2brmo3wgG48","NN/g","EN","3 хв")
+  ],[
+    V("Whiteboarding UX challenge","8MQmYa_zq0g","femke.design","EN","12 хв"),
+    V("Take-Home Design Assignments","gqXr9HU7HCg","vaexperience","EN","9 хв")
+  ],[
+    [1,"10 відповідей","Письмово відповідай на 10 типових питань співбесіди."],
+    [2,"Тестове за 6 годин","Редизайн екрана замовлення в сервісі доставки (знайди приклад на Mobbin) з обмеженням часу."],
+    [3,"Пробна співбесіда","З подругою чи ментором, на запис. Переглянь і запиши, що покращити."]
+  ])],
+  checkpoint:{t:"Готове портфоліо", d:"Три кейси (MOI 2.0, мобільний застосунок, UX-аудит сервісу), Behance, PDF і резюме. Фінальний крок — 10 відгуків на вакансії."},
+  quiz:[
+    ["Що найважливіше на першому екрані кейсу?","Хто ти в проєкті, яку проблему розв’язала і який результат — за 10 секунд."],
+    ["Що робити, якщо тестове завдання неоднозначне?","Поставити уточнювальні питання, а якщо відповіді немає — записати свої припущення в презентації."]
+  ]
+}
+];
+
+/* Гейміфікація */
+const XP = {lesson:20, t1:10, t2:25, t3:50, checkpoint:150, module:50};
+const LEVELS = [
+  [0,"Піксель"],[60,"Лінійка"],[180,"Сітка"],[360,"Шрифт"],[600,"Компонент"],
+  [900,"Варіант"],[1300,"Токен"],[1800,"Патерн"],[2400,"Система"],[3100,"Прототип"],
+  [3900,"Продукт"],[4800,"Кейс"],[5800,"Портфоліо"],[7000,"Дизайнерка"]
+];
+const BADGES = [
+  {id:"first",   ic:"🌱", t:"Перший урок",        d:"Пройти перший урок",            ok:s=>s.lessonsDone>=1},
+  {id:"task1",   ic:"✏️", t:"Перша практика",     d:"Виконати перше завдання",        ok:s=>s.tasksDone>=1},
+  {id:"streak3", ic:"🔥", t:"Три дні поспіль",    d:"Займатися 3 дні без перерви",     ok:s=>s.best>=3},
+  {id:"streak7", ic:"⚡", t:"Тиждень поспіль",    d:"7 днів без перерви",              ok:s=>s.best>=7},
+  {id:"h10",     ic:"⏱️", t:"10 годин",           d:"Записати 10 годин занять",        ok:s=>s.hours>=10},
+  {id:"h50",     ic:"🕰️", t:"50 годин",           d:"Записати 50 годин занять",        ok:s=>s.hours>=50},
+  {id:"tasks10", ic:"✋", t:"Набита рука",        d:"10 практичних завдань",           ok:s=>s.tasksDone>=10},
+  {id:"hard1",   ic:"🧗", t:"Челендж прийнято",   d:"Перше завдання рівня «челендж»",  ok:s=>s.hardDone>=1},
+  {id:"hard5",   ic:"🦁", t:"Не страшно",         d:"5 челенджів",                     ok:s=>s.hardDone>=5},
+  {id:"cp",      ic:"🏁", t:"Перший чекпоінт",    d:"Завершити проєкт модуля",         ok:s=>s.cpDone>=1},
+  {id:"half",    ic:"🌗", t:"Половина шляху",     d:"Половина уроків",                 ok:s=>s.lessonsDone>=s.lessonsTotal/2},
+  {id:"biz",     ic:"📈", t:"Бізнес-лінза",       d:"Чекпоінт «Бізнес-кейс MOI»",      ok:s=>s.has("product-cp")},
+  {id:"voice",   ic:"💬", t:"Слово має вагу",     d:"Чекпоінт «Голос MOI»",            ok:s=>s.has("writing-cp")},
+  {id:"moi",     ic:"👜", t:"Новий MOI",          d:"Чекпоінт «Редизайн MOI: візуал»", ok:s=>s.has("visual-cp")},
+  {id:"live",    ic:"🌐", t:"Живий сайт",         d:"MOI опубліковано у Framer",       ok:s=>s.has("motion-cp")},
+  {id:"client",  ic:"🤝", t:"Перший клієнт",      d:"Чекпоінт «Реальний проєкт»",      ok:s=>s.has("team-cp")},
+  {id:"ready",   ic:"🚀", t:"Готова до ринку",    d:"Фінальний чекпоінт",              ok:s=>s.has("career-cp")}
+];
+</script>
+
+<header class="top">
+  <div class="wrap topin">
+    <a class="brand" href="#">Курс UI/UX</a>
+    <nav class="tabs" aria-label="Розділи">
+      <a href="#" data-tab="home">Дашборд</a>
+      <a href="#materials" data-tab="materials">Матеріали</a>
+      <a href="#focus" data-tab="focus">Фокус</a>
+    </nav>
+    <button class="ghost icon" id="themeBtn" type="button" aria-label="Змінити тему"></button>
+  </div>
+</header>
+
+<div class="viewbar" id="viewbar" hidden><div class="wrap"><span id="viewText"></span><button class="btn-light" type="button" id="exitView">Повернутися до свого</button></div></div>
+<main id="view"></main>
+
+<footer class="wrap">
+  <p>Прогрес зберігається в цьому браузері. Щоб продовжити на іншому пристрої, скористайся перенесенням.</p>
+  <button class="ghost" type="button" id="transferBtn">Поділитися й перенести прогрес</button>
+  <button class="ghost" type="button" id="resetBtn">Скинути</button>
+</footer>
+
+<dialog id="share">
+  <h3>Поділитися прогресом</h3>
+  <label class="field">Ім’я на картці й у посиланні <input id="shareName" type="text" maxlength="40" placeholder="Необов’язково" autocomplete="given-name"></label>
+  <section class="share-sec">
+    <h4>Посилання</h4>
+    <p>Надішли комусь, щоб подивилися твій прогрес, або відкрий на іншому пристрої, щоб перенести його туди.</p>
+    <div class="row left"><button class="solid" type="button" id="copyLink">Скопіювати посилання</button><button class="ghost" type="button" id="nativeShare" hidden>Надіслати…</button></div>
+    <p class="hint" id="linkHint" hidden>Посилання запрацює, коли сайт буде опубліковано. Поки що скористайся кодом нижче.</p>
+  </section>
+  <section class="share-sec">
+    <h4>Картка для сторіс</h4>
+    <img id="cardImg" alt="Картка з прогресом у курсі">
+    <div class="row left"><button class="solid" type="button" id="shareCard">Поділитися карткою</button></div>
+  </section>
+  <details class="share-sec">
+    <summary>Код для перенесення вручну</summary>
+    <textarea id="code" aria-label="Код прогресу" spellcheck="false"></textarea>
+    <div class="row left"><button class="ghost" type="button" id="copyCode">Скопіювати код</button><button class="ghost" type="button" id="loadCode">Завантажити з коду</button></div>
+  </details>
+  <div class="row"><button class="ghost" type="button" id="closeDlg">Закрити</button></div>
+</dialog>
+<dialog id="sharedDlg">
+  <form method="dialog">
+    <h3>Тобі надіслали прогрес</h3>
+    <p id="sharedText"></p>
+    <div class="row">
+      <button class="ghost" value="cancel">Скасувати</button>
+      <button class="ghost" value="load">Завантажити собі</button>
+      <button class="solid" value="view">Переглянути</button>
+    </div>
+  </form>
+</dialog>
+<div class="toasts" id="toasts" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+  const KEY = "design-course-v3", TKEY = "design-roadmap-theme";
+  const $ = s => document.querySelector(s);
+  const KIND = {video:"Відео", playlist:"Плейлист", read:"Стаття", tool:"Інструмент", search:"Пошук"};
+  const LVL = {1:"Легке", 2:"Середнє", 3:"Челендж"};
+
+  /* ---------- Плоскі списки ---------- */
+  const LESSONS = [], TASKS = [];
+  MODULES.forEach((m, mi) => m.lessons.forEach((l, li) => {
+    LESSONS.push({...l, mi, li, mod:m.id, num:`${mi+1}.${li+1}`});
+    l.tasks.forEach((t, ti) => TASKS.push({id:`${l.id}-t${ti+1}`, lvl:t[0], lesson:l.id, mi}));
+  }));
+  const L_BY = Object.fromEntries(LESSONS.map(l => [l.id, l]));
+  const ORDER = Object.fromEntries(LESSONS.map((l, i) => [l.id, i]));
+  const T_BY = Object.fromEntries(TASKS.map(t => [t.id, t]));
+  const CP = MODULES.map(m => m.id + "-cp");
+  const xpOf = id => L_BY[id] ? XP.lesson : T_BY[id] ? XP["t" + T_BY[id].lvl] : CP.includes(id) ? XP.checkpoint : 0;
+
+  /* ---------- Дати ---------- */
+  const key = d => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;
+  const parse = k => { const [y,m,d] = k.split("-").map(Number); return new Date(y, m-1, d); };
+  const addDays = (d, n) => { const x = new Date(d); x.setDate(x.getDate()+n); return x; };
+  const monday = d => addDays(d, -((d.getDay()+6)%7));
+  const todayKey = () => key(new Date());
+  const MONTHS = ["січ","лют","бер","квіт","трав","черв","лип","серп","вер","жовт","лист","груд"];
+  const plural = (n, a, b, c) => { const m10=n%10, m100=n%100; return m10===1&&m100!==11 ? a : (m10>=2&&m10<=4&&(m100<10||m100>=20)) ? b : c; };
+  const fmtH = m => { const h = m/60; return h === 0 ? "0" : h < 10 ? h.toFixed(1).replace(".", ",").replace(",0","") : String(Math.round(h)); };
+  const fmtMin = m => m < 60 ? `${m} хв` : `${fmtH(m)} год`;
+  const esc = t => String(t).replace(/<[^>]+>/g, "").replace(/"/g, "&quot;");
+
+  /* ---------- Стан ---------- */
+  let S = { done:{}, log:{}, last:null };
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) S = Object.assign(S, JSON.parse(raw));
+    else { const old = JSON.parse(localStorage.getItem("design-roadmap-v2") || "null"); if (old && old.log) S.log = old.log; }
+  } catch(e) {}
+  const valid = id => L_BY[id] || T_BY[id] || CP.includes(id);
+  Object.keys(S.done).forEach(id => { if (!valid(id)) delete S.done[id]; });
+  const guessLast = () => {
+    const ids = Object.keys(S.done).filter(id => L_BY[id]);
+    if (!ids.length) return null;
+    ids.sort((a, b) => S.done[a] === S.done[b] ? ORDER[a] - ORDER[b] : S.done[a] < S.done[b] ? -1 : 1);
+    return ids[ids.length - 1];
+  };
+  if (!S.last || !S.done[S.last]) S.last = guessLast();
+  let viewing = null; // збережений власний прогрес під час перегляду чужого
+  const save = () => { if (viewing) return; try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {} };
+  const view = { hideDone:false };
+  let openMods = null, openLessons = null;
+
+  /* ---------- Підрахунки ---------- */
+  function stats() {
+    const has = id => !!S.done[id];
+    let xp = 0, lessonsDone = 0, tasksDone = 0, hardDone = 0, cpDone = 0, estMin = 0;
+    LESSONS.forEach(l => { if (has(l.id)) { lessonsDone++; xp += XP.lesson; estMin += l.min; } });
+    TASKS.forEach(t => { if (has(t.id)) { tasksDone++; xp += XP["t" + t.lvl]; if (t.lvl === 3) hardDone++; } });
+    CP.forEach(c => { if (has(c)) { cpDone++; xp += XP.checkpoint; } });
+    const mods = MODULES.map((m, i) => {
+      const n = m.lessons.length, k = m.lessons.filter(l => has(l.id)).length;
+      const tn = m.lessons.reduce((a, l) => a + l.tasks.length, 0);
+      const tk = TASKS.filter(t => t.mi === i && has(t.id)).length;
+      return {n, k, tn, tk, cp:has(m.id + "-cp"), state: k === 0 ? "none" : k === n ? "done" : "go"};
+    });
+    const modsDone = mods.filter(x => x.state === "done").length;
+    xp += modsDone * XP.module;
+    let lv = 0; LEVELS.forEach((l, i) => { if (xp >= l[0]) lv = i; });
+    const logMin = Object.values(S.log).reduce((a, b) => a + b, 0);
+    const active = new Set(Object.keys(S.log).filter(k => S.log[k] > 0));
+    Object.values(S.done).forEach(k => active.add(k));
+    let d = new Date(); if (!active.has(key(d))) d = addDays(d, -1);
+    let streak = 0; while (active.has(key(d))) { streak++; d = addDays(d, -1); }
+    let best = 0, run = 0, prev = null;
+    [...active].sort().forEach(k => { run = prev && key(addDays(prev, 1)) === k ? run + 1 : 1; best = Math.max(best, run); prev = parse(k); });
+    const s = {has, xp, level:lv, lessonsDone, lessonsTotal:LESSONS.length, tasksDone, tasksTotal:TASKS.length, hardDone, cpDone, estMin, mods, modsDone, logMin, hours:logMin/60, streak, best:Math.max(best, streak)};
+    s.badges = BADGES.filter(b => b.ok(s)).map(b => b.id);
+    return s;
+  }
+
+  // Наступний урок: перший непройдений після останнього пройденого
+  function nextLesson() {
+    const start = S.last ? ORDER[S.last] + 1 : 0, N = LESSONS.length;
+    for (let j = 0; j < N; j++) { const l = LESSONS[(start + j) % N]; if (!S.done[l.id]) return l; }
+    return null;
+  }
+
+  /* ---------- Дії ---------- */
+  const fresh = new Set();
+  function setDone(id, on) {
+    if (viewing) { toast("Це режим перегляду — зміни не зберігаються"); return; }
+    const before = stats();
+    if (on) { S.done[id] = todayKey(); if (L_BY[id]) S.last = id; }
+    else { delete S.done[id]; if (S.last === id) S.last = guessLast(); }
+    save();
+    if (!on) return;
+    const after = stats();
+    toast(`+${after.xp - before.xp} XP`);
+    after.mods.forEach((m, i) => { if (m.state === "done" && before.mods[i].state !== "done") toast(`Модуль «${MODULES[i].title}» пройдено`, true); });
+    if (after.level > before.level) toast(`Новий рівень: ${LEVELS[after.level][1]}`, true);
+    newBadges(before, after);
+  }
+  function newBadges(before, after) {
+    after.badges.filter(b => !before.badges.includes(b)).forEach(b => {
+      const bd = BADGES.find(x => x.id === b); toast(`${bd.ic} Досягнення: ${bd.t}`, true); fresh.add(b);
+    });
+  }
+  function toast(msg, big, ms) {
+    const el = document.createElement("div");
+    el.className = "toast" + (big ? " big" : ""); el.textContent = msg;
+    $("#toasts").appendChild(el);
+    setTimeout(() => el.remove(), ms || (big ? 3200 : 1800));
+  }
+  function openExternal(url) {
+    let w = null;
+    try { w = window.open(url, "_blank"); } catch(e) {}
+    if (w) { try { w.opener = null; } catch(e) {} return; }
+    const msg = ok => toast(ok ? "Нову вкладку заблоковано. Посилання скопійовано — встав його в браузер"
+                              : "Нову вкладку заблоковано. Відкрий сайт у звичайному браузері", false, 4200);
+    try { navigator.clipboard.writeText(url).then(() => msg(true), () => msg(false)); } catch(e) { msg(false); }
+  }
+
+  /* ---------- Дашборд ---------- */
+  function heatmap() {
+    const WEEKS = 18, today = new Date(), tk = key(today);
+    const start = addDays(monday(today), -7 * (WEEKS - 1));
+    const perDay = {};
+    Object.values(S.done).forEach(k => { perDay[k] = (perDay[k] || 0) + 1; });
+    let cells = "";
+    for (let i = 0; i < WEEKS * 7; i++) {
+      const d = addDays(start, i), k = key(d);
+      if (d > today) { cells += `<i class="future"></i>`; continue; }
+      const m = S.log[k] || 0, n = perDay[k] || 0, score = m + n * 30;
+      const l = score === 0 ? 0 : score < 30 ? 1 : score < 60 ? 2 : score < 120 ? 3 : 4;
+      cells += `<i data-l="${l}" class="${k === tk ? "today" : ""}" title="${d.getDate()} ${MONTHS[d.getMonth()]}: ${m} хв, ${n} ${plural(n,"відмітка","відмітки","відміток")}"></i>`;
+    }
+    return `<div class="heat-scroll" id="heatScroll"><div class="heat" role="img" aria-label="Активність за останні ${WEEKS} тижнів">${cells}</div></div>
+      <div class="heat-legend">Менше <i style="background:var(--heat0)"></i><i style="background:var(--heat1)"></i><i style="background:var(--heat2)"></i><i style="background:var(--heat3)"></i><i style="background:var(--heat4)"></i> Більше</div>`;
+  }
+  function weekBars() {
+    const W = 8, m0 = monday(new Date()), weeks = [];
+    for (let w = W - 1; w >= 0; w--) {
+      const s = addDays(m0, -7 * w); let sum = 0;
+      for (let i = 0; i < 7; i++) sum += S.log[key(addDays(s, i))] || 0;
+      weeks.push({s, sum});
+    }
+    const max = Math.max(60, ...weeks.map(w => w.sum));
+    const total = weeks.reduce((a, w) => a + w.sum, 0);
+    return `<div class="bars" role="img" aria-label="Години навчання по тижнях">${weeks.map((w, i) => `<div class="bar${i === W-1 ? " cur" : ""}">
+        <b>${w.sum ? fmtH(w.sum) + " год" : ""}</b><i style="height:${Math.max(3, w.sum / max * 100)}%"></i>
+        <span>${w.s.getDate()}.${String(w.s.getMonth()+1).padStart(2,"0")}</span></div>`).join("")}</div>` +
+      (total ? "" : `<p class="empty-note">Записуй заняття — тут з’явиться графік.</p>`);
+  }
+
+  function renderHome() {
+    const s = stats(), nx = nextLesson(), today = S.log[todayKey()] || 0;
+    const lv = LEVELS[s.level], nxt = LEVELS[s.level + 1];
+    const pct = nxt ? (s.xp - lv[0]) / (nxt[0] - lv[0]) * 100 : 100;
+    $("#view").innerHTML = `
+    <section class="wrap hello">
+      <h1>Привіт! Ось твій шлях</h1>
+      <div class="level">
+        <p class="level-name">Рівень ${s.level + 1}: ${lv[1]}</p>
+        <div class="xpbar"><i style="width:${pct}%"></i></div>
+        <small>${nxt ? `${s.xp} XP, ще ${nxt[0] - s.xp} до рівня «${nxt[1]}»` : `${s.xp} XP — максимальний рівень`}</small>
+        ${viewing ? "" : `<button class="ghost share-btn" type="button" id="openShare">Поділитися прогресом</button>`}
+      </div>
+    </section>
+    <section class="wrap dash">
+      ${nx ? `<article class="card next s7">
+        <span class="xp">+${XP.lesson} XP</span>
+        <p class="eyebrow">Наступний урок ${nx.num}, модуль «${MODULES[nx.mi].title}»</p>
+        <h2>${nx.t}</h2>
+        <p>${nx.text[0].replace(/<[^>]+>/g, "")}</p>
+        <div class="acts">
+          <a class="btn-light" href="#materials/${nx.id}">Відкрити урок</a>
+          <button class="btn-line" type="button" data-ldone="${nx.id}">Урок пройдено</button>
+        </div>
+      </article>` : `<article class="card next s7"><p class="eyebrow">Фініш</p><h2>Усі уроки пройдено. Час розсилати портфоліо!</h2></article>`}
+      <article class="card s5">
+        <h2>Записати заняття</h2>
+        <p class="sub">Скільки часу сьогодні приділила навчанню?</p>
+        <p class="today">${today}<span>хв сьогодні</span></p>
+        <div class="mins">${[15,30,45,60,90].map(m => `<button type="button" data-min="${m}">+${m} хв</button>`).join("")}</div>
+        ${today ? `<button class="linkbtn" type="button" id="undoToday">Обнулити сьогодні</button>` : ""}
+      </article>
+      <article class="card stat s3"><span class="lbl">Уроки</span>
+        <p class="num">${s.lessonsDone}<small> з ${s.lessonsTotal}</small></p><p class="sub">≈ ${fmtH(s.estMin)} год матеріалів</p></article>
+      <article class="card stat s3"><span class="lbl">Практика</span>
+        <p class="num">${s.tasksDone}<small> з ${s.tasksTotal}</small></p><p class="sub">челенджів: ${s.hardDone}, чекпоінтів: ${s.cpDone}</p></article>
+      <article class="card stat s3"><span class="lbl">Години навчання</span>
+        <p class="num">${fmtH(s.logMin)}<small> год</small></p><p class="sub">модулів пройдено: ${s.modsDone} з ${MODULES.length}</p></article>
+      <article class="card stat s3"><span class="lbl">Серія</span>
+        <p class="num">${s.streak}<small> ${plural(s.streak,"день","дні","днів")}</small></p><p class="sub">рекорд: ${s.best} ${plural(s.best,"день","дні","днів")}</p></article>
+      <article class="card s7"><h2>Активність</h2><p class="sub">Заняття, уроки й завдання за останні 18 тижнів</p>${heatmap()}</article>
+      <article class="card s5"><h2>Години на тиждень</h2><p class="sub">Останні 8 тижнів</p>${weekBars()}</article>
+      <article class="card s12">
+        <h2>Модулі</h2>
+        <p class="sub">Модулі можна проходити паралельно: наприклад, візуальну базу разом із бізнесом, а UX — разом із текстами.</p>
+        <div class="stages">${MODULES.map((m, i) => {
+          const x = s.mods[i];
+          const lbl = {none:"Не розпочато", go:"У процесі", done:"Пройдено"}[x.state];
+          return `<a class="tile" href="#materials/${m.id}">
+            <div class="row1"><span class="n">Модуль ${i+1}</span><span class="status ${{none:"",go:"go",done:"ok"}[x.state]}">${lbl}</span></div>
+            <h3>${m.title}</h3><div class="pbar"><i style="width:${x.k/x.n*100}%"></i></div>
+            <span class="meta">Уроки ${x.k} з ${x.n}, практика ${x.tk} з ${x.tn}${x.cp ? ", чекпоінт ✓" : ""}</span></a>`;
+        }).join("")}</div>
+      </article>
+      <article class="card s12">
+        <h2>Досягнення</h2><p class="sub">Відкрито ${s.badges.length} з ${BADGES.length}</p>
+        <div class="badges">${BADGES.map(b => `<div class="badge${s.badges.includes(b.id) ? "" : " locked"}${fresh.has(b.id) ? " new" : ""}"><span class="ic" aria-hidden="true">${b.ic}</span><b>${b.t}</b><span>${b.d}</span></div>`).join("")}</div>
+      </article>
+    </section>`;
+    fresh.clear();
+    const hs = $("#heatScroll"); if (hs) hs.scrollLeft = hs.scrollWidth;
+  }
+
+  /* ---------- Матеріали ---------- */
+  const ext = u => u && !u.startsWith("#") ? ' target="_blank" rel="noopener"' : "";
+  const res = r => `<li class="res"><span class="kind k-${r.k}">${KIND[r.k]}</span>
+      <div><a href="${r.u}"${ext(r.u)}>${r.t}</a>
+      ${r.src || r.lang || r.dur ? `<span class="rmeta">${r.src ? `<span>${r.src}</span>` : ""}${r.lang ? `<span class="lang">${r.lang}</span>` : ""}${r.dur ? `<span>${r.dur}</span>` : ""}</span>` : ""}</div></li>`;
+
+  function lessonHTML(l) {
+    const tasks = l.tasks.map((t, ti) => {
+      const id = `${l.id}-t${ti+1}`;
+      return `<li class="task" data-tid="${id}">
+        <input class="check tcheck" type="checkbox" data-id="${id}" aria-label="Виконано: ${esc(t[1])}">
+        <div><span class="lvl l${t[0]}">${LVL[t[0]]}</span> <b>${t[1]}</b><p>${t[2]}</p></div>
+        <span class="xp-pill">+${XP["t" + t[0]]} XP</span></li>`;
+    }).join("");
+    return `<details class="lesson" id="ls-${l.id}" data-lid="${l.id}">
+      <summary><span class="lmark" aria-hidden="true"></span><span class="lnum">${l.num}</span>
+        <span class="ltitle">${l.t}</span>
+        <span class="lmeta"><span class="tcount"></span><span>${fmtMin(l.min)}</span><i aria-hidden="true">⌄</i></span></summary>
+      <div class="lbody">
+        <ul class="ltext">${l.text.map(p => `<li>${p}</li>`).join("")}</ul>
+        <h4>Дивись і читай</h4>
+        <ul class="reslist">${l.watch.map(res).join("")}</ul>
+        ${l.extra.length ? `<h4>Якщо щось незрозуміло або хочеться глибше</h4><ul class="reslist extra">${l.extra.map(res).join("")}</ul>` : ""}
+        <h4>Практика <span class="opt">за бажанням</span></h4>
+        <ul class="tasks">${tasks}</ul>
+        <div class="lfoot"><button class="ldone-btn" type="button" data-ldone="${l.id}"></button><span class="xp-pill">+${XP.lesson} XP за урок</span></div>
+      </div>
+    </details>`;
+  }
+
+  function renderMaterials(target) {
+    const s = stats(), nx = nextLesson();
+    const activeMod = nx ? nx.mod : MODULES[MODULES.length-1].id;
+    if (!openMods) openMods = new Set([activeMod]);
+    if (!openLessons) openLessons = new Set(nx ? [nx.id] : []);
+    $("#view").innerHTML = `
+    <section class="wrap mat-head">
+      <h1>Матеріали</h1>
+      <p class="lead2">${MODULES.length} модулів, ${LESSONS.length} уроків і ${TASKS.length} завдань. Відкрито модуль, де ти зараз, а сторінка прокручується до місця, де ти зупинилась.</p>
+      <div class="resume" id="resume"></div>
+      <div class="filters">
+        <label class="toggle"><input type="checkbox" id="hideDone" ${view.hideDone ? "checked" : ""}> Сховати пройдені уроки</label>
+        <div class="legend"><span><span class="lvl l1">Легке</span></span><span><span class="lvl l2">Середнє</span></span><span><span class="lvl l3">Челендж</span></span></div>
+      </div>
+      <div class="jump" id="jump">${MODULES.map((m, i) => `<button type="button" data-jump="${m.id}">Модуль ${i+1}<span></span></button>`).join("")}</div>
+    </section>
+    <section class="wrap">
+      ${MODULES.map((m, i) => `<details class="sec" id="sec-${m.id}" data-mod="${m.id}"${openMods.has(m.id) ? " open" : ""}>
+        <summary><span class="num">${i+1}</span><h2>${m.title}</h2><span class="cnt"><b></b><i aria-hidden="true">⌄</i></span>
+          <p class="goal">${m.time}. ${m.goal}</p><div class="pbar"><i></i></div></summary>
+        <div class="lessons">${m.lessons.map(l => lessonHTML(L_BY[l.id])).join("")}<p class="allhidden" hidden>Усі уроки модуля пройдено.</p></div>
+        <div class="cp" data-cp="${m.id}-cp">
+          <div class="cp-head"><span class="cp-badge">Чекпоінт</span><span class="xp-pill">+${XP.checkpoint} XP</span></div>
+          <label class="cp-row"><input class="check cpcheck" type="checkbox" data-id="${m.id}-cp"><span><b>${m.checkpoint.t}</b><p>${m.checkpoint.d}</p></span></label>
+        </div>
+        <div class="quiz"><h4>Перевір себе</h4>${m.quiz.map(q => `<details class="qa"><summary>${q[0]}</summary><p>${q[1]}</p></details>`).join("")}</div>
+      </details>`).join("")}
+    </section>`;
+    document.querySelectorAll(".sec").forEach(d => d.addEventListener("toggle", () => { d.open ? openMods.add(d.dataset.mod) : openMods.delete(d.dataset.mod); }));
+    document.querySelectorAll(".lesson").forEach(d => {
+      if (openLessons.has(d.dataset.lid)) d.open = true;
+      d.addEventListener("toggle", () => { d.open ? openLessons.add(d.dataset.lid) : openLessons.delete(d.dataset.lid); });
+    });
+    refreshMaterials();
+    requestAnimationFrame(() => scrollMaterials(target));
+    if (!fontsSettled && document.fonts) document.fonts.ready.then(() => { fontsSettled = true; if (parseRoute(current).page === "materials") scrollMaterials(target); });
+  }
+
+  function refreshMaterials() {
+    const s = stats(), nx = nextLesson();
+    document.querySelectorAll(".lesson").forEach(d => {
+      const l = L_BY[d.dataset.lid], isDone = !!S.done[l.id];
+      d.classList.toggle("done", isDone);
+      d.classList.toggle("is-next", !!nx && nx.id === l.id);
+      d.hidden = view.hideDone && isDone;
+      const k = l.tasks.filter((t, ti) => S.done[`${l.id}-t${ti+1}`]).length;
+      d.querySelector(".tcount").textContent = `практика ${k}/${l.tasks.length}`;
+      d.querySelector(".ldone-btn").textContent = isDone ? "✓ Урок пройдено" : "Позначити урок пройденим";
+      d.querySelector(".ldone-btn").classList.toggle("on", isDone);
+    });
+    document.querySelectorAll(".task").forEach(li => {
+      const on = !!S.done[li.dataset.tid];
+      li.classList.toggle("done", on); li.querySelector(".tcheck").checked = on;
+    });
+    MODULES.forEach((m, i) => {
+      const x = s.mods[i], d = $("#sec-" + m.id);
+      d.querySelector(".cnt b").textContent = `${x.k} з ${x.n}`;
+      d.querySelector(".pbar i").style.width = (x.k / x.n * 100) + "%";
+      d.querySelector(".allhidden").hidden = !(view.hideDone && x.k === x.n);
+      const cp = d.querySelector(".cp"); cp.classList.toggle("done", x.cp); cp.querySelector(".cpcheck").checked = x.cp;
+      const jb = document.querySelector(`[data-jump="${m.id}"]`);
+      jb.querySelector("span").textContent = `${x.k} з ${x.n}`;
+      jb.classList.toggle("ok", x.state === "done");
+    });
+    $("#resume").innerHTML = nx
+      ? `<p><small>Далі: урок ${nx.num}</small><b>${nx.t}</b></p><button class="btn-light" type="button" data-goto="${nx.id}">Перейти</button>`
+      : `<p><b>Усі уроки пройдено. Неймовірна робота!</b></p>`;
+  }
+
+  const headerH = () => $(".top").offsetHeight;
+  function scrollToEl(el, gap, smooth) {
+    const y = el.getBoundingClientRect().top + scrollY - headerH() - gap;
+    const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+    scrollTo({top: Math.max(0, y), behavior: smooth && !reduce ? "smooth" : "auto"});
+  }
+  function flash(el) { el.classList.remove("flash"); void el.offsetWidth; el.classList.add("flash"); }
+  function openLesson(id) {
+    const d = $("#ls-" + id); if (!d) return null;
+    const sec = d.closest(".sec"); sec.open = true; openMods.add(sec.dataset.mod);
+    d.open = true; openLessons.add(id);
+    if (d.hidden) { view.hideDone = false; const h = $("#hideDone"); if (h) h.checked = false; refreshMaterials(); }
+    return d;
+  }
+  function scrollMaterials(target) {
+    if (target && L_BY[target]) { const d = openLesson(target); if (d) { scrollToEl(d, 12, false); flash(d.querySelector("summary")); } return; }
+    if (target && MODULES.some(m => m.id === target)) {
+      const d = $("#sec-" + target); d.open = true; openMods.add(target); return scrollToEl(d, 12, false);
+    }
+    // Відновлення: остання пройдена вгорі, під нею — відкритий наступний урок
+    const nx = nextLesson();
+    if (!nx || !S.last) return scrollTo(0, 0);
+    const n = openLesson(nx.id);
+    const last = $("#ls-" + S.last);
+    const anchor = last && !last.hidden && last.closest(".sec").open && L_BY[S.last].mi === nx.mi ? last : n;
+    scrollToEl(anchor, 12, false);
+    if (n) flash(n.querySelector("summary"));
+  }
+
+  /* ---------- Фокус ---------- */
+  function renderFocus() {
+    const L = id => `<a href="#materials/${id}">Модуль ${MODULES.findIndex(m => m.id === id) + 1}</a>`;
+    $("#view").innerHTML = `
+    <section class="wrap">
+      <div class="stage-head"><h1>Фокус і поради</h1></div>
+      <div class="dash">
+        <article class="card s12"><div class="focus">
+          <div>
+            <h2>Твій лендинг MOI</h2>
+            <p>Хороший старт. Атмосферні фото, зрозуміла структура, перевикористовувані компоненти й анімації на hover — це вже більше, ніж зазвичай буває в першому проєкті.</p>
+            <p>А палітра сама стала частиною бренду, тож цей сайт зроблено в ній.</p>
+            <div class="swatches" aria-hidden="true"><i style="background:#9A9C7E"></i><i style="background:#E6CDB8"></i><i style="background:#0E0E0E"></i><i style="background:#4A2318"></i></div>
+            <small style="color:var(--muted)">Olive, Zephyr, Midnight, Bark</small>
+          </div>
+          <ol class="growth">
+            <li><b>Сітка й вирівнювання.</b> Розміри стоять 2 + 1 зі зсувом, підписи кольорів то ліворуч, то праворуч, картки матеріалів перекриваються й обрізають текст. ${L("visual")}</li>
+            <li><b>Шкала шрифтів.</b> Усі заголовки секцій одного величезного розміру, а основний текст дуже дрібний — ієрархії бракує. ${L("visual")}</li>
+            <li><b>Головна дія.</b> Кнопки «Order bag» маленькі й бліді, хоча замовлення — мета всієї сторінки. ${L("visual")}</li>
+            <li><b>Контраст.</b> Заголовок на першому екрані лежить на строкатому фото. ${L("system")}</li>
+            <li><b>Зміст блоків.</b> Що робити в «Find your MOI»? Немає назв, цін і кнопки. ${L("ux")}</li>
+            <li><b>Бізнес-логіка.</b> Сторінка красива, але не відповідає, скільки коштує сумка, як довго чекати й чому варто замовити саме тут. ${L("product")}</li>
+            <li><b>Шлях покупки.</b> Як вибір розміру, матеріалу й кольору перетворюється на замовлення? Тут лежить твій майбутній головний кейс. ${L("ux")}</li>
+          </ol>
+        </div></article>
+        <article class="card s5">
+          <h2>Щотижня</h2>
+          <p class="sub">Маленькі звички, які непомітно дають найбільше.</p>
+          <ul>
+            <li>1–2 години референсів: <a href="https://mobbin.com" target="_blank" rel="noopener">Mobbin</a>, <a href="https://godly.website" target="_blank" rel="noopener">Godly</a>, <a href="https://land-book.com" target="_blank" rel="noopener">Land-book</a>, <a href="https://www.behance.net" target="_blank" rel="noopener">Behance</a>.</li>
+            <li>3–5 коротких відео <a href="https://www.youtube.com/@NNgroup" target="_blank" rel="noopener">NN/g</a> замість стрічки.</li>
+            <li>Один екран із <a href="https://www.dailyui.co" target="_blank" rel="noopener">Daily UI</a> або перезбирання чужого екрана.</li>
+            <li>Показати роботу комусь і попросити чесний фідбек.</li>
+          </ul>
+        </article>
+        <article class="card s7">
+          <h2>Що цінує ринок</h2>
+          <p class="sub">Те, що найчастіше відрізняє тих, кого кличуть на співбесіду.</p>
+          <ul>
+            <li>Сильна візуальна база: типографіку й сітку видно в перші секунди перегляду портфоліо.</li>
+            <li>Кейси з аргументацією «чому», а не лише гарні екрани.</li>
+            <li>Чисті файли: Auto Layout, компоненти, змінні.</li>
+            <li>Дизайн-системи, адаптив і доступність.</li>
+            <li>Розуміння верстки й уміння домовитися з розробником.</li>
+            <li>AI-інструменти як прискорювач і no-code (Framer).</li>
+            <li>Англійська на рівні, достатньому для кейсів і дзвінків.</li>
+          </ul>
+        </article>
+        <article class="card s12">
+          <h2>Ігри, що тренують око</h2>
+          <p class="sub">Коли не хочеться вчитися, але хочеться чимось корисним зайнятися.</p>
+          <ul>
+            <li><a href="https://type.method.ac" target="_blank" rel="noopener">Kern Type</a> — кернінг, <a href="https://shape.method.ac" target="_blank" rel="noopener">Shape Type</a> — криві Безьє, <a href="https://color.method.ac" target="_blank" rel="noopener">Color</a> — колір, <a href="https://boolean.method.ac" target="_blank" rel="noopener">The Boolean Game</a> — булеві операції.</li>
+            <li><a href="https://cantunsee.space" target="_blank" rel="noopener">Can’t Unsee</a> — увага до деталей інтерфейсу.</li>
+            <li><a href="https://flexboxfroggy.com" target="_blank" rel="noopener">Flexbox Froggy</a> і <a href="https://cssgridgarden.com" target="_blank" rel="noopener">Grid Garden</a> — як розробник бачить твій Auto Layout.</li>
+          </ul>
+        </article>
+      </div>
+    </section>`;
+  }
+
+  /* ---------- Маршрутизація ---------- */
+  let current = "", fontsSettled = false;
+  try { history.scrollRestoration = "manual"; } catch(e) {}
+  function parseRoute(h) {
+    h = (h || "").replace(/^#/, "");
+    const [page, target] = h.split("/");
+    if (page === "materials") return {page, target};
+    if (page === "focus") return {page};
+    return {page:"home"};
+  }
+  function render(h) {
+    current = h;
+    const r = parseRoute(h);
+    document.querySelectorAll("[data-tab]").forEach(a => { if (a.dataset.tab === r.page) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current"); });
+    if (r.page === "materials") renderMaterials(r.target);
+    else { r.page === "focus" ? renderFocus() : renderHome(); scrollTo(0, 0); }
+  }
+  function go(h) {
+    try { if (location.hash !== h) history.pushState(null, "", h || location.pathname + location.search); } catch(e) {}
+    render(h);
+  }
+  addEventListener("popstate", () => render(location.hash));
+  addEventListener("hashchange", () => { if (location.hash.startsWith("#p=")) return handleSharedHash(location.hash.slice(3)); if (location.hash !== current) render(location.hash); });
+
+  /* ---------- Події ---------- */
+  document.addEventListener("click", e => {
+    const a = e.target.closest("a[href]");
+    if (a) {
+      const href = a.getAttribute("href");
+      if (href.startsWith("#")) {
+        e.preventDefault();
+        const r = parseRoute(href);
+        if (r.page === "materials" && parseRoute(current).page === "materials" && r.target) {
+          try { history.replaceState(null, "", href); } catch(_) {}
+          current = href; scrollMaterials(r.target);
+        } else go(href);
+        return;
+      }
+      if (a.target === "_blank") { e.preventDefault(); openExternal(a.href); }
+      return;
+    }
+    const t = e.target.closest("button"); if (!t || !$("#view").contains(t)) return;
+    if (t.id === "openShare") return openShare();
+    if (viewing && (t.dataset.min || t.dataset.ldone || t.id === "undoToday")) return toast("Це режим перегляду — зміни не зберігаються");
+    if (t.dataset.jump) { const d = $("#sec-" + t.dataset.jump); d.open = true; openMods.add(t.dataset.jump); scrollToEl(d, 12, true); }
+    if (t.dataset.goto) { const d = openLesson(t.dataset.goto); if (d) { scrollToEl(d, 12, true); flash(d.querySelector("summary")); } }
+    if (t.dataset.ldone) {
+      const id = t.dataset.ldone, on = !S.done[id];
+      setDone(id, on);
+      if (parseRoute(current).page === "materials") {
+        refreshMaterials();
+        if (on) { const d = $("#ls-" + id); if (d) { d.open = false; openLessons.delete(id); }
+          const nx = nextLesson(); if (nx) { const n = openLesson(nx.id); if (n) setTimeout(() => scrollToEl(d && !d.hidden ? d : n, 12, true), 50); } }
+      } else renderHome();
+    }
+    if (t.dataset.min) {
+      const before = stats(), k = todayKey();
+      S.log[k] = (S.log[k] || 0) + Number(t.dataset.min); save();
+      toast(`+${t.dataset.min} хв записано`); newBadges(before, stats());
+      const y = scrollY; renderHome(); scrollTo(0, y);
+    }
+    if (t.id === "undoToday") { delete S.log[todayKey()]; save(); const y = scrollY; renderHome(); scrollTo(0, y); }
+  });
+  $("#view").addEventListener("change", e => {
+    if (e.target.matches(".tcheck, .cpcheck")) { setDone(e.target.dataset.id, e.target.checked); refreshMaterials(); }
+    if (e.target.id === "hideDone") { view.hideDone = e.target.checked; refreshMaterials(); }
+  });
+
+  /* ---------- Тема: за замовчуванням світла ---------- */
+  let theme = "light"; try { theme = localStorage.getItem(TKEY) || "light"; } catch(e) {}
+  const applyTheme = () => {
+    document.documentElement.setAttribute("data-theme", theme);
+    $("#themeBtn").textContent = theme === "light" ? "☾" : "☀";
+    $("#themeBtn").setAttribute("aria-label", theme === "light" ? "Увімкнути темну тему" : "Увімкнути світлу тему");
+  };
+  $("#themeBtn").onclick = () => { theme = theme === "light" ? "dark" : "light"; try { localStorage.setItem(TKEY, theme); } catch(e) {} applyTheme(); };
+  applyTheme();
+
+  /* ---------- Поділитися прогресом ---------- */
+  const dlg = $("#share");
+  const b64u = bytes => { let s = ""; bytes.forEach(b => s += String.fromCharCode(b)); return btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, ""); };
+  const unb64u = str => { str = str.replace(/-/g, "+").replace(/_/g, "/"); while (str.length % 4) str += "="; return Uint8Array.from(atob(str), c => c.charCodeAt(0)); };
+  const pipe = async (bytes, stream) => new Uint8Array(await new Response(new Blob([bytes]).stream().pipeThrough(stream)).arrayBuffer());
+
+  // Компактний код: відмітки згруповані за датами, стиснення deflate, якщо браузер уміє
+  async function pack(st) {
+    const byDate = {};
+    Object.entries(st.done).forEach(([id, d]) => (byDate[d] = byDate[d] || []).push(id));
+    const bytes = new TextEncoder().encode(JSON.stringify({v:1, d:byDate, l:st.log, s:st.last, n:st.name || ""}));
+    if (window.CompressionStream) { try { return "z" + b64u(await pipe(bytes, new CompressionStream("deflate-raw"))); } catch(e) {} }
+    return "j" + b64u(bytes);
+  }
+  async function unpack(code) {
+    code = code.trim();
+    const m = code.match(/#p=([\w-]+)/); if (m) code = m[1];
+    if (/^ey/.test(code)) { // старий формат коду
+      const d = JSON.parse(decodeURIComponent(escape(atob(code))));
+      return {done:d.done || {}, log:d.log || {}, last:d.last || null, name:d.name || ""};
+    }
+    let bytes = unb64u(code.slice(1));
+    if (code[0] === "z") bytes = await pipe(bytes, new DecompressionStream("deflate-raw"));
+    else if (code[0] !== "j") throw 0;
+    const o = JSON.parse(new TextDecoder().decode(bytes));
+    const done = {};
+    Object.entries(o.d || {}).forEach(([d, ids]) => ids.forEach(id => { if (valid(id)) done[id] = d; }));
+    return {done, log:o.l || {}, last:o.s || null, name:o.n || ""};
+  }
+  const canLink = /^https?:$/.test(location.protocol) || location.protocol === "file:";
+  const linkFor = code => location.href.split("#")[0] + "#p=" + code;
+
+  // Картка-зображення для сторіс
+  async function drawCard() {
+    try { await Promise.all([document.fonts.load("700 80px Unbounded"), document.fonts.load("500 36px Commissioner")]); } catch(e) {}
+    const s = stats(), W = 1080, H = 1350, c = document.createElement("canvas");
+    c.width = W; c.height = H;
+    const g = c.getContext("2d"), U = "Unbounded, 'Arial Black', sans-serif", C = "Commissioner, system-ui, sans-serif";
+    const rr = (x, y, w, h, r, fill) => { g.beginPath(); g.roundRect(x, y, w, h, r); g.fillStyle = fill; g.fill(); };
+    const fit = (text, font, size, max) => { g.font = `${font.replace("SIZE", size)}`; while (g.measureText(text).width > max && size > 20) { size -= 4; g.font = font.replace("SIZE", size); } };
+    g.fillStyle = "#EEEFE7"; g.fillRect(0, 0, W, H);
+    g.fillStyle = "#5F6154"; g.font = `500 34px ${C}`; g.fillText("Курс UI/UX дизайну", 80, 120);
+    g.fillStyle = "#1D1E16"; fit(S.name ? S.name : "Мій прогрес", `700 SIZEpx ${U}`, 76, W - 160); g.fillText(S.name ? S.name : "Мій прогрес", 80, 215);
+    // рівень
+    rr(80, 270, W - 160, 340, 44, "#4A2318");
+    const lv = LEVELS[s.level], nxt = LEVELS[s.level + 1];
+    g.fillStyle = "rgba(246,235,223,.7)"; g.font = `500 36px ${C}`; g.fillText(`Рівень ${s.level + 1} з ${LEVELS.length}`, 130, 345);
+    g.fillStyle = "#F6EBDF"; fit(lv[1], `700 SIZEpx ${U}`, 112, W - 260); g.fillText(lv[1], 130, 470);
+    rr(130, 515, W - 260, 18, 9, "rgba(246,235,223,.25)");
+    const pct = nxt ? (s.xp - lv[0]) / (nxt[0] - lv[0]) : 1;
+    rr(130, 515, Math.max(18, (W - 260) * pct), 18, 9, "#E6CDB8");
+    g.fillStyle = "rgba(246,235,223,.75)"; g.font = `500 30px ${C}`; g.fillText(`${s.xp} XP`, 130, 578);
+    // показники
+    const tiles = [["Уроки", `${s.lessonsDone}`, `з ${s.lessonsTotal}`], ["Практика", `${s.tasksDone}`, `з ${s.tasksTotal}`],
+                   ["Години", fmtH(s.logMin), "год"], ["Серія", `${s.streak}`, plural(s.streak, "день", "дні", "днів")]];
+    tiles.forEach((t, i) => {
+      const x = 80 + (i % 2) * 470, y = 650 + Math.floor(i / 2) * 230;
+      rr(x, y, 450, 210, 36, "#F8F8F2");
+      g.fillStyle = "#5F6154"; g.font = `500 32px ${C}`; g.fillText(t[0], x + 40, y + 62);
+      g.fillStyle = "#1D1E16"; g.font = `700 88px ${U}`; g.fillText(t[1], x + 40, y + 165);
+      const w = g.measureText(t[1]).width;
+      g.fillStyle = "#5F6154"; g.font = `500 34px ${C}`; g.fillText(t[2], x + 52 + w, y + 165);
+    });
+    // активність за 12 тижнів і досягнення
+    const today = new Date(), start = addDays(monday(today), -7 * 11), per = {};
+    Object.values(S.done).forEach(k => per[k] = (per[k] || 0) + 1);
+    const heat = ["#E2E4D8", "#C9CDB0", "#A2A77F", "#7F8360", "#4A2318"];
+    for (let i = 0; i < 84; i++) {
+      const d = addDays(start, i); if (d > today) continue;
+      const k = key(d), sc = (S.log[k] || 0) + (per[k] || 0) * 30;
+      const l = sc === 0 ? 0 : sc < 30 ? 1 : sc < 60 ? 2 : sc < 120 ? 3 : 4;
+      rr(80 + Math.floor(i / 7) * 34, 1130 + (i % 7) * 18 - 0, 28, 14, 4, heat[l]);
+    }
+    g.fillStyle = "#1D1E16"; g.font = `700 34px ${U}`; g.textAlign = "right";
+    g.fillText(`${s.badges.length} з ${BADGES.length}`, W - 80, 1180);
+    g.fillStyle = "#5F6154"; g.font = `500 30px ${C}`; g.fillText("досягнень", W - 80, 1222);
+    g.font = `40px ${C}`; g.fillText(BADGES.filter(b => s.badges.includes(b.id)).slice(-5).map(b => b.ic).join(" "), W - 80, 1282);
+    g.textAlign = "left"; g.fillStyle = "#5F6154"; g.font = `500 28px ${C}`;
+    g.fillText(`${today.getDate()} ${["січня","лютого","березня","квітня","травня","червня","липня","серпня","вересня","жовтня","листопада","грудня"][today.getMonth()]} ${today.getFullYear()}`, 80, 1300);
+    return c;
+  }
+
+  let cardCanvas = null;
+  async function openShare() {
+    $("#shareName").value = S.name || "";
+    $("#linkHint").hidden = canLink;
+    $("#copyLink").disabled = !canLink;
+    $("#nativeShare").hidden = !(navigator.share && canLink);
+    $("#code").value = await pack(S);
+    dlg.showModal();
+    cardCanvas = await drawCard();
+    $("#cardImg").src = cardCanvas.toDataURL("image/png");
+  }
+  $("#transferBtn").onclick = openShare;
+  $("#closeDlg").onclick = () => dlg.close();
+  $("#shareName").addEventListener("change", async e => {
+    if (viewing) return;
+    S.name = e.target.value.trim().slice(0, 40); save();
+    $("#code").value = await pack(S);
+    cardCanvas = await drawCard(); $("#cardImg").src = cardCanvas.toDataURL("image/png");
+  });
+  async function copyText(text, ok) {
+    try { await navigator.clipboard.writeText(text); toast(ok); }
+    catch(e) { $("#code").value = text; $("#code").select(); toast("Виділи й скопіюй вручну"); }
+  }
+  $("#copyLink").onclick = async () => copyText(linkFor(await pack(S)), "Посилання скопійовано");
+  $("#nativeShare").onclick = async () => {
+    try { await navigator.share({title:"Мій прогрес у курсі UI/UX", url:linkFor(await pack(S))}); } catch(e) {}
+  };
+  $("#shareCard").onclick = async () => {
+    if (!cardCanvas) cardCanvas = await drawCard();
+    const blob = await new Promise(r => cardCanvas.toBlob(r, "image/png"));
+    const file = new File([blob], "progress-ui-ux.png", {type:"image/png"});
+    try {
+      if (navigator.canShare && navigator.canShare({files:[file]})) { await navigator.share({files:[file], title:"Мій прогрес у курсі UI/UX"}); return; }
+    } catch(e) { if (e && e.name === "AbortError") return; }
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = "progress-ui-ux.png";
+    document.body.appendChild(a); a.click(); a.remove();
+    toast("Картку збережено. Якщо не завантажилась — затисни зображення й збережи");
+  };
+  $("#copyCode").onclick = () => copyText($("#code").value, "Код скопійовано");
+  $("#loadCode").onclick = async () => {
+    try { const d = await unpack($("#code").value); dlg.close(); applyShared(d, "load"); }
+    catch(e) { toast("Код не підходить. Перевір, що скопійовано повністю"); }
+  };
+
+  /* ---------- Відкриття чужого посилання: перегляд або завантаження ---------- */
+  function applyShared(d, mode) {
+    if (mode === "load") {
+      S = {done:d.done, log:d.log, last:d.last, name:d.name || S.name || ""};
+      if (!S.last || !S.done[S.last]) S.last = guessLast();
+      viewing = null; document.body.classList.remove("readonly"); $("#viewbar").hidden = true;
+      save(); openMods = openLessons = null; render(current); toast("Прогрес завантажено");
+    } else {
+      if (!viewing) viewing = S;
+      S = {done:d.done, log:d.log, last:d.last, name:d.name};
+      if (!S.last || !S.done[S.last]) S.last = guessLast();
+      document.body.classList.add("readonly");
+      $("#viewbar").hidden = false;
+      $("#viewText").textContent = d.name ? `Ти переглядаєш прогрес: ${d.name}. Змінювати тут нічого не можна.` : "Ти переглядаєш чужий прогрес. Змінювати тут нічого не можна.";
+      openMods = openLessons = null; render(current);
+    }
+  }
+  $("#exitView").onclick = () => {
+    if (viewing) S = viewing; viewing = null;
+    document.body.classList.remove("readonly"); $("#viewbar").hidden = true;
+    openMods = openLessons = null; render(current);
+  };
+  async function handleSharedHash(code) {
+    try { history.replaceState(null, "", location.pathname + location.search); } catch(e) {}
+    let d; try { d = await unpack(code); } catch(e) { toast("Посилання пошкоджене"); return; }
+    const pd = $("#sharedDlg"), s = Object.keys(d.done).filter(id => L_BY[id]).length;
+    $("#sharedText").textContent = `${d.name ? d.name + ": " : ""}пройдено уроків ${s} з ${LESSONS.length}. Що зробити з цим прогресом?`;
+    pd.showModal();
+    pd.onclose = () => { if (pd.returnValue === "view") applyShared(d, "view"); else if (pd.returnValue === "load") {
+      if (Object.keys(S.done).length && !confirm("Твій поточний прогрес на цьому пристрої буде замінено. Продовжити?")) return;
+      applyShared(d, "load"); } };
+  }
+
+  $("#resetBtn").onclick = () => {
+    if (viewing) return toast("Спершу вийди з режиму перегляду");
+    if (!confirm("Видалити весь прогрес і записані заняття? Це не можна скасувати.")) return;
+    S = {done:{}, log:{}, last:null, name:S.name || ""}; save(); openMods = openLessons = null; render(current); toast("Прогрес скинуто");
+  };
+
+  if (location.hash.startsWith("#p=")) { const code = location.hash.slice(3); render(""); handleSharedHash(code); }
+  else render(location.hash);
+})();
+</script>
+</body>
+</html>
