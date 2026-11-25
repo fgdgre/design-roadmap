@@ -405,8 +405,9 @@
      id НЕ ЗМІНЮВАТИ після публікації — до них прив’язаний прогрес.
      =================================================================== */
   const yt = q => "https://www.youtube.com/results?search_query=" + encodeURIComponent(q);
-  const V  = (t, id, src, lang, dur) => ({k:"video", t, u:"https://www.youtube.com/watch?v=" + id, src, lang, dur});
-  const PL = (t, id, src, lang, dur) => ({k:"playlist", t, u:"https://www.youtube.com/playlist?list=" + id, src, lang, dur});
+  const YEARS = {"-4lMJ4is2pE":2023,"-dtCf1DAAKc":2026,"-xjHVbAl5H8":2026,"-z9JX8Lz5lI":2025,"044MI9uH1c4":2026,"0MLwuhpwRiE":2024,"0ar4DezKKGI":2020,"0tNPT6X9Lhc":2018,"1ClbYm_mgpk":2026,"1PFkmrb4Bqg":2025,"1bionYPAPhg":2022,"1odqpkfkDL8":2024,"1ucLq6JTxac":2025,"1w6HIurOqjw":2025,"2W13ext26kQ":2019,"2brmo3wgG48":2019,"2u6bH17NIQk":2026,"2wF9tWSugm4":2023,"35WzgKFXDRA":2021,"3blyJn6htLU":2021,"425aMhpDTSY":2025,"4b40fr8-vOs":2025,"4wkWVlPcSmQ":2024,"5KUNmgt_pvY":2021,"5RzxWiLVtCM":2024,"5Zc3W4NpiA8":2019,"5tVbFfGDQCk":2019,"5uvU1-2xq3U":2025,"6-j5My77tIU":2021,"6lmvCqvmjfE":2019,"7HC08OR0Yhs":2026,"7Z9rrryIOC4":2019,"7cHomlHEwQM":2024,"7sUUzOCv47U":2024,"85NfqxniGxw":2021,"8MQmYa_zq0g":2020,"8OTbyWndY9M":2022,"9-oefwZ6Z74":2024,"9At1yFg901Y":2022,"9Q5BoiIFBiY":2025,"9WVt1CelBfg":2026,"AMKgcBzK7cg":2022,"AXpxZMRM1EY":2024,"Aa89MC8jX2c":2026,"B1rKtQpgo9k":2020,"B7k5rOgmOGY":2025,"BDrEB0S1YZg":2026,"BPJZ6A_brSw":2024,"BmNBxAhatYI":2020,"BtKHHIBJnL8":2024,"CBm9gdwshf8":2024,"CFrLkiyBt50":2024,"CJyJN0ZdEGA":2025,"DBhSfROq3wU":2025,"DS2ildqCrB0":2025,"DX4-5YT1XBs":2022,"DwR0SZTBMTU":2022,"E9X6_QT07DM":2026,"EOcY3hPMQkk":2025,"EcbgbKtOELY":2026,"EyeO-yWSkYE":2025,"FJ67z9D4mv4":2022,"G1WXK1OrcYk":2025,"GTNgiTK-ic8":2022,"Gfsd8NNuD9g":2026,"HA1t7Nc-3mE":2025,"HCD8-JqCtH0":2025,"HE4rLEQpiXY":2025,"HSpms43ycKg":2019,"HY_Ea1la6BM":2024,"H_rzQAagE8E":2025,"Hqs6Yb130bc":2025,"I3eT32LXAKc":2022,"I5Vz2pl8pPI":2024,"IEhRO9LDWew":2025,"IPH8R17w3vA":2022,"IanZkc-i2J4":2018,"J6qN-F9eeoc":2022,"JJQGuKhcErU":2023,"JU9z3RRzC_8":2026,"JYyO8uKTBe8":2024,"JzA00ZHsE0Y":2024,"Kd02qR_LyA0":2024,"Ksx9C2-3yMo":2026,"LF-dUF-EYBs":2025,"LJBavFyEl1g":2018,"LJbkLdtEW00":2022,"M8YhaXg6H8I":2021,"MBrngFrbEAs":2026,"MJTCfSFLUGE":2024,"MUh3xyvEWDE":2022,"NdqTbpyvaIg":2018,"NzFXc6PULh8":2025,"OMGTP2QpfiY":2024,"Oo-5AWdQAt8":2026,"Ovevm3AI8lw":2024,"P0WDO76300Q":2019,"PLXDU_eVOJTx5IuSrbtanZHnDuPB3Hx0hq":2025,"QYlKL8sY280":2026,"QZZdRl79JA8":2025,"QqDXDXd9y5k":2025,"R3oqjJTn99s":2025,"RYgz9qrRZRs":2025,"RhgUirqki50":2018,"SfQBunQMKhk":2025,"Tk-EI2yYT3A":2025,"Ufe0i26DGiA":2018,"Ug_EMizZaGk":2025,"UjOVRUSdO14":2026,"VIjZSJB1uyc":2021,"VeurGt6giso":2025,"W-h1FtNYim4":2018,"Wh3LAGlS_aA":2023,"XI8cjfw8rt8":2025,"XjDAV1oQVvE":2024,"YkxGTwbRQ9w":2022,"Yx-zMcIh8A4":2025,"Z5HNfm5vg_8":2025,"ZCb8qpPM01Y":2026,"ZT4WRRhacWk":2019,"ZwrRJlhJBrE":2022,"_FLgWxA99dg":2026,"aEj6k-gi9-s":2025,"aPwwv-6pRWY":2020,"bcfqmx2hnUQ":2023,"bnoPAezI6cw":2025,"cJrpeLgW_Wc":2018,"cke01gWWwyo":2025,"crAaxd30NMg":2025,"dGcqqA3Sl-o":2025,"dHX8RRYPHJI":2020,"dOCK7MYb4U0":2025,"dnBelEJ9m8o":2025,"dsviXwJwslI":2025,"dx6JvTvIwPo":2025,"eiIhTbFP0ls":2021,"esHH-U6h9TE":2024,"fGCtS6D6tr0":2021,"fIg2koX6nr8":2024,"fcoMDIn52pE":2022,"fnp7jEyq1Gk":2025,"fpc0cUt1y1M":2026,"gEYq6GFAFCs":2020,"gajFtK3tLgA":2021,"gqXr9HU7HCg":2021,"hYu69kgxmLg":2025,"hsMLqUFtPbU":2021,"hwjiExdMiNY":2024,"hx7XyA8RNIw":2022,"i6gc0lOaKTI":2019,"iRjXccj4yRo":2022,"iyrEStiTZh0":2025,"jE53O1PzmNU":2018,"jaZ2gLMGUsM":2022,"jsqsnFjtywE":2024,"jt1WroGHvBs":2019,"k1iwiHJrAWI":2025,"kK1TOpI948o":2026,"kS5jGXKVzB4":2021,"kjOx-Le5gB8":2024,"lOaTtmGE-X8":2021,"lsgVRCJ4fko":2026,"m000dSSXvDY":2019,"mRWdhN4XFzo":2023,"mqyBPuq3enI":2018,"n8MnoJyl3W4":2022,"nAx_IImhr1o":2025,"nV0ahPAxSbI":2021,"nWbBZPjev_0":2024,"nrN2axSSOKg":2023,"o3r1CBEFYX4":2024,"oYskl2ZBoBc":2026,"opTANvl9G1g":2025,"orvtAMGBgPE":2026,"p0t8UgzCJtE":2025,"pzyRafZJ-0M":2021,"qRvafbrzHak":2025,"r-MPiu0E4W4":2026,"rSWSXAFv1Gg":2021,"rgbnAsmPaZk":2025,"rv9yfrV-EAs":2024,"rwitGra27mo":2025,"s8KsEv3KSWM":2025,"sReni_EeZUM":2024,"sT2YiwRXoJM":2023,"sVYZ7QM3UUM":2024,"sqi0-Lz_ZTY":2024,"tvObuIcAooE":2025,"uAq2Yi_m-xQ":2025,"uEjidraxhAw":2025,"uZeRLXODK5w":2023,"uZwRVckjQWI":2022,"uyY67w_lruA":2025,"v39z0JPeIc8":2023,"vX686jF715U":2025,"vu3xcQm7cEo":2021,"vv74GmBXxHE":2025,"vx_YTT3PL8Y":2024,"wsTv9y931o8":2024,"wtl5UrrgU8c":2020,"xCJsRuH7v9w":2024,"y7hfQ1V1N3M":2023,"yBYd5USasXg":2022,"ygMvS7RLUGs":2022,"zIwrgnT498E":2021,"zJH3SXlyi1A":2026};
+  const V  = (t, id, src, lang, dur) => ({k:"video", t, u:"https://www.youtube.com/watch?v=" + id, src, lang, dur, year:YEARS[id]});
+  const PL = (t, id, src, lang, dur) => ({k:"playlist", t, u:"https://www.youtube.com/playlist?list=" + id, src, lang, dur, year:YEARS[id]});
   const A  = (t, u, src, lang, dur) => ({k:"read", t, u, src, lang, dur});
   const T  = (t, u, src, dur) => ({k:"tool", t, u, src, dur});
   const Q  = (t, q) => ({k:"search", t, u:yt(q)});
@@ -422,7 +423,8 @@
           "Блок «Якщо щось незрозуміло» — пошук на YouTube з іншими поясненнями тієї ж теми.",
           "Наприкінці модуля — <b>чекпоінт</b>: проєкт, що збирає все вивчене. Здебільшого це покращення твого лендингу MOI, тож до кінця курсу він стане сильним кейсом.",
           "Більшість відео англійською: вмикай субтитри й автопереклад. Поряд часто є варіант українською чи російською.",
-          "Записуй час на дашборді: так видно прогрес і тримається серія днів."
+          "Записуй час на дашборді: так видно прогрес і тримається серія днів.",
+          "Біля кожного відео вказано рік. Інтерфейс Figma суттєво оновився у 2024–2025 (UI3, Grid, Slots), тож уроки про саму Figma тут лише свіжі. Відео про принципи бувають старшими — принципи не старіють."
         ],[
           V("Every UI/UX Concept Explained in Under 10 Minutes","EcbgbKtOELY","Kole Jain","EN","9 хв"),
           V("UX vs. UI","5KUNmgt_pvY","NN/g","EN","3 хв")
@@ -445,7 +447,6 @@
           T("Mobbin — бібліотека екранів реальних застосунків","https://mobbin.com","mobbin.com"),
           T("Godly — найкращі сайти для натхнення","https://godly.website","godly.website")
         ],[
-          V("Figma from scratch in 1 hour","QxstLdREVYY","Роман Одуванов","RU","1 год"),
           A("Figma Education","https://www.figma.com/education/","Figma","EN"),
           T("Land-book — галерея лендингів","https://land-book.com","land-book.com")
         ],[
@@ -464,16 +465,17 @@
       goal:"Будь-який екран збираєш на Auto Layout, компонентах і змінних так, що його не соромно віддати розробнику.",
       lessons:[
         L("f1","Фрейми, сітки й constraints", 60, [
-          "<b>Frame</b> відрізняється від групи: має власний фон, обрізання, сітки й Auto Layout. Майже все в інтерфейсі — фрейми.",
-          "<b>Layout grid</b>: колонки (12 для десктопу, 8 для планшета, 4 для телефона), gutter — відстань між колонками, margin — поля від краю.",
+          "<b>Frame</b> відрізняється від групи: має власний фон, обрізання, Auto Layout і напрямні. Майже все в інтерфейсі — фрейми.",
+          "<b>Layout guides</b> (до травня 2025 називалися layout grids) — напрямні з колонок, рядків чи рівномірної сітки: 12 колонок для десктопу, 8 для планшета, 4 для телефона. Gutter — відстань між колонками, margin — поля від краю.",
+          "<b>Grid</b> — новий двовимірний режим Auto Layout (з 2025 року): сам розставляє елементи по рядках і колонках, як CSS Grid. Не плутай із layout guides: guides лише підказують, а Grid розкладає.",
           "<b>Constraints</b> кажуть, як елемент поводиться, коли фрейм змінює розмір: прилипає ліворуч, праворуч, тягнеться чи масштабується.",
           "Перевірка якості: потягни фрейм за край. Якщо щось поїхало — constraints або Auto Layout налаштовані неправильно."
         ],[
-          V("Figma Tutorial: Layout Grids","zd8wrAdURN0","Figma","EN","3 хв"),
-          V("Figma tutorial: Constraints","LHY9cm_2zwU","Figma","EN","5 хв"),
-          V("Сетка в Figma: 8, 12, 16 или 24 колонки?","9MFHb3s8FiI","Alexey Bychkov","RU","22 хв")
+          V("Figma Grid Tutorial: How to Use Figma Grid for Responsive Design","hYu69kgxmLg","TD Sunshine","EN","19 хв"),
+          V("Constraints Made Easy in Figma UI3","dOCK7MYb4U0","Raouf Belakhdar","EN","3 хв"),
+          A("Layout guides (колишні layout grids)","https://help.figma.com/hc/en-us/articles/360040450513","Довідка Figma","EN","10 хв")
         ],[
-          V("Master Responsive Grids (Rows & Columns) in Figma","sybtdc4dYzE","Tim Gabe","EN","10 хв"),
+          A("Figma’s new grid: you must understand CSS Grid as a designer","https://uxdesign.cc/figmas-new-grid-you-must-understand-css-grid-as-a-designer-fbb00416e1cc","UX Collective","EN"),
           Q("Constraints чи Auto Layout — коли що","Figma constraints vs auto layout")
         ],[
           [1,"Сітки для трьох екранів","Створи фрейми 1440, 768 і 390 px із сітками на 12, 8 і 4 колонки. Збережи їх як шаблони."],
@@ -484,16 +486,15 @@
           "Auto Layout — це flexbox у Figma: напрямок, відстань між елементами (gap), внутрішні відступи (padding), вирівнювання.",
           "Три режими розміру: <b>Hug</b> — облягає вміст, <b>Fill</b> — заповнює батьківський блок, <b>Fixed</b> — фіксований.",
           "Складні блоки — це вкладені Auto Layout: картка = вертикальний стек, у ньому рядок ціни = горизонтальний стек.",
-          "<b>Wrap</b> переносить елементи на новий рядок — ідеально для сітки карток. Min/max width не дають блоку стати занадто вузьким чи широким.",
+          "У панелі Auto Layout три режими: Vertical, Horizontal і Grid. <b>Wrap</b> (у режимі Horizontal) переносить елементи на новий рядок, а <b>Grid</b> — для справжньої сітки рядків і колонок. Min/max width не дають блоку стати занадто вузьким чи широким.",
           "<b>Absolute position</b> — для бейджів і іконок поверх, які не повинні штовхати сусідів.",
           "Правило: якщо щось можна зробити на Auto Layout — роби на ньому."
         ],[
           V("A Guide to Auto Layout: Best Practices, Tips & Tricks","1odqpkfkDL8","Figma","EN","23 хв"),
-          V("Auto Layout for Beginners (crash course)","2UbxHkiPwxg","Flux Academy","EN","21 хв"),
           V("Автолеяути за 15 хвилин","fnp7jEyq1Gk","Mate academy","UA","15 хв")
         ],[
           V("Master Auto Layout in 30 Minutes (+ Practice File)","rgbnAsmPaZk","DesignWithArash","EN","39 хв"),
-          V("Auto Layout в Figma с нуля","MqWeuT6t61M","Alexey Bychkov","RU","20 хв"),
+          V("Figma Auto Layout 2026 | Figma Basics","ZCb8qpPM01Y","TD Sunshine","EN","26 хв"),
           A("Guide to auto layout","https://help.figma.com/hc/en-us/articles/360040451373-Guide-to-auto-layout","Довідка Figma","EN")
         ],[
           [1,"Кнопка й тег","Кнопка з іконкою, яка росте разом із текстом (Hug), і тег-«пігулка». Зміни текст — нічого не має ламатися."],
@@ -506,11 +507,9 @@
           "<b>Properties</b>: boolean (показати чи сховати іконку), text (текст кнопки), instance swap (замінити іконку). Вони скорочують кількість варіантів у рази.",
           "Називай шари й властивості зрозуміло й англійською: State=Hover, Size=M. Так тебе зрозуміє будь-який розробник."
         ],[
-          V("Figma tutorial: Component properties","iIq8FLt1hUY","Figma","EN","18 хв"),
+          V("Figma Components 101 in UI3: variants and component properties","RYgz9qrRZRs","TD Sunshine","EN","22 хв"),
           V("Master Figma Components and Variants in 20 Minutes","bnoPAezI6cw","DesignWithArash","EN","19 хв"),
-          V("Про компоненти і варіанти у Фігмі","sFvMPRAEJQI","юля і дизайн","UA","35 хв")
         ],[
-          V("Как правильно работать с компонентами в Figma","ICCs6Lo4eak","Сергей Оршак","RU","17 хв"),
           A("Guide to components in Figma","https://help.figma.com/hc/en-us/articles/360038662654-Guide-to-components-in-Figma","Довідка Figma","EN"),
           Q("Вкладені компоненти","Figma nested components tutorial")
         ],[
@@ -524,11 +523,10 @@
           "Два рівні кольорів: <b>primitive</b> (olive-500 — сам колір) і <b>semantic</b> (bg-primary — його роль). Тема перемикається зміною ролей, а не перефарбовуванням сотень шарів.",
           "На безкоштовному плані частина можливостей змінних може бути обмежена (наприклад, кількість режимів). Для навчання цього вистачає."
         ],[
-          V("Figma tutorial: Intro to variables","1ONxxlJnvdM","Figma","EN","15 хв"),
-          V("Master Figma variables in 7 minutes","GUupJJC5Ac4","Flux Academy","EN","7 хв"),
-          V("Dark And Light Modes Using Color Variables","KzLlAAWfyTE","Build With Fede","EN","7 хв")
+          V("Figma Variables for Beginners — Complete Tutorial (2025)","H_rzQAagE8E","Adi Purdila","EN","31 хв"),
+          V("Figma Dark Mode Setup: The Ultimate Guide","uyY67w_lruA","UI Collective","EN","27 хв")
         ],[
-          V("Use Figma Variables Like a Pro (+ Practice File)","fn4rP20U2UM","DesignWithArash","EN","31 хв"),
+          V("Figma Variables Masterclass 2025","425aMhpDTSY","Average Design Dude","EN","1 год 15 хв"),
           A("Guide to variables in Figma","https://help.figma.com/hc/en-us/articles/15339657135383-Guide-to-variables-in-Figma","Довідка Figma","EN"),
           Q("Стилі чи змінні","Figma styles vs variables when to use")
         ],[
@@ -543,11 +541,11 @@
           "<b>Змінні в прототипі</b> дають логіку: лічильник кошика, вибраний колір, увімкнена тема.",
           "Фіксуй хедер при скролі (Fix position) — прототип одразу виглядає «справжнім»."
         ],[
-          V("Figma tutorial: Interactive components","ReNbXhaL3Xk","Figma","EN","9 хв"),
+          V("Figma Prototyping in 20 minutes: a beginner’s guide","k1iwiHJrAWI","TD Sunshine","EN","23 хв"),
           V("Figma Prototype Tutorial for Beginners","1ucLq6JTxac","Aliena Cai","EN","6 хв"),
-          V("Figma tutorial: Prototype with variables","VEuwKJAz7Jg","Figma","EN","13 хв")
+          V("Prototype with Variables in Figma","G1WXK1OrcYk","TD Sunshine","EN","17 хв")
         ],[
-          V("Figma Prototypes: Connections, Animation, Scrolling, and Overlays","5p5yPwyJ9A8","Alexey Bychkov","RU","27 хв"),
+          V("Create state in prototypes with variables (2025 update)","R3oqjJTn99s","Design with Paavan","EN","7 хв"),
           V("Advanced prototyping techniques","o3r1CBEFYX4","Figma","EN","1 год 9 хв"),
           A("Guide to prototyping in Figma","https://help.figma.com/hc/en-us/articles/360040314193-Guide-to-prototyping-in-Figma","Довідка Figma","EN")
         ],[
@@ -577,7 +575,6 @@
           A("Typography in ten minutes","https://practicaltypography.com/typography-in-ten-minutes.html","Practical Typography","EN","10 хв")
         ],[
           V("The ULTIMATE Guide To Typography For Beginners","AXpxZMRM1EY","DesignSpo","EN","14 хв"),
-          V("Основы типографики (1/3)","GOV4FVwka9c","KornilovPro","RU","19 хв"),
           A("Summary of key rules","https://practicaltypography.com/summary-of-key-rules.html","Practical Typography","EN")
         ],[
           [1,"Гра на кернінг","Пройди type.method.ac (Kern Type) і досягни 80+ балів."],
@@ -608,11 +605,9 @@
           "Ритм сторінки: однакові відступи між секціями (наприклад, 96 px на десктопі й 64 на телефоні).",
           "Вирівнюй по одних лініях. Що менше різних осей, то спокійніший макет."
         ],[
-          V("You’ll Regret NOT Using The 8pt Grid in Figma","ohF93_k3IMk","Tim Gabe","EN","8 хв"),
           V("Hard and Soft 8 Point Grids","aPwwv-6pRWY","Christopher Deane","EN","8 хв"),
           A("Law of Proximity","https://lawsofux.com/law-of-proximity/","Laws of UX","EN","5 хв")
         ],[
-          V("Figma Grids: ширина, 8px чи 10px","rFwAHtNz_5s","Alexey Bychkov","RU","24 хв"),
           Q("Системи відступів","spacing system UI design tutorial")
         ],[
           [1,"Аудит відступів MOI","Виміряй відступи на лендингу й знайди 5 «випадкових» чисел, що не кратні 8."],
@@ -661,7 +656,7 @@
           "Підхід Refactoring UI: ієрархію створюй вагою й кольором, а не лише розміром. Прибирай зайві рамки — відділяй блоки відступами й фоном.",
           "Повторення чужого екрана 1:1 — не плагіат, а вправа. У портфоліо йде лише своє."
         ],[
-          V("Refactoring UI: Bad About","S6-q5BheEYU","Steve Schoger","EN","14 хв"),
+          V("The stupid simple way to learn UI/UX design in exactly 10 minutes","9WVt1CelBfg","Kole Jain","EN","10 хв"),
           A("7 Practical Tips for Cheating at Design","https://medium.com/refactoring-ui/7-practical-tips-for-cheating-at-design-40c736799886","Refactoring UI","EN","15 хв"),
           T("Can’t Unsee — гра на уважність до деталей","https://cantunsee.space","cantunsee.space")
         ],[
@@ -690,13 +685,12 @@
           "Базова економіка e-commerce: <b>конверсія</b> (яка частка відвідувачів купує), <b>середній чек</b>, <b>маржа</b>, <b>CAC</b> (скільки коштує залучити покупця), <b>LTV</b> (скільки він принесе за весь час).",
           "Для MOI це означає: красива сторінка — не мета. Мета — щоб більше людей, які прийшли з Instagram, дійшли до замовлення й повернулися ще."
         ],[
-          V("Value Proposition Canvas Explained","ReM1uqmVfP0","Strategyzer","EN","3 хв"),
-          V("Business Model Canvas Explained","QoAOzMTLP5s","Strategyzer","EN","2 хв"),
+          V("Value Proposition Canvas Explained (With Real Examples)","_FLgWxA99dg","Nick Himo","EN","7 хв"),
+          V("Business Model Canvas Explained: Everything You Need to Know","-xjHVbAl5H8","Nick Himo","EN","9 хв"),
           V("30-Minute Masterclass on Product Thinking","Tk-EI2yYT3A","Mike Krieger, EO","EN","30 хв")
         ],[
           A("The Value Proposition Canvas","https://www.strategyzer.com/library/the-value-proposition-canvas","Strategyzer","EN"),
           V("Unit Economics for Startups","AMKgcBzK7cg","Eric Andrews","EN","18 хв"),
-          V("Product Design: база за 40 хвилин","1P_xPKo1X_c","Илья Сидоренко","RU","45 хв")
         ],[
           [1,"Value Proposition MOI","Заповни Value Proposition Canvas для MOI: роботи клієнтки, болі, вигоди і як сумка з кастомізацією їх закриває."],
           [2,"Економіка однієї сумки","Прикинь собівартість, ціну, маржу й вартість реклами на одну покупку. Скільки сумок треба продати на місяць, щоб окупитися? Цифри можна припустити — головне логіка."],
@@ -747,7 +741,7 @@
         ],[
           V("Outcomes Over Outputs","J6qN-F9eeoc","NN/g","EN","3 хв"),
           V("What is an opportunity solution tree?","y7hfQ1V1N3M","Product Talk","EN","1 хв"),
-          V("Introduction to Modern Product Discovery","l7-5x0ra2tc","Teresa Torres","EN","37 хв")
+          V("Continuous discovery: a tactical deep dive with Teresa Torres","4wkWVlPcSmQ","Dovetail","EN","1 год")
         ],[
           A("Opportunity Solution Trees","https://www.producttalk.org/opportunity-solution-trees/","Product Talk","EN"),
           A("Stakeholder Interviews","https://www.nngroup.com/articles/stakeholder-interviews/","NN/g","EN"),
@@ -812,8 +806,6 @@
           V("Jobs-to-Be-Done vs. Personas","IanZkc-i2J4","NN/g","EN","3 хв")
         ],[
           A("Journey Mapping 101","https://www.nngroup.com/articles/journey-mapping-101/","NN/g","EN"),
-          V("Jobs To Be Done простыми словами","QmSFD3voF7Y","Илья Сидоренко","RU",""),
-          V("FigJam tutorial: User journey mapping","L4E1yupkISI","Figma","EN","8 хв")
         ],[
           [1,"Три job stories","Три формулювання «Коли я…, я хочу…, щоб…» для покупниць MOI на основі інтерв’ю."],
           [2,"Персона покупниці MOI","Одна сторінка: цілі, болі, контекст, цитати з інтерв’ю."],
@@ -1009,9 +1001,8 @@
         ],[
           V("Icon design in Figma","JYyO8uKTBe8","Nick Babich","EN","7 хв"),
           V("How to Design Better Icons — golden rules","9At1yFg901Y","nikitisza","EN","5 хв"),
-          V("Making an icon grid in Figma","ddWbw-zEu9s","Miggi from Figgi","EN","4 хв")
+          V("Icon Design Tutorial: Pixel-Perfect icons in Figma","JzA00ZHsE0Y","Hugeicons","EN","1 хв")
         ],[
-          V("Build it in Figma: Design a cohesive icon set","S9P7ob7Nx5I","Figma","EN","1 год 17 хв"),
           A("Material: designing icons","https://m3.material.io/styles/icons/designing-icons","Google","EN"),
           T("Lucide — безкоштовний набір іконок","https://lucide.dev","lucide.dev"),
           T("Phosphor Icons","https://phosphoricons.com","phosphoricons.com")
@@ -1026,7 +1017,7 @@
           "Найчастіше ілюстрації потрібні в онбордингу, порожніх станах, помилках і на лендингах.",
           "Для e-commerce на кшталт MOI краще продають фото, а ілюстрація чи візерунок — для акцентів."
         ],[
-          V("Master Figma Pen Tool in 6 Minutes","d78yo84tnfA","Tim Gabe","EN","7 хв"),
+          V("Drawing with the pen tool","cke01gWWwyo","Figma","EN","15 хв"),
           V("Awesome Figma Illustration Tutorial (For Beginners)","p0t8UgzCJtE","KULAK STUDIO","EN","26 хв"),
           T("The Bézier Game — гра на pen tool","https://bezier.method.ac","method.ac","20 хв")
         ],[
@@ -1049,7 +1040,6 @@
           V("9 Techniques to Display Text over Background Images","JJQGuKhcErU","Magnific","EN","2 хв")
         ],[
           V("2 key steps to Creative Direction for Web Design","IEhRO9LDWew","BONT","EN","14 хв"),
-          V("How To Take Product Photography At Home With A Smartphone","ZFqvFP4GsvI","Learn With Shopify","EN","10 хв")
         ],[
           [1,"Розбір фото трьох брендів","Як знімають сумки три преміальні бренди: фон, світло, ракурси, люди. Що з цього підходить MOI?"],
           [2,"Фото-гайд MOI","Правила фону, світла, ракурсів і кадрування для карток і лендингу, з прикладами."],
@@ -1070,6 +1060,7 @@
           "Safe areas: не клади важливе під «чубчик» і домашній індикатор."
         ],[
           V("Design foundations from idea to interface (WWDC25)","dGcqqA3Sl-o","Apple","EN","19 хв"),
+          V("Everything you need to know about Mobile App UIs in 8 minutes","Gfsd8NNuD9g","Kole Jain","EN","8 хв"),
           A("Designing for iOS","https://developer.apple.com/design/human-interface-guidelines/designing-for-ios","Apple HIG","EN","15 хв"),
           A("Tab bars","https://developer.apple.com/design/human-interface-guidelines/tab-bars","Apple HIG","EN","10 хв")
         ],[
@@ -1101,10 +1092,9 @@
           "Типові брейкпоінти: 360–390, 768, 1024, 1440. Колонки стають стеком, меню — бургером або tab bar, шрифти зменшуються.",
           "У Figma: Fill container + max width, і окремий фрейм на кожен брейкпоінт."
         ],[
-          V("Responsive Design in Figma Using Breakpoints","c0ZTaDMGb20","DesignWithArash","EN","5 хв"),
-          V("Responsive Breakpoints with Variables + Modes","xNk3QnuowKE","UI Collective","EN","5 хв")
+          V("Responsive Design In Figma — Complete Guide In 7 Minutes","VeurGt6giso","Amin Fazeliniaki","EN","7 хв"),
+          V("Figma Responsive Design: How Enterprise Teams Actually Do It","NzFXc6PULh8","UI Collective","EN","50 хв")
         ],[
-          V("Responsive Web Design Has Never Been This Easy","gsVwThzYwv8","Jesse Showalter","EN","4 хв"),
           Q("Mobile-first дизайн","mobile first design explained")
         ],[
           [1,"Size type на трьох екранах","Секція розмірів MOI на 1440, 768 і 390 px."],
@@ -1144,11 +1134,10 @@
           "Атомарний підхід: атоми (кнопка, поле) → молекули (пошук) → організми (хедер).",
           "Вчися на чужих: Material, Apple, Atlassian, Shopify Polaris."
         ],[
-          PL("Introduction to design systems — офіційний курс","PLXDU_eVOJTx6vqOWJSWH87Zb5-riiG63A","Figma","EN","~2 год"),
-          V("Your First Design System in Figma","_uva2dQPlV8","Tim Gabe","EN","15 хв"),
+          V("Build a Design System — Full Course","opTANvl9G1g","UI Collective","EN","3,5 год"),
           A("Design Systems 101","https://www.nngroup.com/articles/design-systems-101/","NN/g","EN","10 хв")
         ],[
-          V("Build a Design System — Full Course","opTANvl9G1g","UI Collective","EN","3,5 год"),
+          V("Learn Figma Design Systems in 2025 (Full Tutorial)","uAq2Yi_m-xQ","Fadel","EN","2 год 19 хв"),
           Q("Атомарний дизайн","atomic design explained")
         ],[
           [1,"Розбери Material 3","Які там токени, компоненти, як влаштована документація."],
@@ -1159,10 +1148,10 @@
           "Рівні: <b>primitive</b> (olive-500) → <b>semantic</b> (color-bg-accent) → <b>component</b> (button-bg).",
           "Хороша назва описує роль, а не вигляд: color-text-muted, а не grey-text. У Figma токени живуть у змінних."
         ],[
-          V("Tokens, variables, and styles","JyCmacSyDY4","Figma","EN","13 хв"),
-          V("What the #&%$ are Design Tokens?","wtTstdiBuUk","UX Lord","EN","7 хв")
+          V("Design Tokens for Dummies: A Complete Guide","CJyJN0ZdEGA","UI Collective","EN","50 хв"),
+          V("Master Design Tokens — From Basics to Advanced","OMGTP2QpfiY","UI Collective","EN","45 хв")
         ],[
-          V("Design Tokens for Dummies","CJyJN0ZdEGA","UI Collective","EN","50 хв")
+          V("Figma Variables Explained! Build a Scalable Design System","tvObuIcAooE","Sergei Chyrkov","EN","1 год 22 хв")
         ],[
           [1,"Таблиця токенів MOI","Три рівні: primitive, semantic, component — для кольорів, відступів і радіусів."],
           [2,"Токени у змінних","Перенеси таблицю в змінні Figma й прив’яжи до компонентів."],
@@ -1178,6 +1167,7 @@
           A("Чек-лист доступності","https://www.a11yproject.com/checklist/","The A11Y Project","EN","20 хв")
         ],[
           V("WCAG Crash Course for UI/UX Designers in 8 Mins","s8KsEv3KSWM","Veera Srivastava","EN","8 хв"),
+          V("How to Check Color Contrast in Figma Without Plugins","Hqs6Yb130bc","Adi Purdila","EN","4 хв"),
           V("Why Disabled Buttons Hurt UX","uEjidraxhAw","NN/g","EN","5 хв"),
           T("WebAIM Contrast Checker","https://webaim.org/resources/contrastchecker/","WebAIM")
         ],[
@@ -1195,7 +1185,6 @@
           T("Flexbox Froggy — гра про flexbox","https://flexboxfroggy.com","flexboxfroggy.com","30 хв")
         ],[
           T("Grid Garden — гра про CSS Grid","https://cssgridgarden.com","cssgridgarden.com","30 хв"),
-          V("Hand off your UX designs to developers like a PRO","Kmp85DeC3K4","Design With Destiny","EN","15 хв"),
           V("Learn CSS Flexbox in 20 Minutes","wsTv9y931o8","Coding2GO","EN","21 хв")
         ],[
           [1,"Flexbox Froggy","Пройди всі 24 рівні. Порівняй властивості з налаштуваннями Auto Layout."],
@@ -1217,7 +1206,7 @@
           "<b>Governance</b> — як система змінюється: хто пропонує нові компоненти, хто затверджує, як повідомляють про зміни (changelog, версії).",
           "Атомарний дизайн Бреда Фроста — класична модель організації системи. Книга безкоштовна онлайн."
         ],[
-          V("Define your design system's documentation","sHF6JSPWbzM","Figma","EN","6 хв"),
+          V("Learn Design Systems: Figma Variables, Components, AI, and More","lsgVRCJ4fko","UI Collective","EN","4 год"),
           V("Config 2024: Design systems best practices","MJTCfSFLUGE","Figma","EN","49 хв"),
           V("A Design System Governance Process","5Zc3W4NpiA8","Brad Frost","EN","19 хв")
         ],[
@@ -1236,10 +1225,8 @@
         ],[
           V("Create flexible components with Slots","UjOVRUSdO14","Figma","EN","5 хв"),
           V("Getting started with Slots","fpc0cUt1y1M","Figma","EN","12 хв"),
-          V("MASTER Figma Components in 10 Minutes","KnmxD8LvHmA","Arnau Ros","EN","9 хв")
         ],[
           V("Figma Slots Explained","E9X6_QT07DM","UI Collective","EN","12 хв"),
-          V("Nested instances for complex component variants","2jf9Zv6vYGk","Wolfr","EN","13 хв")
         ],[
           [1,"Картка зі слотом","Універсальна картка, у яку можна вставити будь-який вміст."],
           [2,"Модальне вікно","Компонент модального вікна зі слотом для вмісту й варіантами кнопок."],
@@ -1253,7 +1240,6 @@
           V("Multi-Brand Design System and Figma Variable Setup","EyeO-yWSkYE","UI Collective","EN","1 год"),
           V("Mastering Multi Brand Design Systems in Figma","nAx_IImhr1o","Pixellink","EN","26 хв")
         ],[
-          V("Learn Design Systems: Variables, Components, AI","lsgVRCJ4fko","UI Collective","EN","4 год"),
           V("DTCG W3C release and multiple brands","XI8cjfw8rt8","Figma","EN","21 хв")
         ],[
           [1,"Карта токенів","Схема: які токени залежать від теми, бренду, брейкпоінта."],
@@ -1289,11 +1275,9 @@
           "Smart Animate анімує шари з однаковими назвами між кадрами — це основа більшості мікроінтеракцій.",
           "Interactive components — для hover і press, After delay — для лоадерів, spring-криві — для живості."
         ],[
-          V("Smart Animate and Drag Triggers","6Id4INKEwb8","Figma","EN","9 хв"),
-          V("How to get micro-interactions right using Figma","hHp4FGVcHjY","Flux Academy","EN","22 хв")
+          V("Figma for Edu: Smart animate with Figma Design","HCD8-JqCtH0","Figma","EN","52 хв"),
         ],[
-          V("Figma Smart Animate for Beginners","thplNeqE9Tg","Tim Gabe","EN","10 хв"),
-          V("3D Carousel in Figma Using Smart Animate","xgk5N4rCJIw","uxpeak","EN","8 хв")
+          Q("Свіжі уроки з мікроінтеракцій у Figma","Figma micro interactions smart animate 2026"),
         ],[
           [1,"«Додати в кошик»","Кнопка з анімованим станом успіху."],
           [2,"Вибір кольору","Клік по кружечку кольору плавно змінює фото сумки."],
@@ -1308,7 +1292,6 @@
           V("Master Figma To Framer In 10 Minutes","rwitGra27mo","Arnau Ros","EN","11 хв"),
           A("Framer Academy","https://www.framer.com/academy/","Framer","EN")
         ],[
-          V("My Figma to Framer Process","gUUXLnlbBdk","Flux Academy","EN","17 хв"),
           V("Framer micro-interactions","vX686jF715U","Framer University","EN","22 хв"),
           V("Framer Complete Course","1w6HIurOqjw","Average Design Dude","EN","2 год 14 хв")
         ],[
@@ -1366,7 +1349,7 @@
           "Scrum: спринти по 1–2 тижні, планування, короткі щоденні зустрічі, демо, ретроспектива. Дизайн зазвичай іде на спринт попереду розробки.",
           "Задачі живуть у Jira чи Linear. Посилання на макет у задачі й коментарі у Figma — звична частина роботи."
         ],[
-          V("Learn Scrum in under 8 minutes","_QfFu-YQfK4","agileforall","EN","8 хв"),
+          V("Scrum Events Explained: Step-by-Step Guide for Beginners","Ovevm3AI8lw","Agilemania","EN","7 хв"),
           V("How Do Product Managers and UX Designers Work Together?","35WzgKFXDRA","Product HQ","EN","6 хв"),
           V("A day in the life of a UX Designer","gEYq6GFAFCs","chunbuns","EN","6 хв")
         ],[
@@ -1480,7 +1463,7 @@
         ],[
           V("The 3 dashboard UI flaws that give away you’ve never built one","Ksx9C2-3yMo","Kole Jain","EN","7 хв"),
           V("UI Design Tips for a Better Data Table UX","IPH8R17w3vA","UX TV","EN","4 хв"),
-          V("Design a Responsive Table in Figma Using Auto Layout","HfcMYRIC0Fw","DesignWithArash","EN","10 хв")
+          V("Designing Responsive Tables with Figma Grid","QZZdRl79JA8","Nick Babich","EN","5 хв")
         ],[
           [1,"Питання власниці","Інтерв’ю з власником малого бізнесу: які 5 питань він ставить собі щоранку? Саме на них має відповідати дашборд."],
           [2,"Таблиця замовлень","Компонент таблиці з сортуванням, фільтрами, масовими діями й станами рядка."],
@@ -1493,7 +1476,7 @@
           "<b>Етика.</b> Якщо тестуєш із людьми з інвалідністю, проси згоди, поважай їхній час і не роби з них «кейс». Частину перевірок можна змоделювати: тільки великий палець, у рукавиці, на ходу."
         ],[
           A("Physical abilities and barriers","https://www.w3.org/WAI/people-use-web/abilities-barriers/physical/","W3C WAI","EN","15 хв"),
-          V("Developing accessible apps for users with motor impairments","ElifzykHt7U","Android Developers","EN","4 хв"),
+          V("What WCAG 2.2 Means for Native Mobile Accessibility","sVYZ7QM3UUM","Deque Systems, axe-con","EN","46 хв"),
           V("Making Games Better for Players with Motor Disabilities","Ufe0i26DGiA","Game Maker’s Toolkit","EN","10 хв")
         ],[
           A("Чек-лист доступності","https://www.a11yproject.com/checklist/","The A11Y Project","EN"),
@@ -1700,7 +1683,7 @@
 
     /* ---------- Figma ---------- */
     "f1-t1": D("Ти починаєш новий проєкт, і команда домовилася про три брейкпоінти. Треба підготувати шаблони, з яких стартуватимуть усі макети.",
-            "Створи фрейми 1440, 768 і 390 px|Налаштуй сітки: 12 колонок для десктопа, 8 для планшета, 4 для телефона з gutter і margin|Збережи сітки як стилі|Підпиши кожен фрейм параметрами сітки",
+            "Створи фрейми 1440, 768 і 390 px|Налаштуй layout guides: 12 колонок для десктопа, 8 для планшета, 4 для телефона з gutter і margin|Збережи сітки як стилі|Підпиши кожен фрейм параметрами сітки",
             "Три фрейми-шаблони зі збереженими стилями сіток.",
             "Margin і gutter логічні для кожного розміру|Сітки збережено як стилі|Числа кратні 4 чи 8"),
     "f1-t2": D("Лід каже: «Перший екран MOI виглядає розсипаним». Твоя задача — повернути йому структуру через сітку.",
@@ -2754,7 +2737,7 @@
     const ext = u => u && !u.startsWith("#") ? ' target="_blank" rel="noopener"' : "";
     const res = r => `<li class="res"><span class="kind k-${r.k}">${KIND[r.k]}</span>
       <div><a href="${r.u}"${ext(r.u)}>${r.t}</a>
-      ${r.src || r.lang || r.dur ? `<span class="rmeta">${r.src ? `<span>${r.src}</span>` : ""}${r.lang ? `<span class="lang">${r.lang}</span>` : ""}${r.dur ? `<span>${r.dur}</span>` : ""}</span>` : ""}</div></li>`;
+      ${r.src || r.lang || r.dur ? `<span class="rmeta">${r.src ? `<span>${r.src}</span>` : ""}${r.lang ? `<span class="lang">${r.lang}</span>` : ""}${r.dur ? `<span>${r.dur}</span>` : ""}${r.year ? `<span>${r.year}</span>` : ""}</span>` : ""}</div></li>`;
 
     function briefHTML(det, id, label) {
       if (!det) return "";
